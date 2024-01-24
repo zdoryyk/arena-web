@@ -1,0 +1,53 @@
+<main id="main" class="main">
+    <section class="section">
+        <div class="container">
+            <h2 class="dashboard-title">Current Submissions</h2>
+            <div class="submissions">
+                <div class="submission" [routerLink]="['/problemsets-detail']">
+                    <div class="submission-data">
+                        <div class="submission-top">
+                            <div class="submission-stats">
+                                <h3 class="submission-heading warning">TOP SECRET</h3>
+                                <p class="submission-subtext">10 submissions</p>
+                            </div>
+                            <div class="submission-stats">
+                                <h3 class="submission-heading warning">30%</h3>
+                                <p class="submission-rating">30/100</p>
+                            </div>
+                        </div>
+                        <p class="submission-date">March. 1, 2022, 15:02</p>
+                    </div>
+                    <p class="submission-status warning-bg">Task Complete</p>
+                </div>
+                <div class="submission">
+                    <div class="submission-data">
+                        <div class="submission-top">
+                            <div class="submission-stats">
+                                <h3 class="submission-heading danger">PROBLEMS TO SOLVE</h3>
+                                <p class="submission-subtext">10 submissions</p>
+                            </div>
+                            <div class="submission-stats">
+                                <h3 class="submission-heading danger">0%</h3>
+                                <p class="submission-rating">0/100</p>
+                            </div>
+                        </div>
+                        <p class="submission-date">March. 1, 2022, 18:02</p>
+                    </div>
+                    <p class="submission-status danger-bg">Compilation Error</p>
+                </div>
+            </div>
+            <div class="submissions-block">
+                <div class="submissions-history">
+                    <h2 class="dashboard-title">Last Submissions</h2>
+                    <div class="submissions-body">
+                        <span class="empty">You don’t have yet</span>
+                    </div>
+                </div>
+                <div class="submissions-total">
+                    <h2 class="dashboard-title">174 submissions</h2>
+                    <img src="assets/icons/book.svg" alt="book">
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

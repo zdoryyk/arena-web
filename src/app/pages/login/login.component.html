@@ -1,0 +1,25 @@
+<main>
+    <section class="section auth">
+        <div class="container">
+            <div class="d-flex justify-content-center align-items-center gap-5">
+                <div class="login">
+                    <div class="login-img">
+                        <img src="assets/images/cube.png" class="img-fluid" alt="logo">
+                    </div>
+                    <form class="form">
+                        <h2 class="form-title">Login</h2>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Username</label>
+                            <input type="text" name="username" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+                        </div>
+                        <button type="submit" class="btn btn-primary form-btn" [routerLink]="['/dashboard']">Log in</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
