@@ -1,0 +1,18 @@
+<div id="menu" class="menu menu-hidden">
+    <ul class="menu-list">
+        <li>
+            <a [routerLink]="['/dashboard']" routerLinkActive="active-link mobile" class="menu-link" (click)="onToggle()">Dashboard</a>
+        </li>
+        <li>
+            <a [routerLink]="['/problemsets']" routerLinkActive="active-link mobile" class="menu-link" (click)="onToggle()">Problemsets</a>
+        </li>
+        <li>
+            <a [routerLink]="['/profile']" routerLinkActive="active-link mobile" class="menu-link" (click)="onToggle()">Profile</a>
+        </li>
+    </ul>
+
+    <div class="menu-auth">
+        <span>Zdoryk Daniil</span>
+        <a><img src="../../assets/icons/logout.svg" class="img-fluid" alt="logo" (click)="onLogout()"></a>
+    </div>
+</div>

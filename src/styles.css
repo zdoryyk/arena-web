@@ -3,106 +3,16 @@
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
 
-#panel-show {
-  width: 25px;
-  height: 30px;
-  background: url('assets/icons/double_arrow.svg') center/contain no-repeat;
-  transform: rotate(-180deg);
-  border: none;
-  margin-bottom: 10px;
-  transform: rotate(180deg);
-}
-
-.container {
-  margin: 0 auto;
-  padding: 0 10px;
-}
-
-.logo-name {
-  font-size: 45px;
-}
-
-#sidebar {
-  transition: left 0.3s ease;
-  position: fixed;
-  width: 296px;
-  border-right: 1px solid #BBB;
-  padding: 20px 25px;
-  background: #fff;
-}
-
-.profile {
-  display: flex;
-  width: 100%;
-  padding-left: 8px;
-  justify-content: space-between;
-  margin: 32px 0 70px;
-}
-
-.profile-person {
-  font-size: 25px;
-  font-weight: 700;
-}
-
-.list-item {
-  font-size: 25px;
-  margin-bottom: 40px;
-  padding: 10px;
-  border-radius: 10px;
-  font-family: Inter;
-  display: flex;
-  justify-content: end;
-  cursor: pointer;
-}
-
-.list-item.no-hover:hover {
-  color: #292D32;
-  background: #fff;
-}
-
-.list-item.no-hover:not(:nth-of-type(2)):hover a svg path {
-  fill: #292D32;
-  stroke: #292D32;
-}
-
-.list-item.no-hover:nth-of-type(2):hover a svg path {
-  stroke: #292D32;
-}
-
-.list-item:last-of-type {
-  margin-bottom: 0;
-}
-
-.list-item:hover {
-  color: white;
-  background: #292D32;
-}
-
-.list-item:not(:nth-of-type(2)):hover a svg path {
-  fill: white;
-  stroke: white;
-}
-
-.list-item:nth-of-type(2):hover a svg path {
-  stroke: white;
-}
-
-.list-item a {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.tab-img {
-  width: 22px;
-}
-
 /* main */
 
 .main {
   margin: 0 auto;
-  padding: 40px 0;
+  padding: 60px 0 40px;
   transition: .3s ease;
+
+  @media screen and (min-width: 768px) {
+    padding: 40px 0;
+  }
 }
 
 .section {
@@ -110,7 +20,10 @@
   display: flex;
   padding: 60px 0;
   overflow-y: auto;
-  padding-left: 100px;
+
+  @media screen and (min-width: 768px) {
+    padding-left: 100px;
+  }
 }
 
 .section.auth {
@@ -143,8 +56,8 @@
   padding: 16px 20px;
   display: grid;
   grid-template-areas:
-        "name img"
-        "info img";
+    "name img"
+    "info img";
 }
 
 .profile-info {
@@ -585,12 +498,15 @@
   gap: 3px;
 }
 
+
 .active-link svg {
-  stroke: #3E91FA; /* Active color */
+  stroke: #3E91FA;
+  /* Active color */
 }
 
 .inactive-link svg {
-  stroke: #292D32; /* Default color */
+  stroke: #292D32;
+  /* Default color */
 }
 
 
@@ -684,10 +600,6 @@
 
 @media (max-width: 768px) {
 
-  .section {
-    padding: 0;
-    padding-left: 100px;
-  }
 
   .detail-list-item p,
   .detail-list-item span {
@@ -710,9 +622,9 @@
   .profile-content {
     text-align: center;
     grid-template-areas:
-            "name"
-            "img"
-            "info";
+      "name"
+      "img"
+      "info";
   }
 
   .profile-img {

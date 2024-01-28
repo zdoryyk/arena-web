@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import {Router, RouterModule, RouterOutlet} from '@angular/router';
 import {LoginComponent} from "./pages/login/login.component";
 import {SidebarComponent} from "./sidebar/sidebar.component";
+import {HeaderComponent} from "./header/header.component";
+import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet,RouterModule,LoginComponent,SidebarComponent],
+  imports: [CommonModule, RouterOutlet,RouterModule,LoginComponent,SidebarComponent,HeaderComponent,MobileMenuComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

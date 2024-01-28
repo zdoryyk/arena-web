@@ -1,0 +1,89 @@
+#sidebar {
+    display: none;
+    transition: left 0.3s ease;
+    position: fixed;
+    width: 296px;
+    border-right: 1px solid #BBB;
+    padding: 20px 25px;
+    background: #fff;
+
+    @media screen and (min-width: 768px) {
+        display: block;
+    }
+}
+
+#panel-show {
+    width: 25px;
+    height: 30px;
+    background: url('../../assets/icons/double_arrow.svg') center/contain no-repeat;
+    transform: rotate(-180deg);
+    border: none;
+    margin-bottom: 10px;
+    transform: rotate(180deg);
+}
+
+.logo-name {
+    font-size: 45px;
+}
+
+.profile {
+    display: flex;
+    width: 100%;
+    padding-left: 8px;
+    justify-content: space-between;
+    margin: 32px 0 70px;
+}
+
+.profile-person {
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.list-item {
+    font-size: 25px;
+    margin-bottom: 40px;
+    padding: 10px;
+    border-radius: 10px;
+    font-family: Inter;
+    display: flex;
+    justify-content: end;
+    cursor: pointer;
+}
+
+.list-item.no-hover:hover {
+    color: #292D32;
+    background: #fff;
+}
+
+.list-item.no-hover:not(:nth-of-type(2)):hover a svg path {
+    fill: #292D32;
+    stroke: #292D32;
+}
+
+.list-item.no-hover:nth-of-type(2):hover a svg path {
+    stroke: #292D32;
+}
+
+.list-item:last-of-type {
+    margin-bottom: 0;
+}
+
+.list-item:hover {
+    color: white;
+    background: #292D32;
+}
+
+.list-item:not(:nth-of-type(2)):hover a svg path {
+    fill: white;
+    stroke: white;
+}
+
+.list-item:nth-of-type(2):hover a svg path {
+    stroke: white;
+}
+
+.list-item a {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}

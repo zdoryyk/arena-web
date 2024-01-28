@@ -1,0 +1,61 @@
+.menu {
+    position: fixed;
+    right: 0;
+    top: 62px;
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0 3px 10px rgb(73, 73, 73);
+    padding: 25px 20px;
+    visibility: visible;
+    transition: all .7s;
+    z-index: 99;
+
+    @media screen and (min-width: 768px) {
+        display: none;
+    }
+}
+
+.menu-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.menu-link {
+    display: inline-block;
+    width: 100%;
+    padding: 10px 15px;
+    background: #cfcfcf;
+    color: #000;
+    font-weight: 500;
+    border-radius: 5px;
+    text-align: center;
+    transition: .7s;
+}
+
+.menu-hidden {
+    top: -260px;
+    visibility: hidden;
+}
+
+
+.active-link.mobile {
+    background-color: #292D32;
+    color: #fff;
+}
+
+.menu-auth {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding: 0 10px;
+    margin-top: 25px;
+}
+
+.menu-auth img {
+    width: 25px;
+}
+
+.menu-auth span {
+    font-weight: 700;
+}
