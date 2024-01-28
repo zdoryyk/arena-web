@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import {Router, RouterModule, RouterOutlet} from '@angular/router';
 import {LoginComponent} from "./pages/login/login.component";
 import {SidebarComponent} from "./sidebar/sidebar.component";
-import {HeaderComponent} from "./header/header.component";
-import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
+import {HeaderComponent} from "./components/header/header.component";
+import { MobileMenuComponent } from './components/mobile-menu/mobile-menu.component';
 
 @Component({
   selector: 'app-root',

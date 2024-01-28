@@ -32,64 +32,9 @@
   padding: 80px 0;
 }
 
-.dashboard-body {
-  display: flex;
-  justify-content: space-between;
-  gap: 30px;
-}
-
-.dashboard-part-img {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  max-width: 50%;
-}
-
-.dashboard-part-img img {
-  width: 100%;
-}
-
-.profile-content {
-  box-shadow: 3px 3px 9px 0px rgba(190, 190, 190, 0.13);
-  border-radius: 20px;
-  margin-bottom: 70px;
-  padding: 16px 20px;
-  display: grid;
-  grid-template-areas:
-    "name img"
-    "info img";
-}
-
-.profile-info {
-  grid-area: info;
-}
-
-.profile-name {
-  color: #79838B;
-  font-family: Anaheim;
-  font-size: 32px;
-  text-transform: capitalize;
-  margin-bottom: 20px;
-  grid-area: name;
-}
-
 .profile-img {
   grid-area: img;
   align-self: center;
-}
-
-.profile-label {
-  color: #98BBD7;
-  font-family: Anaheim;
-  font-size: 19px;
-  text-transform: capitalize;
-}
-
-.profile-text-value {
-  color: #79838B;
-  font-family: Anaheim;
-  font-size: 18px;
-  text-transform: capitalize;
 }
 
 .dashboard-title {
@@ -115,12 +60,12 @@
 .submissions.problemsets .submission {
   margin-bottom: 0;
 }
-
+/* 
 .submission {
   border-radius: 20px;
   border: 1px solid rgba(0, 0, 0, 0.25);
   width: 500px;
-}
+} */
 
 .submission-data {
   padding: 27px 30px 0;
@@ -229,43 +174,6 @@
 .success-bg {
   background: #A3D985;
 }
-
-/* cases */
-
-.cases {
-  display: grid;
-  grid-template: repeat(2, 230px) / repeat(2, 230px);
-  gap: 50px;
-}
-
-.case {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding: 45px;
-  border-radius: 20px;
-  border: 1px solid #B6B6B6;
-}
-
-.case-value {
-  color: #666262;
-  font-family: Inter;
-  font-size: 60px;
-  font-weight: 500;
-}
-
-.case-value.success {
-  color: #4A960E;
-}
-
-.case-label {
-  font-family: Inter;
-  font-size: 20px;
-  font-weight: 500;
-  text-align: center;
-}
-
 
 .mg-left {
   margin: 0 auto;
@@ -619,14 +527,6 @@
     width: 100%;
   }
 
-  .profile-content {
-    text-align: center;
-    grid-template-areas:
-      "name"
-      "img"
-      "info";
-  }
-
   .profile-img {
     justify-self: center;
   }
@@ -683,16 +583,5 @@
 
   .submissions {
     justify-content: center;
-  }
-
-  .dashboard-part-img {
-    max-width: 100%;
-  }
-}
-
-@media (max-width: 1400px) {
-  .dashboard-body {
-    flex-direction: column;
-    align-items: center;
   }
 }
