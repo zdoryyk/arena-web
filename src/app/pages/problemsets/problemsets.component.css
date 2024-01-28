@@ -1,0 +1,22 @@
+.submissions {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-bottom: 90px;
+}
+
+.submissions.problemsets {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.50);
+    padding-bottom: 40px;
+}
+
+.submissions.problemsets .submission {
+    margin-bottom: 0;
+}
+
+@media (max-width: 1200px) {
+    .submissions {
+        justify-content: center;
+    }
+}

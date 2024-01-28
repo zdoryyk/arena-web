@@ -1,16 +1,15 @@
 <main id="main" class="main">
     <section class="section">
         <div class="container">
-            <h2 class="dashboard-title">Ongoing problems</h2>
+            <h2 class="title">Ongoing problems</h2>
             <div class="submissions problemsets">
-                <div class="submission">
-                    <app-submission-card [title]="submissionData.title"
-                        [totalSubmissions]="submissionData.totalSubmissions"
-                        [lastEvaluation]="submissionData.lastEvaluation"
-                        [lastSubmitDate]="submissionData.lastSubmitDate"
-                        [completeStatus]="submissionData.completeStatus">
-                    </app-submission-card>
-                </div>
+                <app-submission-card 
+                    [title]="submissionData.title"
+                    [totalSubmissions]="submissionData.totalSubmissions"
+                    [lastEvaluation]="submissionData.lastEvaluation"
+                    [lastSubmitDate]="submissionData.lastSubmitDate"
+                    [completeStatus]="submissionData.completeStatus">
+                </app-submission-card>
                 <div class="submission">
                     <div class="submission-data">
                         <div class="submission-top">
@@ -28,7 +27,7 @@
                     <p class="submission-status danger-bg">Compilation Error</p>
                 </div>
             </div>
-            <h2 class="dashboard-title">Closed problems</h2>
+            <h2 class="title">Closed problems</h2>
             <div class="submissions">
                 <div class="submission">
                     <div class="submission-data">

@@ -1,0 +1,88 @@
+.head {
+    padding: 20px 0 0;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    margin-bottom: 50px;
+}
+
+.main-title {
+    color: #F87C3C;
+    font-family: Inter;
+    font-size: 50px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.single-progress {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 5px 0;
+}
+
+.single-progress-percent {
+    color: #F87C3C;
+    font-family: Inter;
+    font-size: 40px;
+    font-weight: 500;
+}
+
+.single-progress-divide {
+    color: #040404;
+    font-family: Inter;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.single-task-bar {
+    border-radius: 13px;
+    background: #F87C3C;
+    padding: 8px 31px;
+    color: #FFF;
+    font-family: Inter;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.submissions {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    max-width: 1060px;
+}
+
+
+@media (max-width: 576px) {
+    .main-title {
+        font-size: 24px;
+    }
+
+    .single-progress-percent {
+        font-size: 24px;
+    }
+
+    .single-progress-divide {
+        font-size: 16px;
+    }
+
+    .single-task-bar {
+        border-radius: 13px;
+        background: #F87C3C;
+        padding: 8px 31px;
+        color: #FFF;
+        font-family: Inter;
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .submissions {
+        justify-content: center;
+    }
+}

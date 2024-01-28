@@ -1,15 +1,11 @@
 #sidebar {
     display: none;
-    transition: left 0.3s ease;
+    transition: left 0.4s ease;
     position: fixed;
     width: 296px;
     border-right: 1px solid #BBB;
     padding: 20px 25px;
     background: #fff;
-
-    @media screen and (min-width: 768px) {
-        display: block;
-    }
 }
 
 #panel-show {
@@ -20,6 +16,7 @@
     border: none;
     margin-bottom: 10px;
     transform: rotate(180deg);
+    transition: .4s;
 }
 
 .logo-name {
@@ -42,12 +39,12 @@
 .list-item {
     font-size: 25px;
     margin-bottom: 40px;
-    padding: 10px;
     border-radius: 10px;
     font-family: Inter;
     display: flex;
     justify-content: end;
     cursor: pointer;
+    transition: .3s;
 }
 
 .list-item.no-hover:hover {
@@ -55,12 +52,11 @@
     background: #fff;
 }
 
-.list-item.no-hover:not(:nth-of-type(2)):hover a svg path {
+.list-item.no-hover:not(:nth-of-type(2)):hover path {
     fill: #292D32;
-    stroke: #292D32;
 }
 
-.list-item.no-hover:nth-of-type(2):hover a svg path {
+.list-item.no-hover:nth-of-type(2):hover path {
     stroke: #292D32;
 }
 
@@ -73,17 +69,31 @@
     background: #292D32;
 }
 
-.list-item:not(:nth-of-type(2)):hover a svg path {
+.list-item:not(:nth-of-type(2)):hover path {
     fill: white;
-    stroke: white;
 }
 
-.list-item:nth-of-type(2):hover a svg path {
+.list-item:nth-of-type(2):hover path {
     stroke: white;
 }
 
 .list-item a {
     display: flex;
     align-items: center;
+    padding: 10px;
     gap: 20px;
+}
+
+.list-item:not(:nth-child(2)) .active-link path {
+    fill: #3E91FA;
+}
+
+.list-item:nth-child(2) .active-link path {
+    stroke: #3E91FA;
+}
+
+@media (min-width: 768px) {
+    #sidebar {
+        display: block;
+    }
 }

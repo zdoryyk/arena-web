@@ -1,0 +1,246 @@
+.details-head {
+    padding: 20px 0 50px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    margin-bottom: 19px;
+}
+
+.main-title {
+    color: #F87C3C;
+    font-family: Inter;
+    font-size: 50px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.single-progress {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 5px 0;
+}
+
+.single-progress-percent {
+    color: #F87C3C;
+    font-family: Inter;
+    font-size: 40px;
+    font-weight: 500;
+}
+
+.single-progress-divide {
+    color: #040404;
+    font-family: Inter;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.details-info {
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    background: #FFF;
+    margin-bottom: 95px;
+}
+
+.details-bar {
+    border-radius: 20px;
+    background: #4D93FD;
+    color: #FFF;
+    font-family: Roboto;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    padding: 10px 34px;
+}
+
+.details-frame {
+    padding: 0 35px;
+}
+
+.details-heading {
+    color: #060606;
+    font-family: Roboto;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin: 13px 0 23px;
+}
+
+.details-list {
+    padding-bottom: 40px;
+    border-bottom: 1px solid #C3C2C2;
+}
+
+.detail-list-item {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 8px;
+}
+
+.detail-list-item p {
+    width: 170px;
+    text-align: center;
+    font-family: Roboto;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.detail-list-item span {
+    font-family: Roboto;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.detail-list-item .user {
+    color: #725200;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.details-tools {
+    padding: 30px 0 45px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 50px;
+}
+
+.tools-item {
+    font-family: Roboto;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.tools-item a {
+    transition: .3s;
+}
+
+.tools-item a:hover {
+    color: #3E77AA;
+}
+
+.details-case {
+    display: flex;
+    justify-content: space-between;
+    color: #5E5E5E;
+    font-family: Roboto;
+    font-size: 23px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    border-radius: 8px;
+    background: #AEAEAE;
+    padding: 15px 20px;
+    width: 720px;
+}
+
+
+.details-case-main {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 80%;
+}
+
+.details-imgs {
+    display: flex;
+    gap: 3px;
+}
+
+@media (max-width: 576px) {
+    .details-head {
+        padding: 20px 0 20px;
+    }
+
+    .main-title {
+        font-size: 24px;
+    }
+
+    .single-progress-percent {
+        font-size: 24px;
+    }
+
+    .single-progress-divide {
+        font-size: 16px;
+    }
+
+    .details-bar {
+        text-align: center;
+        font-size: 20px;
+        padding: 10px 14px;
+    }
+
+    .details-frame {
+        padding: 0 10px;
+    }
+
+    .detail-list-item p {
+        text-align: left;
+        font-size: 14px;
+    }
+
+    .detail-list-item span {
+        text-align: left;
+        font-size: 14px;
+    }
+
+    .details-tools {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .details-case p {
+        display: block;
+        font-size: 14px;
+    }
+
+    .details-case img {
+        display: none;
+    }
+}
+
+
+
+@media (max-width: 768px) {
+
+    .detail-list-item p {
+        width: 45%;
+    }
+
+    .detail-list-item span {
+        width: 45%;
+    }
+
+    .details-tools {
+        padding: 10px 0 25px;
+        gap: 25px;
+    }
+
+    .tools-item {
+        font-size: 17px;
+    }
+}
+
+@media (max-width: 992px) {
+    .details-case {
+        font-size: 13px;
+        width: 100%;
+    }
+
+    .details-case-main {
+        width: 100%;
+    }
+}

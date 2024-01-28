@@ -2,11 +2,6 @@
     display: flex;
     justify-content: space-between;
     gap: 30px;
-
-    @media (max-width: 1400px) {
-        flex-direction: column;
-        align-items: center;
-    }
 }
 
 .profile-charts {
@@ -14,10 +9,6 @@
     flex-direction: column;
     gap: 30px;
     max-width: 50%;
-
-    @media (max-width: 1200px) {
-        max-width: 100%;
-    }
 }
 
 .profile-charts img {
@@ -33,14 +24,6 @@
     grid-template-areas:
         "name img"
         "info img";
-
-    @media (max-width: 768px) {
-        text-align: center;
-        grid-template-areas:
-            "name"
-            "img"
-            "info";
-    }
 }
 
 .profile-name {
@@ -86,10 +69,6 @@
     padding: 45px;
     border-radius: 20px;
     border: 1px solid #B6B6B6;
-
-    @media (max-width: 576px) {
-        padding: 35px;
-    }
 }
 
 .case-value {
@@ -116,4 +95,46 @@
     font-size: 20px;
     font-weight: 500;
     text-align: center;
+}
+
+@media (max-width: 576px) {
+    .cases {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .case {
+        padding: 35px;
+        width: 230px;
+        height: 230px;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-content {
+        text-align: center;
+        grid-template-areas:
+            "name"
+            "img"
+            "info";
+    }
+
+    .cases {
+        grid-template: repeat(2, 180px) / repeat(2, 180px);
+        gap: 25px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .profile-charts {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 1400px) {
+    .profile {
+        flex-direction: column;
+        align-items: center;
+    }
 }

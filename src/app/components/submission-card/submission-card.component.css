@@ -1,5 +1,104 @@
 .submission {
+    display: block;
     border-radius: 20px;
     border: 1px solid rgba(0, 0, 0, 0.25);
     width: 500px;
+}
+
+.submission-data {
+    padding: 27px 30px 0;
+}
+
+.submission-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    margin-bottom: 30px;
+}
+
+.submission-heading {
+    font-family: Inter;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.submission-subtext {
+    color: #B1B1B1;
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.submission-rating {
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.submission-date {
+    color: #817E7E;
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: right;
+}
+
+.submission-status {
+    border-radius: 13px;
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 8px 30px;
+    color: #fff;
+}
+
+.success {
+    color: #A3D985;
+}
+
+.success-bg {
+    background: #A3D985;
+}
+
+.warning {
+    color: #F87C3C;
+}
+
+.warning-bg {
+    background: #F87C3C;
+}
+
+.danger {
+    color: #E0544C;
+}
+
+.danger-bg {
+    background: #E0544C;
+}
+
+@media (max-width: 576px) {
+    .submission {
+        width: 350px;
+    }
+
+    .submission-data {
+        padding: 15px 10px 0;
+    }
+
+    .submission-heading {
+        font-size: 17px;
+    }
+
+    .submission-subtext {
+        font-size: 14px;
+    }
+
+    .submission-date {
+        font-size: 15px;
+    }
+
+    .submission-status {
+        font-size: 16px;
+        padding: 5px 15px;
+    }
 }

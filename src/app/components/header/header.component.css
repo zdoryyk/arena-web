@@ -6,10 +6,6 @@
     background-color: rgb(218, 218, 218);
     box-shadow: 0 3px 10px rgb(73, 73, 73);
     z-index: 100;
-
-    @media screen and (min-width: 768px) {
-        display: none;
-    }
 }
 
 .header-body {
@@ -25,50 +21,8 @@
     display: none;
 }
 
-
-/* .menu {
-    position: fixed;
-    right: 0;
-    top: 62px;
-    bottom: 0;
-    width: 300px;
-    background: #ffffff;
-    box-shadow: -3px 0 10px rgb(73, 73, 73);
-    padding: 40px 0 40px 20px;
-    visibility: visible;
-    transition: .4s;
-
-    @media screen and (min-width: 768px) {
+@media (min-width: 768px) {
+    .header {
         display: none;
     }
-} */
-
-/* .menu {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-
-    position: fixed;
-    right: 0;
-    top: 62px;
-    bottom: 0;
-    width: 300px;
-    background: #ffffff;
-    padding: 40px 0 40px 20px;
-    visibility: visible;
-    transition: .4s;
 }
-
-.menu-link {
-    display: inline-block;
-    width: 100%;
-    padding: 15px;
-    background: #000000;
-    color: #ffffff;
-    border-radius: 10px 0 0 10px;
-}
-
-.menu-hidden {
-    right: -100%;
-    visibility: hidden;
-} */

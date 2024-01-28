@@ -1,7 +1,7 @@
 <main id="main" class="main">
     <section class="section">
         <div class="container">
-            <h2 class="dashboard-title">Current Submissions</h2>
+            <h2 class="title">Current Submissions</h2>
             <div class="submissions">
                 <div class="submission" [routerLink]="['/problemsets-detail']">
                     <div class="submission-data">
@@ -36,15 +36,13 @@
                     <p class="submission-status danger-bg">Compilation Error</p>
                 </div>
             </div>
-            <div class="submissions-block">
-                <div class="submissions-history">
-                    <h2 class="dashboard-title">Last Submissions</h2>
-                    <div class="submissions-body">
-                        <span class="empty">You don’t have yet</span>
-                    </div>
+            <div class="summary">
+                <div class="history">
+                    <h2 class="title">Last Submissions</h2>
+                    <p class="empty">You don’t have yet</p>
                 </div>
                 <div class="submissions-total">
-                    <h2 class="dashboard-title">174 submissions</h2>
+                    <h2 class="title">174 submissions</h2>
                     <img src="assets/icons/book.svg" alt="book">
                 </div>
             </div>
