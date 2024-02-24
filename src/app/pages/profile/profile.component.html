@@ -1,44 +1,57 @@
 <main id="main" class="main">
-    <section class="section">
-        <div class="container">
-            <div class="profile">
-                <div>
-                    <div class="profile-content">
-                        <p class="profile-name">Danil Zdoryk</p>
-                        <div class="profile-info">
-                            <p class="profile-label">Type <span class="profile-text-value">Student</span></p>
-                            <p class="profile-label">Joined <span class="profile-text-value">Sep 2021</span></p>
-                            <p class="profile-label">Isic number <span class="profile-text-value">12512051025912095</span></p>
-                        </div>
-                        <div class="col-12 md:col-4">
-                            <h5>Label</h5>
-                            <p-avatar label="DZ" styleClass="mr-2" size="xlarge"></p-avatar>
-                        </div>
-                    </div>
-                    <div class="cases">
-                        <div class="case">
-                            <p class="case-value">7</p>
-                            <p class="case-label">Problemsets done</p>
-                        </div>
-                        <div class="case">
-                            <p class="case-value">48</p>
-                            <p class="case-label">Submissions</p>
-                        </div>
-                        <div class="case">
-                            <p class="case-value success">92%</p>
-                            <p class="case-label">Success rate</p>
-                        </div>
-                        <div class="case">
-                            <p class="case-value">66.8</p>
-                            <p class="case-label">Summary points</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="profile-charts">
-                    <img src="assets/images/chart1.png" alt="cart1">
-                    <img src="assets/images/chart2.png" alt="cart2">
-                </div>
+  <section class="section">
+    <div class="container">
+      <div class="profile">
+        <div>
+          <div class="profile-content">
+            <p class="profile-name">Danil Zdoryk</p>
+            <div class="profile-info">
+              <p class="profile-label">
+                Type <span class="profile-text-value">Student</span>
+              </p>
+              <p class="profile-label">
+                Joined <span class="profile-text-value">Sep 2021</span>
+              </p>
+              <p class="profile-label">
+                Isic number
+                <span class="profile-text-value">12512051025912095</span>
+              </p>
             </div>
+            <div class="col-12 md:col-4">
+              <h5>Label</h5>
+              <p-avatar label="DZ" styleClass="mr-2" size="xlarge"></p-avatar>
+            </div>
+          </div>
+          <div class="cases">
+            <div class="case">
+              <p class="case-value">7</p>
+              <p class="case-label">Problemsets done</p>
+            </div>
+            <div class="case">
+              <p class="case-value">48</p>
+              <p class="case-label">Submissions</p>
+            </div>
+            <div class="case">
+              <p class="case-value success">92%</p>
+              <p class="case-label">Success rate</p>
+            </div>
+            <div class="case">
+              <p class="case-value">66.8</p>
+              <p class="case-label">Summary points</p>
+            </div>
+          </div>
         </div>
-    </section>
+        <div class="profile-charts">
+          <p-chart
+            class="profile-chart"
+            type="bar"
+            [data]="basicData"
+            [options]="basicOptions"
+            responsive="true"
+          ></p-chart>
+          <img src="assets/images/chart2.png" alt="cart2" />
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
