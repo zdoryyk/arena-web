@@ -3,23 +3,6 @@ import { ChartModule } from 'primeng/chart';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 
-const doughnutLabel = {
-  id: 'doughnutLabel',
-  beforeDatasetsDraw(chart, args, pluginOptions) {
-    const { ctx, data } = chart;
-    const labelEnd = chart.id === 1 ? '' : '%';
-    const textColor = chart.id === 1 ? '#C391C8' : '#7F8EC6';
-
-    ctx.save();
-    const xCoor = chart.getDatasetMeta(0).data[0].x;
-    const yCoor = chart.getDatasetMeta(0).data[0].y;
-    ctx.textAlign = 'center';
-    ctx.font = 'bold 60px sans-serif';
-    ctx.fillStyle = textColor;
-    ctx.fillText(`${data.datasets[0].data[0]}${labelEnd}`, xCoor, yCoor);
-  },
-};
-
 @Component({
   selector: 'app-profile',
   standalone: true,
@@ -31,11 +14,15 @@ export class ProfileComponent implements OnInit {
   leftDoughnutData: any;
   rightDoughnutData: any;
   doughnutOptions: any;
-  rightDoughnutOptions: any;
-  plugins: any;
+  barOptions: any;
+  doughnutPlugins: any;
+  barPlugins: any;
+
+  barData: any;
 
   ngOnInit(): void {
     this.leftDoughnutData = {
+      id: 'leftDoughnut',
       labels: ['Last Submission'],
       datasets: [
         {
@@ -76,6 +63,7 @@ export class ProfileComponent implements OnInit {
     };
 
     this.rightDoughnutData = {
+      id: 'rightDoughnut',
       labels: ['Earned points'],
       datasets: [
         {
@@ -96,6 +84,98 @@ export class ProfileComponent implements OnInit {
       ],
     };
 
-    this.plugins = [doughnutLabel];
+    this.doughnutPlugins = [
+      {
+        id: 'doughnutLabel',
+        beforeDatasetsDraw(chart: any) {
+          const { ctx, data, config } = chart;
+          const labelEnd =
+            config._config.data.id === 'rightDoughnut' ? '' : '%';
+          const textColor =
+            config._config.data.id === 'rightDoughnut' ? '#C391C8' : '#7F8EC6';
+          console.log(config);
+
+          ctx.save();
+          const xCoor = chart.getDatasetMeta(0).data[0].x;
+          const yCoor = chart.getDatasetMeta(0).data[0].y;
+          ctx.textAlign = 'center';
+          ctx.font = 'bold 60px sans-serif';
+          ctx.fillStyle = textColor;
+          ctx.fillText(`${data.datasets[0].data[0]}${labelEnd}`, xCoor, yCoor);
+        },
+      },
+    ];
+
+    // bar chart
+
+    this.barData = {
+      labels: [1, 2, 3, 4, 5, 6, 7],
+      datasets: [
+        {
+          label: '',
+          data: [65, 59, 80, 81, 56, 55, 40],
+          backgroundColor: '#1B59F8',
+          borderRadius: 50,
+          barPercentage: 0.5,
+        },
+        {
+          label: '',
+          data: [100, 100, 100, 100, 100, 100, 100],
+          backgroundColor: '#F2F7FF',
+          borderRadius: 50,
+          barPercentage: 0.5,
+        },
+      ],
+    };
+
+    this.barOptions = {
+      plugins: {
+        legend: {
+          display: false,
+        },
+        tooltip: {
+          filter: function (tooltipItem) {
+            return tooltipItem.datasetIndex === 0;
+          },
+        },
+      },
+      scales: {
+        y: {
+          ticks: {
+            callback: function (value, index, ticks) {
+              return value + '%';
+            },
+          },
+          grid: {
+            display: false,
+            drawOnChartArea: false,
+          },
+        },
+        x: {
+          grid: {
+            display: false,
+            drawOnChartArea: false,
+          },
+        },
+      },
+    };
+
+    this.barPlugins = [
+      {
+        id: 'barBackground',
+        beforeDatasetsDraw(chart: any) {
+          const xCoorFront = chart.getDatasetMeta(0).data;
+          const xCoorBg = chart.getDatasetMeta(1).data;
+          const fx = xCoorFront[0].x;
+          const bx = xCoorBg[0].x;
+          const offset = Math.sqrt(Math.pow(fx - bx, 2)) / 2;
+
+          for (let i = 0; i < xCoorFront.length; i++) {
+            xCoorFront[i].x += offset;
+            xCoorBg[i].x -= offset;
+          }
+        },
+      },
+    ];
   }
 }
