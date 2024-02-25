@@ -42,14 +42,33 @@
           </div>
         </div>
         <div class="profile-charts">
-          <p-chart
-            class="profile-chart"
-            type="bar"
-            [data]="basicData"
-            [options]="basicOptions"
-            responsive="true"
-          ></p-chart>
-          <img src="assets/images/chart2.png" alt="cart2" />
+          <div class="profile-dougnuts">
+            <p-chart
+              class="profile-chart"
+              type="doughnut"
+              [data]="leftDoughnutData"
+              [options]="doughnutOptions"
+              [plugins]="plugins"
+              responsive="true"
+            ></p-chart>
+            <p-chart
+              class="profile-chart"
+              type="doughnut"
+              [data]="rightDoughnutData"
+              [options]="doughnutOptions"
+              [plugins]="plugins"
+              responsive="true"
+            ></p-chart>
+            <!-- <p-chart
+              class="profile-chart"
+              type="doughnut"
+              [data]="basicData"
+              [options]="basicOptions"
+              [plugins]="plugins"
+              responsive="true"
+            ></p-chart> -->
+          </div>
+          <!-- <img src="assets/images/chart2.png" alt="cart2" /> -->
         </div>
       </div>
     </div>

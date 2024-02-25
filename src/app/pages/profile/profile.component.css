@@ -8,7 +8,6 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
-  max-width: 50%;
 }
 
 .profile-charts img {
@@ -53,14 +52,10 @@
   text-transform: capitalize;
 }
 
-.profile-chart {
-  background: linear-gradient(
-    0deg,
-    rgba(109, 151, 245, 0.15) 0%,
-    rgba(241, 96, 96, 0.1) 100%
-  );
-  padding: 30px 20px 0 20px;
-  border-radius: 18px;
+.profile-dougnuts {
+  width: 100%;
+  display: flex;
+  gap: 70px;
 }
 
 /* cases */
@@ -139,6 +134,13 @@
 @media (max-width: 1200px) {
   .profile-charts {
     max-width: 100%;
+  }
+}
+
+@media (max-width: 992px) {
+  .profile-dougnuts {
+    width: 100%;
+    flex-direction: column;
   }
 }
 
