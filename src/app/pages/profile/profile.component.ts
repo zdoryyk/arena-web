@@ -40,9 +40,11 @@ export class ProfileComponent implements OnInit {
           cutout: 115,
           borderWidth: 10,
           borderColor: 'rgba(231, 196, 242, 0.4)',
+          hoverBorderColor: 'rgba(231, 196, 242, 0.4)',
         },
       ],
     };
+
     this.doughnutOptions = {
       plugins: {
         legend: {
@@ -81,6 +83,7 @@ export class ProfileComponent implements OnInit {
           cutout: 115,
           borderWidth: 10,
           borderColor: 'rgba(231, 196, 242, 0.4)',
+          hoverBorderColor: 'rgba(231, 196, 242, 0.4)',
         },
       ],
     };
@@ -94,7 +97,6 @@ export class ProfileComponent implements OnInit {
             config._config.data.id === 'rightDoughnut' ? '' : '%';
           const textColor =
             config._config.data.id === 'rightDoughnut' ? '#C391C8' : '#7F8EC6';
-          console.log(config);
 
           ctx.save();
           const xCoor = chart.getDatasetMeta(0).data[0].x;
@@ -107,7 +109,7 @@ export class ProfileComponent implements OnInit {
       },
     ];
 
-    // bar chart
+    // BAR CHART
 
     this.barData = {
       labels: [1, 2, 3, 4, 5, 6, 7],
@@ -125,6 +127,7 @@ export class ProfileComponent implements OnInit {
           backgroundColor: '#F2F7FF',
           borderRadius: 50,
           barPercentage: 0.5,
+          hoverBackgroundColor: '#F2F7FF',
         },
       ],
     };
@@ -143,7 +146,7 @@ export class ProfileComponent implements OnInit {
       scales: {
         y: {
           ticks: {
-            callback: function (value, index, ticks) {
+            callback: function (value: string) {
               return value + '%';
             },
           },

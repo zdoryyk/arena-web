@@ -1,80 +1,91 @@
 <main id="main" class="main">
-    <section class="section">
-        <div class="container">
-            <div class="details-head">
-                <h2 class="main-title">TOP SECRET</h2>
-                <div class="single-progress">
-                    <span class="single-progress-percent">30%</span>
-                    <span class="single-progress-divide">30/100</span>
-                </div>
-            </div>
-            <div class="details-info">
-                <div class="details-bar">
-                    Submission detail
-                </div>
-                <div class="details-frame">
-                    <p class="details-heading">Summary</p>
-                    <ul class="details-list">
-                        <li class="detail-list-item">
-                            <p>Author</p>
-                            <span class="user">Danil Zdoryk</span>
-                        </li>
-                        <li class="detail-list-item">
-                            <p>Problem</p>
-                            <span>OOP 2022 Project Ellen</span>
-                        </li>
-                        <li class="detail-list-item">
-                            <p>Submission ID</p>
-                            <span>f2f7dad4-b85d-48c8-a71a-1e2edcfff601</span>
-                        </li>
-                        <li class="detail-list-item">
-                            <p>Submited on</p>
-                            <span>Dec. 3, 2022, 15:24</span>
-                        </li>
-                        <li class="detail-list-item">
-                            <p>Evaluated on</p>
-                            <span>Dec. 3, 2022, 18:02</span>
-                        </li>
-                        <li class="detail-list-item">
-                            <p>Summary score</p>
-                            <span><b>84.50</b> out of 100 <b>(84.50%)</b></span>
-                        </li>
-                    </ul>
-
-                    <ul class="details-tools">
-                        <li class="tools-item">
-                            <a href="#">Repository</a>
-                        </li>
-                        <li class="tools-item">
-                            <a href="#">Revision</a>
-                        </li>
-                        <li class="tools-item">
-                            <a href="#">
-                                <img src="assets/icons/files.svg" alt="files">
-                                SSH
-                            </a>
-                        </li>
-                        <li class="tools-item">
-                            <a href="#">
-                                <img src="assets/icons/list.svg" alt="list">
-                                SUBMISSION LIST
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <p class="details-heading">TEST CASES</p>
-            <div class="details-case">
-                <div class="details-case-main">
-                    <span>#1</span>
-                    <img src="assets/icons/arrow.svg" alt="arrow">
-                    <p>PROJECT STRUCTURE CHECK</p>
-                </div>
-                <div class="details-imgs">
-                    <img src="assets/icons/minus.svg" alt="minus">
-                    <img src="assets/icons/circle.svg" alt="circle">
-                </div>
-            </div>
+  <section class="section">
+    <div class="container">
+      <div class="details-head">
+        <h2 class="main-title">TOP SECRET</h2>
+        <div class="single-progress">
+          <span class="single-progress-percent">30%</span>
+          <span class="single-progress-divide">30/100</span>
         </div>
-    </section>
+      </div>
+      <div class="details-info">
+        <div class="details-bar">Submission detail</div>
+        <div class="details-frame">
+          <p class="details-heading">Summary</p>
+          <ul class="details-list">
+            <li class="detail-list-item">
+              <p>Author</p>
+              <span class="user">Danil Zdoryk</span>
+            </li>
+            <li class="detail-list-item">
+              <p>Problem</p>
+              <span>OOP 2022 Project Ellen</span>
+            </li>
+            <li class="detail-list-item">
+              <p>Submission ID</p>
+              <span>f2f7dad4-b85d-48c8-a71a-1e2edcfff601</span>
+            </li>
+            <li class="detail-list-item">
+              <p>Submited on</p>
+              <span>Dec. 3, 2022, 15:24</span>
+            </li>
+            <li class="detail-list-item">
+              <p>Evaluated on</p>
+              <span>Dec. 3, 2022, 18:02</span>
+            </li>
+            <li class="detail-list-item">
+              <p>Summary score</p>
+              <span><b>84.50</b> out of 100 <b>(84.50%)</b></span>
+            </li>
+          </ul>
+
+          <ul class="details-tools">
+            <li class="tools-item">
+              <a href="#">Repository</a>
+            </li>
+            <li class="tools-item">
+              <a href="#">Revision</a>
+            </li>
+            <li class="tools-item">
+              <a href="#">
+                <img src="assets/icons/files.svg" alt="files" />
+                SSH
+              </a>
+            </li>
+            <li class="tools-item">
+              <a href="#">
+                <img src="assets/icons/list.svg" alt="list" />
+                SUBMISSION LIST
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="chart-wrapper">
+        <p-chart
+          class="detail-chart"
+          type="bar"
+          [data]="barData"
+          [options]="barOptions"
+          [plugins]="barPlugins"
+          width="100%"
+          height="100%"
+        ></p-chart>
+      </div>
+
+      <h4 class="details-heading">TEST CASES</h4>
+      <div class="details-case">
+        <div class="details-case-main">
+          <span>#1</span>
+          <img src="assets/icons/arrow.svg" alt="arrow" />
+          <p>PROJECT STRUCTURE CHECK</p>
+        </div>
+        <div class="details-imgs">
+          <img src="assets/icons/minus.svg" alt="minus" />
+          <img src="assets/icons/circle.svg" alt="circle" />
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
