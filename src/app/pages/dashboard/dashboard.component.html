@@ -1,51 +1,61 @@
 <main id="main" class="main">
-    <section class="section">
-        <div class="container">
-            <h2 class="title">Current Submissions</h2>
-            <div class="submissions">
-                <div class="submission" [routerLink]="['/problemsets-detail']">
-                    <div class="submission-data">
-                        <div class="submission-top">
-                            <div class="submission-stats">
-                                <h3 class="submission-heading warning">TOP SECRET</h3>
-                                <p class="submission-subtext">10 submissions</p>
-                            </div>
-                            <div class="submission-stats">
-                                <h3 class="submission-heading warning">30%</h3>
-                                <p class="submission-rating">30/100</p>
-                            </div>
-                        </div>
-                        <p class="submission-date">March. 1, 2022, 15:02</p>
-                    </div>
-                    <p class="submission-status warning-bg">Task Complete</p>
-                </div>
-                <div class="submission">
-                    <div class="submission-data">
-                        <div class="submission-top">
-                            <div class="submission-stats">
-                                <h3 class="submission-heading danger">PROBLEMS TO SOLVE</h3>
-                                <p class="submission-subtext">10 submissions</p>
-                            </div>
-                            <div class="submission-stats">
-                                <h3 class="submission-heading danger">0%</h3>
-                                <p class="submission-rating">0/100</p>
-                            </div>
-                        </div>
-                        <p class="submission-date">March. 1, 2022, 18:02</p>
-                    </div>
-                    <p class="submission-status danger-bg">Compilation Error</p>
-                </div>
+  <section class="section">
+    <div class="container">
+      <h2 class="title">Current Submissions</h2>
+      <div class="submissions">
+        <div class="submission" [routerLink]="['/problemsets-detail']">
+          <div class="submission-data">
+            <div class="submission-top">
+              <div class="submission-stats">
+                <h3 class="submission-heading warning">TOP SECRET</h3>
+                <p class="submission-subtext">10 submissions</p>
+              </div>
+              <div class="submission-stats">
+                <h3 class="submission-heading warning">30%</h3>
+                <p class="submission-rating">30/100</p>
+              </div>
             </div>
-            <div class="summary">
-                <div class="history">
-                    <h2 class="title">Last Submissions</h2>
-                    <p class="empty">You don’t have yet</p>
-                </div>
-                <div class="submissions-total">
-                    <h2 class="title">174 submissions</h2>
-                    <img src="assets/icons/book.svg" alt="book">
-                </div>
-            </div>
+            <p class="submission-date">March. 1, 2022, 15:02</p>
+          </div>
+          <p class="submission-status warning-bg">Task Complete</p>
         </div>
-    </section>
+        <div class="submission">
+          <div class="submission-data">
+            <div class="submission-top">
+              <div class="submission-stats">
+                <h3 class="submission-heading danger">PROBLEMS TO SOLVE</h3>
+                <p class="submission-subtext">10 submissions</p>
+              </div>
+              <div class="submission-stats">
+                <h3 class="submission-heading danger">0%</h3>
+                <p class="submission-rating">0/100</p>
+              </div>
+            </div>
+            <p class="submission-date">March. 1, 2022, 18:02</p>
+          </div>
+          <p class="submission-status danger-bg">Compilation Error</p>
+        </div>
+      </div>
+      <div class="summary">
+        <div class="history">
+          <h2 class="title">Last Submissions</h2>
+          <p class="empty">You don’t have yet</p>
+        </div>
+        <div class="submissions-total">
+          <h2 class="title">174 submissions</h2>
+          <img src="assets/icons/book.svg" alt="book" />
+        </div>
+      </div>
+      <div>
+        <p-chart
+          class="line-chart"
+          type="line"
+          [data]="lineData"
+          [options]="lineOptions"
+          width="100%"
+          height="100%"
+        ></p-chart>
+      </div>
+    </div>
+  </section>
 </main>

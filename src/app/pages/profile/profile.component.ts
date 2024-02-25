@@ -13,12 +13,13 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
 export class ProfileComponent implements OnInit {
   leftDoughnutData: any;
   rightDoughnutData: any;
+  barData: any;
+
   doughnutOptions: any;
   barOptions: any;
+
   doughnutPlugins: any;
   barPlugins: any;
-
-  barData: any;
 
   ngOnInit(): void {
     this.leftDoughnutData = {
