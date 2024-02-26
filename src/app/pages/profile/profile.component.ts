@@ -45,26 +45,6 @@ export class ProfileComponent implements OnInit {
       ],
     };
 
-    this.doughnutOptions = {
-      plugins: {
-        legend: {
-          labels: {
-            usePointStyle: true,
-            boxWidth: 13,
-            boxHeight: 13,
-            color: '#303030',
-            font: {
-              size: 25,
-            },
-          },
-          position: 'bottom',
-        },
-        tooltip: {
-          enabled: false,
-        },
-      },
-    };
-
     this.rightDoughnutData = {
       id: 'rightDoughnut',
       labels: ['Earned points'],
@@ -86,6 +66,27 @@ export class ProfileComponent implements OnInit {
           hoverBorderColor: 'rgba(231, 196, 242, 0.4)',
         },
       ],
+    };
+
+    this.doughnutOptions = {
+      plugins: {
+        legend: {
+          labels: {
+            usePointStyle: true,
+            boxWidth: 13,
+            boxHeight: 13,
+            color: '#303030',
+            font: {
+              size: 25,
+            },
+          },
+          position: 'bottom',
+        },
+        tooltip: {
+          enabled: false,
+        },
+      },
+      events: ['mousemove', 'mouseout', 'touchstart', 'touchmove'],
     };
 
     this.doughnutPlugins = [

@@ -41,20 +41,16 @@
           <h2 class="title">Last Submissions</h2>
           <p class="empty">You don’t have yet</p>
         </div>
-        <div class="submissions-total">
-          <h2 class="title">174 submissions</h2>
-          <img src="assets/icons/book.svg" alt="book" />
+        <div class="dashboard-chart">
+          <p-chart
+            class="line-chart"
+            type="line"
+            [data]="lineData"
+            [options]="lineOptions"
+            width="100%"
+            height="100%"
+          ></p-chart>
         </div>
-      </div>
-      <div>
-        <p-chart
-          class="line-chart"
-          type="line"
-          [data]="lineData"
-          [options]="lineOptions"
-          width="100%"
-          height="100%"
-        ></p-chart>
       </div>
     </div>
   </section>

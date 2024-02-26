@@ -22,8 +22,13 @@ export class ProblemsetDetailComponent implements OnInit {
         {
           label: '',
           data: [65, 59, 80, 81, 56, 55, 40],
-          backgroundColor: '#D8E4EC',
           barPercentage: 0.6,
+          backgroundColor: (color: any) => {
+            const highestIndex = this.barData.datasets[0].data.indexOf(
+              Math.max(...this.barData.datasets[0].data)
+            );
+            return color.index === highestIndex ? '#88C4E4' : '#D8E4EC';
+          },
         },
       ],
     };

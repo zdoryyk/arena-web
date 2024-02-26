@@ -2,24 +2,29 @@
   display: flex;
   gap: 40px;
   flex-wrap: wrap;
+  justify-content: center;
   max-width: 1060px;
   margin-bottom: 90px;
 }
 
 .summary {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
-  align-items: start;
-  gap: 54px;
-  margin-bottom: 50px;
+  align-items: center;
+  gap: 46px;
+}
+
+.dashboard-chart {
+  width: 100%;
 }
 
 .history {
   padding: 20px;
   text-align: center;
   border: 1px solid #000;
-  min-height: 615px;
-  width: 626px;
+  min-height: 400px;
+  width: 100%;
 }
 
 .empty {
@@ -28,50 +33,49 @@
   font-size: 25px;
   font-weight: 700;
   display: inline-block;
-  margin-top: 38%;
-}
-
-.submissions-total {
-  border: 1px solid #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 300px;
-  padding: 0 70px;
-  flex-direction: column;
+  margin-top: 20%;
 }
 
 .line-chart {
   display: block !important;
-  height: 400px;
+  height: 200px;
 }
 
-@media (max-width: 992px) {
+@media (min-width: 576px) {
   .history {
-    min-height: 400px;
+    width: 600px;
   }
 
-  .empty {
-    margin-top: 20%;
-  }
-
-  .submissions-total {
-    text-align: center;
-    padding: 0 10px;
-    height: 200px;
+  .dashboard-chart {
+    width: 80%;
   }
 
   .line-chart {
-    height: 200px;
+    height: 270px;
   }
 }
 
-@media (max-width: 1200px) {
-  .submissions {
-    justify-content: center;
+@media (min-width: 992px) {
+  .history {
+    min-height: 615px;
   }
 
+  .empty {
+    margin-top: 38%;
+  }
+
+  .line-chart {
+    height: 320px;
+  }
+}
+
+@media (min-width: 1400px) {
   .summary {
-    justify-content: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .dashboard-chart {
+    width: 50%;
   }
 }
