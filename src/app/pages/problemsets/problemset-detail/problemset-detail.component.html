@@ -75,17 +75,42 @@
       </div>
 
       <h4 class="details-heading">TEST CASES</h4>
-      <div class="details-case">
-        <div class="details-case-main">
-          <span>#1</span>
-          <img src="assets/icons/arrow.svg" alt="arrow" />
-          <p>PROJECT STRUCTURE CHECK</p>
+      <app-test-group [title]="testCaseData[0].title">
+        <div ul-content>
+          <app-test-case
+            [bgColor]="testCaseData[0].cases[0].bgColor"
+            [text]="testCaseData[0].cases[0].text"
+          ></app-test-case>
+          <app-test-case
+            [bgColor]="testCaseData[0].cases[1].bgColor"
+            [text]="testCaseData[0].cases[1].text"
+          ></app-test-case>
+          <app-test-case
+            [bgColor]="testCaseData[0].cases[2].bgColor"
+            [text]="testCaseData[0].cases[2].text"
+          ></app-test-case>
+          <app-test-case
+            [bgColor]="testCaseData[0].cases[3].bgColor"
+            [text]="testCaseData[0].cases[3].text"
+          ></app-test-case>
         </div>
-        <div class="details-imgs">
-          <img src="assets/icons/minus.svg" alt="minus" />
-          <img src="assets/icons/circle.svg" alt="circle" />
+      </app-test-group>
+      <app-test-group [title]="testCaseData[1].title">
+        <div ul-content>
+          <app-test-case
+            [bgColor]="testCaseData[1].cases[0].bgColor"
+            [text]="testCaseData[1].cases[0].text"
+          ></app-test-case>
+          <app-test-case
+            [bgColor]="testCaseData[1].cases[1].bgColor"
+            [text]="testCaseData[1].cases[1].text"
+          ></app-test-case>
+          <app-test-case
+            [bgColor]="testCaseData[1].cases[2].bgColor"
+            [text]="testCaseData[1].cases[2].text"
+          ></app-test-case>
         </div>
-      </div>
+      </app-test-group>
     </div>
   </section>
 </main>

@@ -1,0 +1,32 @@
+.test {
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  background: #aeaeae;
+  border-radius: 15px;
+  color: #fff;
+  font-size: 30px;
+  margin-bottom: 24px;
+}
+
+.test-left {
+  display: flex;
+  gap: 40px;
+}
+
+.test-right {
+  display: flex;
+  gap: 20px;
+}
+
+.test-text {
+  text-transform: uppercase;
+}
+
+.green {
+  background: #8fbe48;
+}
+
+.orange {
+  background: #f57b3b;
+}

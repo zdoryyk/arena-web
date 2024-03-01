@@ -68,7 +68,8 @@
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  margin: 13px 0 23px;
+  margin: 13px 0 50px;
+  text-align: center;
 }
 
 .details-list {

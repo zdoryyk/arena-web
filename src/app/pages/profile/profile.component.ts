@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit {
       labels: ['Last Submission'],
       datasets: [
         {
-          data: [42, 74], // [max: 100, 116 - [1]]
+          data: [99, 17], // [max: 100, 116 - [1]]
           backgroundColor: ['#A9BEF4', 'transparent'],
           cutout: 115,
           borderWidth: 0,
@@ -117,7 +117,7 @@ export class ProfileComponent implements OnInit {
       datasets: [
         {
           label: '',
-          data: [65, 59, 80, 81, 56, 55, 40],
+          data: [5, 59, 80, 41, 56, 35, 40],
           backgroundColor: '#1B59F8',
           borderRadius: 50,
           barPercentage: 0.5,
