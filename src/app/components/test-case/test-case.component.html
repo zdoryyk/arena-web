@@ -1,12 +1,47 @@
-<div class="test {{ bgColor }}">
-  <div class="test-left">
-    <span>#{{ id }}</span>
-    <img src="assets/icons/arrow.svg" alt="arrow" />
-    <p class="test-text">{{ text }}</p>
+<div class="test {{ bgColor }}" (click)="onToggle()">
+  <div class="test-header">
+    <div class="test-left">
+      <span>#{{ orderedNumber }}</span>
+      <img
+        src="assets/icons/arrow.svg"
+        alt="arrow"
+        [style.transform]="'rotate(' + rotationAngle + 'deg)'"
+      />
+      <p class="test-text">{{ text }}</p>
+    </div>
+    <div class="test-right">
+      <div class="test-progress {{ isVisible }}">
+        <span class="{{ isCompetedVisible }}">{{ completed }} / </span
+        ><span>{{ assessment }}</span>
+      </div>
+      <button>
+        <img src="assets/icons/check.svg" alt="check" *ngIf="checkBtnVisible" />
+        <img src="assets/icons/close.svg" alt="close" *ngIf="closeBtnVisible" />
+        <img src="assets/icons/minus.svg" alt="minus" *ngIf="minusBtnVisible" />
+      </button>
+    </div>
   </div>
-  <div class="test-right">
-    <span>{{ quantity }}</span>
-    <img src="assets/icons/check.svg" alt="check" />
-    <img src="assets/icons/close.svg" alt="check" />
+  <div class="test-content" [style.height]="contentHeight">
+    <div class="test-content-inner" #contentDiv>
+      <h5>Text</h5>
+      <p>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quod vitae sed
+        similique laudantium eligendi facere sequi nesciunt molestiae dolor
+        totam adipisci minima, cum accusamus iste aut alias ab, praesentium
+        asperiores?
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quod vitae sed
+        similique laudantium eligendi facere sequi nesciunt molestiae dolor
+        totam adipisci minima, cum accusamus iste aut alias ab, praesentium
+        asperiores?
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quod vitae sed
+        similique laudantium eligendi facere sequi nesciunt molestiae dolor
+        totam adipisci minima, cum accusamus iste aut alias ab, praesentium
+        asperiores?
+      </p>
+    </div>
   </div>
 </div>

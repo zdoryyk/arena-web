@@ -78,6 +78,7 @@
   border-radius: 20px;
   border: 1px solid rgba(0, 0, 0, 0.25);
   width: 500px;
+  cursor: pointer;
 }
 
 .submission-data {

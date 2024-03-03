@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,6 +8,20 @@ import { CommonModule } from '@angular/common';
   templateUrl: './test-group.component.html',
   styleUrl: './test-group.component.css',
 })
-export class TestGroupComponent {
+export class TestGroupComponent implements OnInit {
   @Input() title: string;
+  @Input() totalCompleted: number;
+  @Input() totalAssessment: number;
+
+  isVisible: string = '';
+  isCompetedVisible: string = '';
+
+  ngOnInit(): void {
+    if (this.totalAssessment > 0) {
+      this.isVisible = 'visible';
+    }
+    if (this.totalAssessment === this.totalCompleted) {
+      this.isCompetedVisible = 'hidden';
+    }
+  }
 }

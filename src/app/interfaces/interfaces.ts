@@ -5,8 +5,3 @@ export interface Submission {
   lastSubmitDate: Date;
   completeStatus: Map<String, String>;
 }
-
-export interface TestCase {
-  quantity: number;
-  bgColor: string;
-}

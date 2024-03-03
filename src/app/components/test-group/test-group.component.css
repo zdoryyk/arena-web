@@ -1,1 +1,20 @@
+.test-group-info {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 40px;
+  padding-right: 10px;
+  margin: 50px 0 20px;
+}
 
+.test-group-total {
+  display: none;
+}
+
+.test-group-total.visible {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}

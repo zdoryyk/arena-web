@@ -1,12 +1,20 @@
 .test {
+  margin-bottom: 24px;
+  background: #aeaeae;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #aeaeae;
+  border-radius: 15px;
+  cursor: pointer;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.7);
+}
+
+.test-header {
   padding: 15px 30px;
   display: flex;
   justify-content: space-between;
-  background: #aeaeae;
-  border-radius: 15px;
   color: #fff;
   font-size: 30px;
-  margin-bottom: 24px;
 }
 
 .test-left {
@@ -14,9 +22,22 @@
   gap: 40px;
 }
 
+.test-left img {
+  transition: all 0.5s;
+}
+
 .test-right {
   display: flex;
   gap: 20px;
+}
+
+.test-right button {
+  display: flex;
+  align-items: center;
+}
+
+.rotate {
+  transform: rotate(45deg);
 }
 
 .test-text {
@@ -25,8 +46,38 @@
 
 .green {
   background: #8fbe48;
+  border-color: #8fbe48;
 }
 
 .orange {
   background: #f57b3b;
+  border-color: #f57b3b;
+}
+
+.red {
+  background: #ff0000;
+  border-color: #ff0000;
+}
+
+.test-progress {
+  display: none;
+}
+
+.test-progress.visible {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
+.test-content {
+  background: #fff;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: height 0.4s ease-in-out;
+}
+
+.test-content-inner {
+  padding: 15px 15px 30px;
 }

@@ -75,39 +75,75 @@
       </div>
 
       <h4 class="details-heading">TEST CASES</h4>
-      <app-test-group [title]="testCaseData[0].title">
+      <app-test-group
+        [title]="testCaseData[0].title"
+        [totalCompleted]="testCaseData[0].totalCompleted"
+        [totalAssessment]="testCaseData[0].totalAssessment"
+      >
         <div ul-content>
           <app-test-case
-            [bgColor]="testCaseData[0].cases[0].bgColor"
+            [orderedNumber]="testCaseData[0].cases[0].orderedNumber"
+            [isProcessing]="testCaseData[0].cases[0].isProcessing"
             [text]="testCaseData[0].cases[0].text"
+            [completed]="testCaseData[0].cases[0].completed"
+            [assessment]="testCaseData[0].cases[0].assessment"
+            [isError]="testCaseData[0].cases[0].isError"
           ></app-test-case>
           <app-test-case
-            [bgColor]="testCaseData[0].cases[1].bgColor"
+            [orderedNumber]="testCaseData[0].cases[1].orderedNumber"
+            [isProcessing]="testCaseData[0].cases[1].isProcessing"
             [text]="testCaseData[0].cases[1].text"
+            [completed]="testCaseData[0].cases[1].completed"
+            [assessment]="testCaseData[0].cases[1].assessment"
+            [isError]="testCaseData[0].cases[1].isError"
           ></app-test-case>
           <app-test-case
-            [bgColor]="testCaseData[0].cases[2].bgColor"
+            [orderedNumber]="testCaseData[0].cases[2].orderedNumber"
+            [isProcessing]="testCaseData[0].cases[2].isProcessing"
             [text]="testCaseData[0].cases[2].text"
+            [completed]="testCaseData[0].cases[2].completed"
+            [assessment]="testCaseData[0].cases[2].assessment"
+            [isError]="testCaseData[0].cases[2].isError"
           ></app-test-case>
           <app-test-case
-            [bgColor]="testCaseData[0].cases[3].bgColor"
+            [orderedNumber]="testCaseData[0].cases[3].orderedNumber"
+            [isProcessing]="testCaseData[0].cases[3].isProcessing"
             [text]="testCaseData[0].cases[3].text"
+            [completed]="testCaseData[0].cases[3].completed"
+            [assessment]="testCaseData[0].cases[3].assessment"
+            [isError]="testCaseData[0].cases[3].isError"
           ></app-test-case>
         </div>
       </app-test-group>
-      <app-test-group [title]="testCaseData[1].title">
+      <app-test-group
+        [title]="testCaseData[1].title"
+        [totalCompleted]="testCaseData[1].totalCompleted"
+        [totalAssessment]="testCaseData[1].totalAssessment"
+      >
         <div ul-content>
           <app-test-case
-            [bgColor]="testCaseData[1].cases[0].bgColor"
+            [orderedNumber]="testCaseData[1].cases[0].orderedNumber"
+            [isProcessing]="testCaseData[1].cases[0].isProcessing"
             [text]="testCaseData[1].cases[0].text"
+            [completed]="testCaseData[1].cases[0].completed"
+            [assessment]="testCaseData[1].cases[0].assessment"
+            [isError]="testCaseData[1].cases[0].isError"
           ></app-test-case>
           <app-test-case
-            [bgColor]="testCaseData[1].cases[1].bgColor"
+            [orderedNumber]="testCaseData[1].cases[1].orderedNumber"
+            [isProcessing]="testCaseData[1].cases[1].isProcessing"
             [text]="testCaseData[1].cases[1].text"
+            [completed]="testCaseData[1].cases[1].completed"
+            [assessment]="testCaseData[1].cases[1].assessment"
+            [isError]="testCaseData[1].cases[1].isError"
           ></app-test-case>
           <app-test-case
-            [bgColor]="testCaseData[1].cases[2].bgColor"
+            [orderedNumber]="testCaseData[1].cases[2].orderedNumber"
+            [isProcessing]="testCaseData[1].cases[2].isProcessing"
             [text]="testCaseData[1].cases[2].text"
+            [completed]="testCaseData[1].cases[2].completed"
+            [assessment]="testCaseData[1].cases[2].assessment"
+            [isError]="testCaseData[1].cases[2].isError"
           ></app-test-case>
         </div>
       </app-test-group>

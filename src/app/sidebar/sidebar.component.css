@@ -1,99 +1,101 @@
 #sidebar {
-    display: none;
-    transition: left 0.4s ease;
-    position: fixed;
-    width: 296px;
-    border-right: 1px solid #BBB;
-    padding: 20px 25px;
-    background: #fff;
+  display: none;
+  transition: left 0.4s ease;
+  position: fixed;
+  width: 296px;
+  border-right: 1px solid #bbb;
+  padding: 20px 25px;
+  background: #fff;
+  z-index: 100;
 }
 
 #panel-show {
-    width: 25px;
-    height: 30px;
-    background: url('../../assets/icons/double_arrow.svg') center/contain no-repeat;
-    transform: rotate(-180deg);
-    border: none;
-    margin-bottom: 10px;
-    transform: rotate(180deg);
-    transition: .4s;
+  width: 25px;
+  height: 30px;
+  background: url("../../assets/icons/double_arrow.svg") center/contain
+    no-repeat;
+  transform: rotate(-180deg);
+  border: none;
+  margin-bottom: 10px;
+  transform: rotate(180deg);
+  transition: 0.4s;
 }
 
 .logo-name {
-    font-size: 45px;
+  font-size: 45px;
 }
 
 .profile {
-    display: flex;
-    width: 100%;
-    padding-left: 8px;
-    justify-content: space-between;
-    margin: 32px 0 70px;
+  display: flex;
+  width: 100%;
+  padding-left: 8px;
+  justify-content: space-between;
+  margin: 32px 0 70px;
 }
 
 .profile-person {
-    font-size: 25px;
-    font-weight: 700;
+  font-size: 25px;
+  font-weight: 700;
 }
 
 .list-item {
-    font-size: 25px;
-    margin-bottom: 40px;
-    border-radius: 10px;
-    font-family: Inter;
-    display: flex;
-    justify-content: end;
-    cursor: pointer;
-    transition: .3s;
+  font-size: 25px;
+  margin-bottom: 40px;
+  border-radius: 10px;
+  font-family: Inter;
+  display: flex;
+  justify-content: end;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .list-item.no-hover:hover {
-    color: #292D32;
-    background: #fff;
+  color: #292d32;
+  background: #fff;
 }
 
 .list-item.no-hover:not(:nth-of-type(2)):hover path {
-    fill: #292D32;
+  fill: #292d32;
 }
 
 .list-item.no-hover:nth-of-type(2):hover path {
-    stroke: #292D32;
+  stroke: #292d32;
 }
 
 .list-item:last-of-type {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .list-item:hover {
-    color: white;
-    background: #292D32;
+  color: white;
+  background: #292d32;
 }
 
 .list-item:not(:nth-of-type(2)):hover path {
-    fill: white;
+  fill: white;
 }
 
 .list-item:nth-of-type(2):hover path {
-    stroke: white;
+  stroke: white;
 }
 
 .list-item a {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    gap: 20px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  gap: 20px;
 }
 
 .list-item:not(:nth-child(2)) .active-link path {
-    fill: #3E91FA;
+  fill: #3e91fa;
 }
 
 .list-item:nth-child(2) .active-link path {
-    stroke: #3E91FA;
+  stroke: #3e91fa;
 }
 
 @media (min-width: 768px) {
-    #sidebar {
-        display: block;
-    }
+  #sidebar {
+    display: block;
+  }
 }

@@ -13,83 +13,93 @@ import { TestCaseComponent } from '../../../components/test-case/test-case.compo
   styleUrl: './problemset-detail.component.css',
 })
 export class ProblemsetDetailComponent implements OnInit {
-  // testCaseData = [
-  //   {
-  //     id: 1,
-  //     quantity: null,
-  //     bgColor: null,
-  //     text: 'text',
-  //   },
-  //   {
-  //     id: 2,
-  //     quantity: 0,
-  //     bgColor: 'green',
-  //     text: 'text',
-  //   },
-  //   {
-  //     id: 3,
-  //     quantity: 0,
-  //     bgColor: 'green',
-  //     text: 'text',
-  //   },
-  //   {
-  //     id: 4,
-  //     quantity: 0,
-  //     bgColor: 'orange',
-  //     text: 'text',
-  //   },
-  // ];
+  private _testCaseData = [];
 
-  testCaseData = [
-    {
-      id: 1,
-      title: 'Weapon',
-      cases: [
-        { id: 1, quantity: null, bgColor: null, text: 'text' },
-        {
-          id: 2,
-          quantity: 0,
-          bgColor: 'green',
-          text: 'text',
-        },
-        {
-          id: 3,
-          quantity: 0,
-          bgColor: 'green',
-          text: 'text',
-        },
-        {
-          id: 4,
-          quantity: 0,
-          bgColor: 'orange',
-          text: 'text',
-        },
-      ],
-    },
-    {
-      id: 2,
-      title: 'Action',
-      cases: [
-        { id: 1, quantity: null, bgColor: 'orange', text: 'text' },
-        {
-          id: 2,
-          quantity: 0,
-          bgColor: 'green',
-          text: 'text',
-        },
-        {
-          id: 3,
-          quantity: 0,
-          bgColor: 'green',
-          text: 'text',
-        },
-      ],
-    },
-  ];
+  get testCaseData() {
+    return this._testCaseData
+      .map((parentObject, index) => ({
+        ...parentObject,
+        totalCompleted: this.onGetData('completed', index),
+        totalAssessment: this.onGetData('assessment', index),
+      }))
+      .filter((parentObject) => parentObject.cases.length > 0);
+  }
 
   barData: any;
   barOptions: any;
   barPlugins: any;
+  constructor() {
+    this._testCaseData = [
+      {
+        id: 1,
+        title: 'Actions',
+        cases: [
+          {
+            orderedNumber: 1,
+            isProcessing: true,
+            completed: 7,
+            assessment: 7,
+            text: 'text',
+            isError: false,
+          },
+          {
+            orderedNumber: 2,
+            isProcessing: false,
+            completed: 0,
+            assessment: 2.5,
+            text: 'text',
+            isError: false,
+          },
+          {
+            orderedNumber: 3,
+            isProcessing: true,
+            completed: 0,
+            assessment: 1.5,
+            text: 'text',
+            isError: false,
+          },
+          {
+            orderedNumber: 4,
+            isProcessing: true,
+            completed: 1,
+            assessment: 5,
+            text: 'text',
+            isError: false,
+          },
+        ],
+      },
+      {
+        id: 2,
+        title: 'Behaviours',
+        cases: [
+          {
+            orderedNumber: 5,
+            isProcessing: true,
+            completed: 2,
+            assessment: 4,
+            text: 'text',
+            isError: true,
+          },
+          {
+            orderedNumber: 6,
+            isProcessing: false,
+            completed: 0,
+            assessment: 1,
+            text: 'text',
+            isError: false,
+          },
+          {
+            orderedNumber: 7,
+            isProcessing: true,
+            completed: 4,
+            assessment: 4,
+            text: 'text',
+            isError: false,
+          },
+        ],
+      },
+    ];
+  }
 
   ngOnInit(): void {
     this.barData = {
@@ -166,5 +176,18 @@ export class ProblemsetDetailComponent implements OnInit {
       },
     };
     this.barPlugins = [ChartDataLabels];
+  }
+
+  onGetData(field: string, parentIndex: number) {
+    if (parentIndex < 0 || parentIndex >= this._testCaseData.length) return;
+
+    const parentObject = this._testCaseData[parentIndex];
+    const filteredCases = parentObject.cases.filter(
+      (testCase) => !testCase.isError && testCase.isProcessing
+    );
+
+    return filteredCases.reduce((sum, testCase) => {
+      return sum + testCase[field];
+    }, 0);
   }
 }
