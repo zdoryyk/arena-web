@@ -8,13 +8,16 @@
   cursor: pointer;
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.7);
 }
+.test img {
+  width: 16px;
+}
 
 .test-header {
   padding: 15px 30px;
   display: flex;
   justify-content: space-between;
   color: #fff;
-  font-size: 30px;
+  font-size: 16px;
 }
 
 .test-left {
@@ -80,4 +83,14 @@
 
 .test-content-inner {
   padding: 15px 15px 30px;
+}
+
+@media (min-width: 768px) {
+  .test-header {
+    font-size: 30px;
+  }
+
+  .test img {
+    width: 30px;
+  }
 }
