@@ -5,6 +5,7 @@ import {ProblemsetsComponent} from "./pages/problemsets/problemsets.component";
 import {LoginComponent} from "./pages/login/login.component";
 import {ProblemestsDetailComponent} from "./pages/problemsets/problemests-detail/problemests-detail.component";
 import {ProblemsetDetailComponent} from "./pages/problemsets/problemset-detail/problemset-detail.component";
+import { AdminDashboardComponent } from './pages/admin/admin-dashboard/admin-dashboard.component';
 
 export const routes: Routes = [
   {
@@ -36,4 +37,8 @@ export const routes: Routes = [
     path: 'problemset-detail',
     component: ProblemsetDetailComponent,
   },
+  {
+    path: 'admin-dashboard',
+    component: AdminDashboardComponent
+  }
 ];

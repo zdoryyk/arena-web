@@ -1,0 +1,68 @@
+.cards {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap; 
+  }
+  
+  .card {
+    border: 1px solid rgba(0, 0, 0, 0.852);
+    border-radius: 10px;
+    padding: 20px;
+    width: 400px;
+    height: 200px; 
+    text-align: center;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .card-icon {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .card-title {
+    font-size: 20px;
+    margin: 0;
+  }
+
+  .title {
+    padding-top: 60px; 
+  }
+
+  .problemsets {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-bottom: 90px;
+}
+
+  /* For mobile devices */
+  @media (max-width: 575px) {
+    .cards {
+      flex-direction: column; 
+      gap: 20px; 
+    }
+    .card {
+      width: 100%; 
+     
+    }
+  }
+  
+  /* For tablets and small desktops, you can keep the original flex-row layout or make any adjustments as needed */
+  @media (min-width: 576px) and (max-width: 991px) {
+    /* Your styles for tablets and small desktops here */
+  }
+  
+  /* For larger desktops */
+  @media (min-width: 992px) {
+    /* Your styles for larger desktops here */
+  }
+  
+  @media (min-width: 1400px) {
+    /* Your styles for very large screens here */
+  }
+  
