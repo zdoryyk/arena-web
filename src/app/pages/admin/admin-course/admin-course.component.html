@@ -4,26 +4,22 @@
             <header>
                 <div class="title center">ZAP 2024</div>
                 <div class="buttons">
-                    <button class="btn add">ADD PROBLEMSET</button>
-                    <button class="btn archive">ARCHIVE</button>
+                    <button class="btn add" (click)="openNewProblemsetDialog()">ADD PROBLEMSET</button>
+                    <button class="btn archive" (click)="openConfirmationDialog()">ARCHIVE</button>
                 </div>
             </header>
+            <div class="paginator wrapper">
+                <p-paginator (onPageChange)="onPageChange($event)"[rows]="4" [first]="first" [totalRecords]="groupes.length" [showCurrentPageReport]="true" [alwaysShow]="false"></p-paginator>
+            </div>
             <section class="groups">
-                <div class="group">
-                    <h2>A1</h2>
-                    <p>15 submissions</p>
-                </div>
-                <div class="group">
-                    <h2>A2</h2>
-                    <p>25 submissions</p>
-                </div>
-                <div class="group">
-                    <h2>A3</h2>
-                    <p>30 submissions</p>
-                </div>
-                <div class="group">
-                    <h2>A4</h2>
-                    <p>5 submissions</p>
+                @for (group of paginatedGroups; track $index) {   
+                        <div class="group">
+                            <h2>{{ group.name }}</h2>
+                            <p>{{ group.submissions }} submissions</p>
+                        </div>
+                }
+                <div class="paginator-wrapper">
+                    <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="4" [totalRecords]="groupes.length" [showCurrentPageReport]="true" [alwaysShow]="false"></p-paginator>
                 </div>
             </section>
         </div>   

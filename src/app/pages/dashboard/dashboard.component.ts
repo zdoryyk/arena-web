@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ChartModule } from 'primeng/chart';
+import { SubmissionCardComponent } from '../../components/submission-card/submission-card.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [RouterModule, ChartModule],
+  imports: [RouterModule, ChartModule,SubmissionCardComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
@@ -14,6 +15,17 @@ export class DashboardComponent implements OnInit {
 
   lineOptions: any;
   linePlugins: any;
+  submissionData = {
+    title: 'PROBLEMS TO SOLVE',
+    totalSubmissions: 10,
+    lastEvaluation: 0,
+    lastSubmitDate: new Date('2022-03-01T18:02:00'),
+    completeStatus: new Map<string, string>([
+      ['warning','Task Incompleted'],
+    ])
+  };
+
+
   ngOnInit(): void {
     this.lineData = {
       labels: [

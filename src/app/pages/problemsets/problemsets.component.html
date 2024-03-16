@@ -11,121 +11,30 @@
                     [completeStatus]="submissionData.completeStatus">
                 </app-submission-card>
                 
-                <div class="submission">
-                    <div class="submission-data">
-                        <div class="submission-top">
-                            <div class="submission-stats">
-                                <h3 class="submission-heading danger">PROBLEMS TO SOLVE</h3>
-                                <p class="submission-subtext">10 submissions</p>
-                            </div>
-                            <div class="submission-stats">
-                                <h3 class="submission-heading danger">0%</h3>
-                                <p class="submission-rating">0/100</p>
-                            </div>
-                        </div>
-                        <p class="submission-date">March. 1, 2022, 18:02</p>
-                    </div>
-                    <p class="submission-status danger-bg">Compilation Error</p>
-                </div>
+                <app-submission-card 
+                    [title]="submissionData.title"
+                    [totalSubmissions]="submissionData.totalSubmissions"
+                    [lastEvaluation]="submissionData.lastEvaluation"
+                    [lastSubmitDate]="submissionData.lastSubmitDate"
+                    [completeStatus]="submissionData.completeStatus">
+                </app-submission-card>
             </div>
             <h2 class="title">Closed problems</h2>
             <div class="submissions">
-                <div class="submission">
-                    <div class="submission-data">
-                        <div class="submission-top">
-                            <div class="submission-stats">
-                                <h3 class="submission-heading success">KAREL THE ROBOT</h3>
-                                <p class="submission-subtext">10 submissions</p>
-                            </div>
-                            <div class="submission-stats">
-                                <h3 class="submission-heading success">100%</h3>
-                                <p class="submission-rating">100/100</p>
-                            </div>
-                        </div>
-                        <p class="submission-date">Oct. 16, 2021, 15:02</p>
-                    </div>
-                    <p class="submission-status success-bg">Task Complete</p>
-                </div>
-                <div class="submission">
-                    <div class="submission-data">
-                        <div class="submission-top">
-                            <div class="submission-stats">
-                                <h3 class="submission-heading warning">NUMBERS, ARRAYS</h3>
-                                <p class="submission-subtext">5 submissions</p>
-                            </div>
-                            <div class="submission-stats">
-                                <h3 class="submission-heading warning">50%</h3>
-                                <p class="submission-rating">50/100</p>
-                            </div>
-                        </div>
-                        <p class="submission-date">Oct. 27, 2021, 15:02</p>
-                    </div>
-                    <p class="submission-status warning-bg">Task Incompleted</p>
-                </div>
-                <div class="submission">
-                    <div class="submission-data">
-                        <div class="submission-top">
-                            <div class="submission-stats">
-                                <h3 class="submission-heading warning">BALL SORT PUZZLE</h3>
-                                <p class="submission-subtext">40 submissions</p>
-                            </div>
-                            <div class="submission-stats">
-                                <h3 class="submission-heading warning">90%</h3>
-                                <p class="submission-rating">90/100</p>
-                            </div>
-                        </div>
-                        <p class="submission-date">Dec. 13, 2021, 15:02</p>
-                    </div>
-                    <p class="submission-status warning-bg">Task Incompleted</p>
-                </div>
-                <div class="submission">
-                    <div class="submission-data">
-                        <div class="submission-top">
-                            <div class="submission-stats">
-                                <h3 class="submission-heading success">HANGMAN</h3>
-                                <p class="submission-subtext">10 submissions</p>
-                            </div>
-                            <div class="submission-stats">
-                                <h3 class="submission-heading success">100%</h3>
-                                <p class="submission-rating">100/100</p>
-                            </div>
-                        </div>
-                        <p class="submission-date">Nov. 15, 2021, 15:02</p>
-                    </div>
-                    <p class="submission-status success-bg">Taks completed</p>
-                </div>
-                <div class="submission">
-                    <div class="submission-data">
-                        <div class="submission-top">
-                            <div class="submission-stats">
-                                <h3 class="submission-heading danger">PROBLEMS TO SOLVE</h3>
-                                <p class="submission-subtext">10 submissions</p>
-                            </div>
-                            <div class="submission-stats">
-                                <h3 class="submission-heading danger">0%</h3>
-                                <p class="submission-rating">0/100</p>
-                            </div>
-                        </div>
-                        <p class="submission-date">March. 1, 2022, 18:02</p>
-                    </div>
-                    <p class="submission-status danger-bg">Compilation Error</p>
-                </div>
-                <div class="submission">
-                    <div class="submission-data">
-                        <div class="submission-top">
-                            <div class="submission-stats">
-                                <h3 class="submission-heading danger">PROBLEMS TO SOLVE</h3>
-                                <p class="submission-subtext">10 submissions</p>
-                            </div>
-                            <div class="submission-stats">
-                                <h3 class="submission-heading danger">0%</h3>
-                                <p class="submission-rating">0/100</p>
-                            </div>
-                        </div>
-                        <p class="submission-date">March. 1, 2022, 18:02</p>
-                    </div>
-                    <p class="submission-status danger-bg">Compilation Error</p>
-                </div>
+                <app-submission-card 
+                    [title]="submissionData.title"
+                    [totalSubmissions]="submissionData.totalSubmissions"
+                    [lastEvaluation]="submissionData.lastEvaluation"
+                    [lastSubmitDate]="submissionData.lastSubmitDate"
+                    [completeStatus]="submissionData.completeStatus">
+                </app-submission-card>
+                <app-submission-card 
+                [title]="submissionData.title"
+                [totalSubmissions]="submissionData.totalSubmissions"
+                [lastEvaluation]="submissionData.lastEvaluation"
+                [lastSubmitDate]="submissionData.lastSubmitDate"
+                [completeStatus]="submissionData.completeStatus">
+            </app-submission-card>
             </div>
         </div>
     </section>

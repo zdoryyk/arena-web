@@ -27,11 +27,12 @@ export class NewCourseComponent implements OnInit {
   newCourseSubscription: Subscription = new Subscription;
   existError: boolean = false;
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private newCourseDialogService: NewCourseServiceService,
-    
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<NewCourseComponent>) { }
+    private dialogRef: MatDialogRef<NewCourseComponent>
+    ) { }
 
   ngOnInit(): void {
     this.initializeForm();

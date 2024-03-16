@@ -109,6 +109,7 @@
 }
 
 .case-label {
+  padding-top: 25px;
   font-family: Inter;
   font-size: 20px;
   font-weight: 500;

@@ -20,4 +20,14 @@ export class SubmissionCardComponent implements Submission, OnInit {
   ngOnInit(): void {
     console.log(this.completeStatus.entries());
   }
+
+    submissionData = {
+    title: 'PROBLEMS TO SOLVE',
+    totalSubmissions: 10,
+    lastEvaluation: 0,
+    lastSubmitDate: new Date('2022-03-01T18:02:00'),
+    completeStatus: new Map<string, string>([
+      ['warning','Task Incompleted'],
+    ])
+  };
 }
