@@ -6,6 +6,8 @@ import {LoginComponent} from "./pages/login/login.component";
 import {ProblemestsDetailComponent} from "./pages/problemsets/problemests-detail/problemests-detail.component";
 import {ProblemsetDetailComponent} from "./pages/problemsets/problemset-detail/problemset-detail.component";
 import { AdminDashboardComponent } from './pages/admin/admin-dashboard/admin-dashboard.component';
+import { AdminCoursesComponent } from './pages/admin/admin-courses/admin-courses.component';
+import { AdminCourseComponent } from './pages/admin/admin-course/admin-course.component';
 
 export const routes: Routes = [
   {
@@ -40,5 +42,13 @@ export const routes: Routes = [
   {
     path: 'admin-dashboard',
     component: AdminDashboardComponent
+  },
+  {
+    path: 'admin-courses',
+    component: AdminCoursesComponent
+  },
+  {
+    path: 'admin-course',
+    component: AdminCourseComponent
   }
 ];

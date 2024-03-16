@@ -1,0 +1,37 @@
+<main id="main" class="main">
+    <section class="section">
+        <div class="container">
+            <div class="cards">
+                <div class="card">
+                    <mat-icon class="custom-icon-size" svgIcon="hat"></mat-icon>
+                    <div class="card-title">2 Courses</div>
+                </div>
+                <div class="card">
+                    <mat-icon class="custom-icon-size" svgIcon="book"></mat-icon> 
+                    <div class="card-title">2 Problemsets</div>
+                </div>
+                <div class="card">
+                    <mat-icon class="custom-icon-size" svgIcon="users"></mat-icon>
+                    <div class="card-title">6 Groups</div>
+                </div>
+            </div>
+            <div class="courses-button-container">
+                <h1 class="title">Active Courses</h1>
+                <button class="courses-button">
+                  <mat-icon class="button-icon" svgIcon="button" (click)="openNewCourseDialog()"></mat-icon>
+                </button>
+            </div>     
+            <div class="active courses">
+                <app-admin-dashboard-card [isCourse]="true"></app-admin-dashboard-card>
+                <app-admin-dashboard-card [isCourse]="true"></app-admin-dashboard-card>
+            </div> 
+            <div class="courses-button-container">
+                <h1 class="title">Archived  Courses</h1>
+            </div>   
+            <div class="archieved courses">
+                <app-admin-dashboard-card [isArchievedCourse]="true" [isCourse]="true"></app-admin-dashboard-card>
+                <app-admin-dashboard-card [isArchievedCourse]="true" [isCourse]="true"></app-admin-dashboard-card>
+            </div> 
+        </div>
+    </section>
+</main>

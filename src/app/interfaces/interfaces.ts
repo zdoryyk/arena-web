@@ -19,3 +19,13 @@ export interface AdminProblemsetCard{
   course: String;
   created?: Date;
 }
+
+export interface CourseModel {
+  data: {
+      type: string,
+      attributes: {
+          title: string,
+          description: string
+      }
+  }
+}

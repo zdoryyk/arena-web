@@ -1,0 +1,32 @@
+<h2 mat-dialog-title class="d-flex justify-content-center">New course</h2>
+<div class="alert alert-danger" role="alert" *ngIf="existError">
+  Sorry, but course with this title already exists..
+</div>
+<mat-dialog-content class="m-1">
+  <form [formGroup]="form">
+      
+    <div class="row">
+      <mat-form-field class="w-100">
+        <mat-label>Title</mat-label>
+        <input type="text" matInput formControlName="title" placeholder="Course title">
+        <mat-error *ngIf="form.controls.title.hasError('required')">
+          Title is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field class="w-100">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" placeholder="Course description"></textarea>
+      </mat-form-field>
+    </div>
+    
+  </form>
+  
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <!-- <button type="submit" class="add-button" [mat-dialog-close]="true" mat-raised-button color="primary">Add</button> -->
+  <button class="add-button" mat-raised-button color="primary" [disabled]="!form.valid" (click)="submitForm()">Add</button>
+</mat-dialog-actions>

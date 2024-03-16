@@ -1,0 +1,37 @@
+.title.center {
+    text-align: center;
+}
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-around; 
+}
+
+.btn {
+    margin: 5px; 
+}
+
+.btn.add {
+    background-color: #8FBE48; 
+    color: white;
+    padding: 10px 20px;
+    font-size: 24px;
+    cursor: pointer; 
+    border-radius: 22px;
+    width: 300px;
+    height: 100px;
+}
+
+.btn.archive {
+    background-color: #797979; 
+    color: white;
+    padding: 10px 20px;
+    font-size: 24px;
+    cursor: pointer; 
+    border-radius: 22px;
+    width: 300px;
+    height: 100px;
+}
+
+/* Стили для других кнопок, если необходимо */
+

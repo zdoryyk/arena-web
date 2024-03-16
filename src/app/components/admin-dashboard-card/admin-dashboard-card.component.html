@@ -13,8 +13,32 @@
         <p class="card-date">31.1.21</p>
         <!-- <p class="card-date">{{created | date : 'MMM. d, y, HH:mm'}}</p> -->
     </div>
-    <p class="card-status blue-bg">Detail</p>
+    <div class="card-detail-container blue-bg">
+        <!-- <mat-icon class="custom-icon-size" svgIcon="detail"></mat-icon> -->
+        <p class="card-status">DETAIL</p>
+      </div>
 </div>
+}
+@else if (isCourse && isArchievedCourse) {
+    <div class="card" [routerLink]="['/problemsets-detail']">
+        <div class="card-data">
+            <div class="card-top">
+                <div class="card-stats">
+                    <h3 class="card-heading-grey">TOP SECRET</h3>
+                    <div class="card-subtexts"> 
+                        <p class="card-subtext">ELLEN 2024</p>
+                        <p class="card-subtext-groups">8 groups</p>
+                    </div>
+                </div>
+            </div>
+            <p class="card-date">31.1.21</p>
+            <!-- <p class="card-date">{{created | date : 'MMM. d, y, HH:mm'}}</p> -->
+        </div>
+        <div class="card-detail-container grey-bg">
+            <!-- <mat-icon class="custom-icon-size" svgIcon="detail"></mat-icon> -->
+            <p class="card-status">DETAIL</p>
+          </div>
+    </div>
 }
 @else{
     <div class="card" [routerLink]="['/problemsets-detail']">
@@ -31,6 +55,9 @@
             <p class="card-date">31.1.21</p>
             <!-- <p class="card-date">{{created | date : 'MMM. d, y, HH:mm'}}</p> -->
         </div>
-        <p class="card-status green-bg">Detail</p>
+        <div class="card-detail-container green-bg">
+            <!-- <mat-icon class="custom-icon-size" svgIcon="detail"></mat-icon> -->
+            <p class="card-status">DETAIL</p>
+          </div>
     </div>
 }

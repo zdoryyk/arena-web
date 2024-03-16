@@ -1,0 +1,33 @@
+::ng-deep .mat-focused .mat-form-field-label {
+    color: #1E88E5 !important;
+}
+  
+::ng-deep.mat-form-field-ripple {
+background-color: #1E88E5 !important;;
+}
+
+.add-button {
+    background-color: #93DA7A;
+}
+
+::ng-deep .cdk-overlay-pane {
+    width: 40% !important;
+}
+
+@media only screen and (max-width: 1024px) {
+    ::ng-deep .cdk-overlay-pane {
+        width: 50% !important;
+    }       
+}
+
+@media only screen and (max-width: 768px) {
+    ::ng-deep .cdk-overlay-pane {
+        width: 70% !important;
+    }       
+}
+
+@media only screen and (max-width: 425px) {
+    ::ng-deep .cdk-overlay-pane {
+        width: 90% !important;
+    }       
+}

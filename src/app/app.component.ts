@@ -6,6 +6,7 @@ import {SidebarComponent} from "./sidebar/sidebar.component";
 import {HeaderComponent} from "./components/header/header.component";
 import { MobileMenuComponent } from './components/mobile-menu/mobile-menu.component';
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -17,5 +18,6 @@ export class AppComponent {
   title = 'arena';
   isLoggedIn = true;
   constructor(private router: Router){
+    
   }
 }

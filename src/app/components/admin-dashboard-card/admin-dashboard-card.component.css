@@ -2,6 +2,7 @@
     border-radius: 20px;
     border: 1px solid rgba(0, 0, 0, 0.25);
     width: 500px;
+    height: 200px;
     cursor: pointer;
   }
   
@@ -28,6 +29,13 @@
     font-size: 30px;
     font-weight: 700;
     color: #4D93FD;
+  }
+  
+  .card-heading-grey {
+    font-family: Inter;
+    font-size: 30px;
+    font-weight: 700;
+    color: #A0A0A0;
   }
 
   .card-subtexts {
@@ -74,6 +82,32 @@
     color: #fff;
   }
 
+
+
+  .card-detail-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0px 20px;
+    border-radius: 13px;
+    background: #4D93FD;
+    color: #fff;
+    text-align: center;
+  }
+
+  .custom-icon-size {
+    width: 24px; /* Примерный размер */
+    height: 24px; /* Примерный размер */
+    vertical-align: middle; /* Помогает выравнивать иконки и текст */
+  }
+  
+  .card-status {
+    margin: 0; /* Убираем внешние отступы */
+    display: flex; /* Помогает с выравниванием, если внутри несколько строк текста */
+    align-items: center; /* Выравниваем текст по центру по вертикали */
+    vertical-align: middle; /* Для дополнительной коррекции выравнивания */
+  }
+
   .blue-bg {
     background: #4D93FD;
   }
@@ -81,6 +115,11 @@
   .green-bg {
     background: #8FBE48;
   }
+
+  .grey-bg {
+    background: #A0A0A0;;
+  }
+  
   
 
   @media (max-width: 576px) {
