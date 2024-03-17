@@ -11,11 +11,13 @@ import { CourseModel, CourseModelGet, GroupPaginationModel } from '../../../inte
 import { NewProblemsetComponent } from '../../../components/dialogs/new-problemset/new-problemset.component';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { ConfirmDialogComponent } from '../../../components/dialogs/confirm-dialog/confirm-dialog.component';
+import { ChartModule } from 'primeng/chart';
+import { GroupDetailComponent } from '../../../components/dialogs/group-detail/group-detail.component';
 
 @Component({
   selector: 'app-admin-course',
   standalone: true,
-  imports: [RouterModule, DatePipe, CommonModule,AdminDashboardCardComponent,MatIconModule,HttpClientModule,PaginatorModule,],
+  imports: [RouterModule, DatePipe, CommonModule,AdminDashboardCardComponent,MatIconModule,HttpClientModule,PaginatorModule, ChartModule],
   providers:[],
   templateUrl: './admin-course.component.html',
   styleUrl: './admin-course.component.css'
@@ -23,6 +25,9 @@ import { ConfirmDialogComponent } from '../../../components/dialogs/confirm-dial
 export class AdminCourseComponent implements OnInit{
   loading = false;
   first: number = 0;
+  lineData: any;
+  lineOptions: any;
+  linePlugins: any;
   
   course: CourseModelGet = {
     id: "",
@@ -67,6 +72,57 @@ export class AdminCourseComponent implements OnInit{
 
   ngOnInit(): void {
     this.updatePaginatedGroups(0,4);
+
+    this.lineData = {
+      labels: [
+        '00:00',
+        '01:00',
+        '02:00',
+        '03:00',
+        '04:00',
+        '05:00',
+        '06:00',
+        '07:00',
+        '08:00',
+      ],
+      datasets: [
+        {
+          label: 'TOP SECRET',
+          data: [0, 39, 55, 81, 58, 75, 40, 9, 74],
+          fill: false,
+          borderColor: '#F87C3C',
+          pointBackgroundColor: '#F87C3C',
+        },
+      ],
+    };
+
+    this.lineOptions = {
+      plugins: {
+        legend: {
+          align: 'end',
+          labels: {
+            usePointStyle: true,
+            pointStyleWidth: 10,
+          },
+        },
+      },
+    };
+  }
+
+  test(){
+    var _popup =  this.dialog.open(GroupDetailComponent,{
+      enterAnimationDuration: '1000ms',
+      exitAnimationDuration:'500ms',
+      width: '40%',
+     
+      data: {
+        title: 'Title'
+      }
+     })
+  
+     _popup.afterClosed().subscribe(item => {
+      console.log(item);
+     })
   }
 
   openNewProblemsetDialog() {

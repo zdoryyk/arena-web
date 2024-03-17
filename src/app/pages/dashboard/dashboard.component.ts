@@ -12,7 +12,6 @@ import { SubmissionCardComponent } from '../../components/submission-card/submis
 })
 export class DashboardComponent implements OnInit {
   lineData: any;
-
   lineOptions: any;
   linePlugins: any;
   submissionData = {

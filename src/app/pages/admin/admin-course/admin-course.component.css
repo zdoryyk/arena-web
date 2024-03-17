@@ -65,11 +65,17 @@
     margin: 10px auto;
     height: 100px;
     box-sizing: border-box;
+    cursor: pointer;
 }
 .group h2 {
     font-size: 25px; 
     margin: 0;
 }
+
+.dashboard-chart {
+    width: 100%;
+    height: 30%;
+  }
 
 /* Стили для мобильных устройств */
 /* Стили для мобильных устройств */
@@ -115,6 +121,10 @@
         width: 100%; /* Make paginator full width on mobile screens */
         justify-content: center; /* Center paginator buttons if they don't fill the width */
     }
+
+    .dashboard-chart {
+        width: 100%;
+      }
 }
 
   
@@ -138,11 +148,15 @@
   /* Стили для десктопов */
   @media (min-width: 1025px) {
     .group {
-      width: 1200px; /* Фиксированная ширина для больших экранов */
+      width: 1200px; 
     }
     
     .groups-title {
-      margin-left: 190px; /* Отступ слева для выравнивания с остальными элементами */
+      margin-left: 190px; 
     }
+
+    .dashboard-chart {
+        width: 97%;
+      }
   }
   
