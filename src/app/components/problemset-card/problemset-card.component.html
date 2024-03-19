@@ -1,0 +1,19 @@
+<div class="card" (click)="navigateToDetail()">
+    <div class="card-data">
+        <div class="card-top">
+            <div class="card-stats">
+                <h3 class="card-heading-blue">{{title}}</h3>
+                <div class="card-subtexts"> 
+                    <p class="card-subtext">Course name</p>
+                    <p class="card-subtext-groups">{{ groups }} groups</p>
+                </div>
+            </div>
+        </div>
+        <p class="card-date">{{created | date : 'MMM. d, y, HH:mm'}}</p>
+    </div>
+    <div class="card-detail-container blue-bg">
+        <!-- <mat-icon class="custom-icon-size" svgIcon="detail"></mat-icon> -->
+        <p class="card-status">DETAIL</p>
+      </div>
+</div>
+

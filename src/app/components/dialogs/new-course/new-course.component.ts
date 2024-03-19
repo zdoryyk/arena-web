@@ -80,6 +80,7 @@ export class NewCourseComponent implements OnInit {
         }
       };
       this.newCourseSubscription = this.newCourseDialogService.addNewCourse(newCourse).subscribe(result => {
+        console.log(result);
         this.dialogRef.close(result);
       }), (error) => {
         console.log("This is error:" + error)

@@ -1,43 +1,45 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { AdminCourseCard, AdminProblemsetCard } from '../../interfaces/interfaces';
+import { Component, Input } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-admin-dashboard-card',
+  selector: 'app-problemset-card',
   standalone: true,
   imports: [RouterModule, DatePipe, CommonModule,MatIconModule,HttpClientModule],
-  templateUrl: './admin-dashboard-card.component.html',
-  styleUrl: './admin-dashboard-card.component.css'
+  templateUrl: './problemset-card.component.html',
+  styleUrl: './problemset-card.component.css'
 })
-export class AdminDashboardCardComponent implements AdminCourseCard,AdminProblemsetCard,OnInit {
+export class ProblemsetCardComponent {
 
+  @Input() id: string;
   @Input() title: string;
-  @Input() course: String;
   @Input() groups: number;
   @Input() problemsets?: number;
   @Input() created: Date;
-  @Input() isCourse: boolean;
-  @Input() isArchievedCourse: boolean;
 
   constructor(
     private matIconRegistery: MatIconRegistry,
     private domSanitizer: DomSanitizer,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
   ){
     // this.matIconRegistery.addSvgIcon(
     //   'detail',
     //   this.domSanitizer
     //   .bypassSecurityTrustResourceUrl('../assets/icons/detail.svg'),
-    // )
+    // )    
   }
   
   ngOnInit(): void {
     
   }
 
-
+  navigateToDetail(): void {
+    console.log(this.id);
+    this.router.navigate(['/admin-course', this.id]);
+  }
 
 }

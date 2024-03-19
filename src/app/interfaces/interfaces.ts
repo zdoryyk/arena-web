@@ -36,30 +36,12 @@ export interface CourseModelGet {
   archived: boolean,
   description: string,
   groups: any[],
-  problemsets: any[]
+  problemsets: any[],
 }
 
-export interface ProblemsetModel {
-  data: {
-      type: string,
-      attributes: {
-          description: string,
-          pid: string,
-          title: string,
-          max_score: number,
-          date_start: string,
-          date_finish: string
-      },
-      relationships: {
-          course: {
-              data: {
-                  type: string,
-                  id: string
-              }
-          }
-      }
-  }
-}
+ 
+
+
 
 export interface GroupPaginationModel {
   name: string,

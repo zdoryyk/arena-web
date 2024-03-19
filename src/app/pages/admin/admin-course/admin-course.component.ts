@@ -1,63 +1,51 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { AdminDashboardCardComponent } from '../../../components/admin-dashboard-card/admin-dashboard-card.component';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { PaginatorModule } from 'primeng/paginator';
-import { CourseModel, CourseModelGet, GroupPaginationModel } from '../../../interfaces/interfaces';
+import { GroupPaginationModel } from '../../../interfaces/interfaces';
 import { NewProblemsetComponent } from '../../../components/dialogs/new-problemset/new-problemset.component';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { ConfirmDialogComponent } from '../../../components/dialogs/confirm-dialog/confirm-dialog.component';
 import { ChartModule } from 'primeng/chart';
 import { GroupDetailComponent } from '../../../components/dialogs/group-detail/group-detail.component';
+import { Course } from '../../../interfaces/course';
+import { Subscription } from 'rxjs';
+import { CourseDetailService } from '../../../services/course-detail.service';
+import { group, log } from 'console';
+import { Group, GroupResponse } from '../../../interfaces/group';
 
 @Component({
   selector: 'app-admin-course',
   standalone: true,
-  imports: [RouterModule, DatePipe, CommonModule,AdminDashboardCardComponent,MatIconModule,HttpClientModule,PaginatorModule, ChartModule],
+  imports: [RouterModule, DatePipe, CommonModule,MatIconModule,HttpClientModule,PaginatorModule, ChartModule],
   providers:[],
   templateUrl: './admin-course.component.html',
   styleUrl: './admin-course.component.css'
 })
 export class AdminCourseComponent implements OnInit{
+
+  course: Course;
+  groups: Group[] = [];
+  paginatedGroups: Group[] = [];
   loading = false;
   first: number = 0;
+  rows: number = 4;
   lineData: any;
   lineOptions: any;
   linePlugins: any;
-  
-  course: CourseModelGet = {
-    id: "",
-    name: "",
-    archived: false,
-    description: "",
-    groups: [],
-    problemsets: []
-  };
-
-  groupes: GroupPaginationModel[] = [
-    { name: 'A1', submissions: 15 },
-    { name: 'A2', submissions: 25 },
-    { name: 'A3', submissions: 30 },
-    { name: 'A4', submissions: 20 },
-    { name: 'A5', submissions: 18 },
-    { name: 'A6', submissions: 22 },
-    { name: 'A7', submissions: 27 },
-    { name: 'A8', submissions: 13 },
-    { name: 'A9', submissions: 9 },
-    { name: 'A10', submissions: 14 },
-    { name: 'A11', submissions: 17 },
-    { name: 'A12', submissions: 11 },
-    { name: 'A13', submissions: 12 },
-    { name: 'A14', submissions: 16 },
-  ];
-
-  paginatedGroups: GroupPaginationModel[] = [];
-
+  private routeSub: Subscription = new Subscription;
+  private courseSubscription: Subscription = new Subscription;
+  private courseGroupsSubscription: Subscription = new Subscription;
+  private courseProblemsetsSubscription: Subscription = new Subscription;
+  private userSubscription: Subscription = new Subscription;
+  private problemsetStatSubscription: Subscription = new Subscription;
   constructor(
+    private courseDetailService: CourseDetailService,
+    private activeRoute: ActivatedRoute,
     private matIconRegistery: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     public dialog: MatDialog,
@@ -71,8 +59,47 @@ export class AdminCourseComponent implements OnInit{
 
 
   ngOnInit(): void {
-    this.updatePaginatedGroups(0,4);
+    this.course = {
+      type: '',
+      id: '', 
+      attributes: {
+        title: '',
+        description: '',
+        archived: false,
+      },
+      relationships: {
+        problemsets: {
+          data: [], 
+        },
+        groups: {
+          data: [], 
+        },
+      },
+      links: {
+        self: '', 
+      },
+    };
+    this.setChart();
+    this.course.id = this.activeRoute.snapshot.paramMap.get('id');
+    this.courseSubscription = this.courseDetailService.getCourse(this.course.id).subscribe(result => {
+      this.course.attributes.title = result.data.attributes.title;
+      this.course.attributes.archived = result.data.attributes.archived;
+      this.course.attributes.description = result.data.attributes.description;
+      this.courseDetailService.getGroups(this.course.id).subscribe({
+        next: (response) => {
+          this.groups = response.data;
+          console.log(this.first);
+          this.updatePaginatedGroups();
+        },
+        error: (error) => {
+          console.error('Произошла ошибка при получении групп:', error);
+        }
+      });
+    });
+  }
 
+
+  setChart(){
     this.lineData = {
       labels: [
         '00:00',
@@ -114,7 +141,6 @@ export class AdminCourseComponent implements OnInit{
       enterAnimationDuration: '1000ms',
       exitAnimationDuration:'500ms',
       width: '40%',
-     
       data: {
         title: 'Title'
       }
@@ -157,16 +183,17 @@ export class AdminCourseComponent implements OnInit{
      })
     }
 
-   onPageChange(event: any) {
-    this.first = event.first;
-    this.updatePaginatedGroups(event.first, event.rows);
-
-  }
-
-  private updatePaginatedGroups(startIndex: number, pageSize: number) {
-    this.paginatedGroups = this.groupes.slice(startIndex, startIndex + pageSize);
-  }
-
+    updatePaginatedGroups(): void {
+      this.paginatedGroups = this.groups.slice(this.first, this.first + this.rows);
+      console.log(this.paginatedGroups);
+      
+    }
+  
+    onPageChange(event: any): void {
+      this.first = event.first;
+      console.log(this.first);
+      this.updatePaginatedGroups();
+    }
   
 
 }

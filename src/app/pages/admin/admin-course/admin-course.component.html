@@ -2,24 +2,24 @@
     <section class="section">
         <div class="container">
             <header>
-                <div class="title center">ZAP 2024</div>
+                <div class="title center">{{this.course.attributes.title}}</div>
                 <div class="buttons">
                     <button class="btn add" (click)="openNewProblemsetDialog()">ADD PROBLEMSET</button>
                     <button class="btn archive" (click)="openConfirmationDialog()">ARCHIVE</button>
                 </div>
             </header>
             <div class="paginator wrapper">
-                <p-paginator (onPageChange)="onPageChange($event)"[rows]="4" [first]="first" [totalRecords]="groupes.length" [showCurrentPageReport]="true" [alwaysShow]="false"></p-paginator>
+                <p-paginator (onPageChange)="onPageChange($event)" [rows]="rows" [first]="first" [totalRecords]="groups.length" [showCurrentPageReport]="true" [alwaysShow]="false"></p-paginator>
             </div>
             <section class="groups">
                 @for (group of paginatedGroups; track $index) {   
                         <div class="group"(click)="test()" >
-                            <h2>{{ group.name }}</h2>
-                            <p>{{ group.submissions }} submissions</p>
+                            <h2>{{ group.attributes.name }}</h2>
+                            <p>{{group.relationships.students.data.length}} students</p>
                         </div>
                 }
                 <div class="paginator-wrapper">
-                    <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="4" [totalRecords]="groupes.length" [showCurrentPageReport]="true" [alwaysShow]="false"></p-paginator>
+                    <p-paginator (onPageChange)="onPageChange($event)" [rows]="rows" [first]="first" [totalRecords]="groups.length" [showCurrentPageReport]="true" [alwaysShow]="false"></p-paginator>
                 </div>
             </section>
             <div class="dashboard-chart">

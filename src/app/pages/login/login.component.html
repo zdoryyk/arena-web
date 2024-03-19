@@ -17,7 +17,7 @@
                             <input type="password" id="password" name="password" class="form-control">
                         </div>
                         <button type="submit" class="btn btn-primary form-btn" [routerLink]="['/dashboard']">Log in</button>
-                        <button type="button" class="btn btn-tuke">Login via TUKE</button>
+                        <button type="button" class="btn btn-tuke" (click)="loginViaThirdPartyService()" > Unique sign in TUKE (KPI SSO)</button>
                     </form>
                 </div>
             </div>

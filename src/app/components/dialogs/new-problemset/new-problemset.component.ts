@@ -43,13 +43,19 @@ export class NewProblemsetComponent {
     this.range = this.fb.group({
       start: [null, Validators.required],
       end: [null, Validators.required],
+      startTime: [null, Validators.required], // Добавьте это
+      endTime: [null, Validators.required], // И это
     }, { validators: dateRangeValidator });
 
     this.form = this.fb.group({
+      indentifier: ['',Validators.required],
       title: ['', Validators.required],
       maxScore: [0, [Validators.required, Validators.min(1)]], 
       description: [''],
-      range: this.range
+      range: this.range,
+      maxNumberOfEvaluation: [null],
+      minutesBetweenEvalRounds: [null],
+      revisionNumberOfTheTests: [null],
     });
   }
 

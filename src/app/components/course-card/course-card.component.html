@@ -1,0 +1,19 @@
+@if(!isArchieved){
+    <div class="card" [routerLink]="['/admin-course',id]">
+        <div class="card-data">
+            <div class="card-top">
+                <div class="card-stats">
+                    <h3 class="card-heading-green">{{title}}</h3>
+                    <div class="card-subtexts"> 
+                        <p class="card-subtext">{{problemsets}} problemsets</p>
+                        <p class="card-subtext-groups">{{groups}} groups</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-detail-container green-bg">
+            <!-- <mat-icon class="custom-icon-size" svgIcon="detail"></mat-icon> -->
+            <p class="card-status">DETAIL</p>
+          </div>
+    </div>
+}

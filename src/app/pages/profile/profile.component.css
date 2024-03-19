@@ -17,7 +17,8 @@
 }
 
 .profile-content {
-  box-shadow: 3px 3px 9px 0px rgba(190, 190, 190, 0.13);
+  box-shadow: 5px 5px 15px 0px rgba(190, 190, 190, 0.25); /* Pronounced shadow */
+  border: 1px solid #ccc; /* Added border */
   border-radius: 20px;
   margin-bottom: 70px;
   padding: 16px 20px;

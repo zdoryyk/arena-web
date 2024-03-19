@@ -1,25 +1,42 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, TransferState, makeStateKey } from '@angular/core';
 import { AdminCourseCard, AdminProblemsetCard } from '../../../interfaces/interfaces';
 import { CommonModule, DatePipe } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { AdminDashboardCardComponent } from '../../../components/admin-dashboard-card/admin-dashboard-card.component';
+import { Router, RouterModule } from '@angular/router';
 import { HttpClient, HttpClientModule, HttpContext, HttpParamsOptions } from '@angular/common/http';
 import {MatIconModule, MatIconRegistry} from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { CourseManagerService } from '../../../services/course-manager.service';
+import { Course } from '../../../interfaces/course';
+import { Problemset } from '../../../interfaces/problemset';
+import { CourseCardComponent } from '../../../components/course-card/course-card.component';
+import { ProblemsetCardComponent } from '../../../components/problemset-card/problemset-card.component';
+import { log } from 'console';
+import { ArcBorderRadius } from 'chart.js';
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
   providers:[HttpClient],
-  imports: [RouterModule, DatePipe, CommonModule,AdminDashboardCardComponent,MatIconModule,HttpClientModule],
+  imports: [RouterModule, DatePipe, CommonModule,MatIconModule,HttpClientModule,CourseCardComponent,ProblemsetCardComponent],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.css'
 })
 export class AdminDashboardComponent implements OnInit {
 
+  courses: Course[] = [];
+  archivedCourses: Course[] = [];
+  problemsets: Problemset[] = [];
+  loading: boolean = true;
+  isLecturer: boolean = false;
+  totalSubmissions = 0;
+  totalGroups = 0;
+
+
   constructor(
     private matIconRegistery: MatIconRegistry,
     private domSanitizer: DomSanitizer,
+    private coursesManagerService: CourseManagerService,
+    private transferState: TransferState,
   ){
     this.matIconRegistery.addSvgIcon(
       'book',
@@ -39,7 +56,41 @@ export class AdminDashboardComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    
+    if(this.transferState.hasKey(makeStateKey('activeCourses'))){
+      this.courses = this.transferState.get(makeStateKey('activeCourses'),[]);
+      this.archivedCourses =  this.transferState.get(makeStateKey('archievedCourses'),[]);
+      this.totalGroups = this.transferState.get(makeStateKey('totalGroups'),0);
+      this.totalSubmissions = this.transferState.get(makeStateKey('totalSubmissions'),0);
+      this.problemsets = this.transferState.get<Problemset[]>(makeStateKey('problemsets'),[]);
+      console.log(this.problemsets);
+    }else{
+      this.initializeData();
+      // console.log(this.transferState.get(makeStateKey('activeCourses'),[]));
+      // console.log(this.transferState.get(makeStateKey('archievedCourses'),[]));  
+    } 
+  }
+
+  async initializeData(){
+    (async () => {
+      try {
+        const { courses, archivedCourses, isLecturer,totalSubmissions,totalGroups} = await this.coursesManagerService.initializeUserData();
+        this.courses = courses;
+        this.archivedCourses = archivedCourses;
+        this.isLecturer = isLecturer;
+        this.totalSubmissions = totalSubmissions;
+        this.totalGroups = totalGroups;
+        this.problemsets = await this.coursesManagerService.getAllProblemsets(courses);
+      } catch (error) {
+        console.error('Error initializing data', error);
+      } finally {
+        this.loading = false;
+        this.transferState.set<Course[]>(makeStateKey('activeCourses'),this.courses);
+        this.transferState.set<Course[]>(makeStateKey('archievedCourses'),this.archivedCourses);
+        this.transferState.set<number>(makeStateKey('totalSubmissions'),this.totalSubmissions);
+        this.transferState.set<number>(makeStateKey('totalGroups'),this.totalGroups);
+        this.transferState.set<Problemset[]>(makeStateKey('problemsets'),this.problemsets);
+      }
+    })();
   }
 
 }

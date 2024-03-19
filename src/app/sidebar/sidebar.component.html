@@ -8,7 +8,7 @@
     </div>
 
     <div class="profile" style="padding-right: 5px;">
-        <span class="profile-person">Zdoryk Danil</span>
+        <span class="profile-person">{{fullName}}</span>
         <a><img src="assets/icons/logout.svg" class="img-fluid" alt="logo" (click)="onLogout()"></a>
     </div>
 
@@ -16,7 +16,7 @@
         <nav class="col-xlg-2 sidebar">
             <ul>
                 <li class="list-item">
-                    <a [routerLink]="['/dashboard']" routerLinkActive="active-link" (click)="onToggle()">
+                    <a [routerLink]="dynamicRouteDashboard" routerLinkActive="active" (click)="onToggle()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
                             <path
                                 d="M10.2084 15.6771H7.29175C3.76258 15.6771 1.823 13.7375 1.823 10.2083V7.29167C1.823 3.76251 3.76258 1.82292 7.29175 1.82292H10.2084C13.7376 1.82292 15.6772 3.76251 15.6772 7.29167V10.2083C15.6772 13.7375 13.7376 15.6771 10.2084 15.6771ZM7.29175 4.01042C4.98758 4.01042 4.0105 4.98751 4.0105 7.29167V10.2083C4.0105 12.5125 4.98758 13.4896 7.29175 13.4896H10.2084C12.5126 13.4896 13.4897 12.5125 13.4897 10.2083V7.29167C13.4897 4.98751 12.5126 4.01042 10.2084 4.01042H7.29175Z"
@@ -35,7 +35,7 @@
                     </a>
                 </li>
                 <li class="list-item">
-                    <a [routerLink]="['/problemsets']" routerLinkActive="active-link" (click)="onToggle()">
+                    <a [routerLink]="dynamicRouteCoursesOrProblemsets" routerLinkActive="active" (click)="onToggle()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
                             <path
                                 d="M13.125 18.9583C12.1625 19.4396 11.3605 20.1542 10.7625 21.0438C10.4271 21.5542 10.4271 22.1958 10.7625 22.7063C11.3605 23.5958 12.1625 24.3104 13.125 24.7917"
@@ -49,38 +49,39 @@
                             <path d="M3.2522 11.6812L31.2814 11.6667" stroke="#292D32" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
-                        Problemsets
+                        @if (isTeacher) {Courses} @else {Problemsets}
                     </a>
                 </li>
-                <li class="list-item">
-                    <a [routerLink]="['/profile']" routerLinkActive="active-link" (click)="onToggle()">
-                        <svg fill="#000000" width="35px" height="35px" viewBox="0 0 32 32"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                            <g id="SVGRepo_iconCarrier">
-                                <title></title>
-                                <g id="about">
-                                    <path d="M16,16A7,7,0,1,0,9,9,7,7,0,0,0,16,16ZM16,4a5,5,0,1,1-5,5A5,5,0,0,1,16,4Z">
-                                    </path>
-                                    <path
-                                        d="M17,18H15A11,11,0,0,0,4,29a1,1,0,0,0,1,1H27a1,1,0,0,0,1-1A11,11,0,0,0,17,18ZM6.06,28A9,9,0,0,1,15,20h2a9,9,0,0,1,8.94,8Z">
-                                    </path>
+                @if(!isTeacher){
+                    <li class="list-item">
+                        <a [routerLink]="['/profile']" routerLinkActive="active" (click)="onToggle()">
+                            <svg fill="#000000" width="35px" height="35px" viewBox="0 0 32 32"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <title></title>
+                                    <g id="about">
+                                        <path d="M16,16A7,7,0,1,0,9,9,7,7,0,0,0,16,16ZM16,4a5,5,0,1,1-5,5A5,5,0,0,1,16,4Z">
+                                        </path>
+                                        <path
+                                            d="M17,18H15A11,11,0,0,0,4,29a1,1,0,0,0,1,1H27a1,1,0,0,0,1-1A11,11,0,0,0,17,18ZM6.06,28A9,9,0,0,1,15,20h2a9,9,0,0,1,8.94,8Z">
+                                        </path>
+                                    </g>
                                 </g>
-                            </g>
-                        </svg>
-                        Profile
-                    </a>
-                </li>
+                            </svg>
+                            Profile
+                        </a>
+                    </li>
+                }
             </ul>
         </nav>
     </div>
-
     <div id="sidebar-secondary">
         <nav class="col-xlg-2 sidebar">
             <ul>
                 <li class="list-item no-hover">
-                    <a [routerLink]="['/dashboard']" routerLinkActive="active-link">
+                    <a [routerLink]="dynamicRouteDashboard" routerLinkActive="active-link">
                         <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
                             <path
                                 d="M10.2082 15.6771H7.2915C3.76234 15.6771 1.82275 13.7375 1.82275 10.2084V7.29169C1.82275 3.76252 3.76234 1.82294 7.2915 1.82294H10.2082C13.7373 1.82294 15.6769 3.76252 15.6769 7.29169V10.2084C15.6769 13.7375 13.7373 15.6771 10.2082 15.6771ZM7.2915 4.01044C4.98734 4.01044 4.01025 4.98752 4.01025 7.29169V10.2084C4.01025 12.5125 4.98734 13.4896 7.2915 13.4896H10.2082C12.5123 13.4896 13.4894 12.5125 13.4894 10.2084V7.29169C13.4894 4.98752 12.5123 4.01044 10.2082 4.01044H7.2915Z"
@@ -98,7 +99,7 @@
                     </a>
                 </li>
                 <li class="list-item no-hover">
-                    <a [routerLink]="['/problemsets']" routerLinkActive="active-link">
+                    <a  [routerLink]="dynamicRouteCoursesOrProblemsets"  routerLinkActive="active-link">
                         <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
                             <path
                                 d="M13.125 18.9583C12.1625 19.4396 11.3605 20.1542 10.7625 21.0438C10.4271 21.5542 10.4271 22.1958 10.7625 22.7063C11.3605 23.5958 12.1625 24.3104 13.125 24.7917"
@@ -114,25 +115,27 @@
                         </svg>
                     </a>
                 </li>
-                <li class="list-item no-hover">
-                    <a [routerLink]="['/profile']" routerLinkActive="active-link">
-                        <svg fill="#000000" width="35px" height="35px" viewBox="0 0 32 32"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                            <g id="SVGRepo_iconCarrier">
-                                <title></title>
-                                <g id="about">
-                                    <path d="M16,16A7,7,0,1,0,9,9,7,7,0,0,0,16,16ZM16,4a5,5,0,1,1-5,5A5,5,0,0,1,16,4Z">
-                                    </path>
-                                    <path
-                                        d="M17,18H15A11,11,0,0,0,4,29a1,1,0,0,0,1,1H27a1,1,0,0,0,1-1A11,11,0,0,0,17,18ZM6.06,28A9,9,0,0,1,15,20h2a9,9,0,0,1,8.94,8Z">
-                                    </path>
+                @if(!isTeacher){
+                    <li class="list-item no-hover">
+                        <a [routerLink]="['/profile']" routerLinkActive="active-link">
+                            <svg fill="#000000" width="35px" height="35px" viewBox="0 0 32 32"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <title></title>
+                                    <g id="about">
+                                        <path d="M16,16A7,7,0,1,0,9,9,7,7,0,0,0,16,16ZM16,4a5,5,0,1,1-5,5A5,5,0,0,1,16,4Z">
+                                        </path>
+                                        <path
+                                            d="M17,18H15A11,11,0,0,0,4,29a1,1,0,0,0,1,1H27a1,1,0,0,0,1-1A11,11,0,0,0,17,18ZM6.06,28A9,9,0,0,1,15,20h2a9,9,0,0,1,8.94,8Z">
+                                        </path>
+                                    </g>
                                 </g>
-                            </g>
-                        </svg>
-                    </a>
-                </li>
+                            </svg>
+                        </a>
+                    </li>
+                }
             </ul>
         </nav>
     </div>

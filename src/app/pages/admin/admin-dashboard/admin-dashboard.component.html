@@ -4,34 +4,40 @@
             <div class="cards">
                 <div class="card">
                     <mat-icon class="custom-icon-size" svgIcon="hat"></mat-icon>
-                    <div class="card-title">2 Courses</div>
+                    <div class="card-title">{{courses.length}} Courses</div>
                 </div>
                 <div class="card">
                     <mat-icon class="custom-icon-size" svgIcon="book"></mat-icon> 
-                    <div class="card-title">2 Problemsets</div>
+                    <div class="card-title">{{totalSubmissions}} Problemsets</div>
                 </div>
                 <div class="card">
                     <mat-icon class="custom-icon-size" svgIcon="users"></mat-icon>
-                    <div class="card-title">6 Groups</div>
+                    <div class="card-title">{{totalGroups}} Groups</div>
                 </div>
             </div>
             <h1 class="title">Active Problemsets</h1>
             <div class="problemsets">
-                <app-admin-dashboard-card>
-                    
-                </app-admin-dashboard-card>
-                
-                <app-admin-dashboard-card>
-                    
-                </app-admin-dashboard-card>
+               @for (problemset of problemsets; track $index) {
+                    <app-problemset-card
+                    [id]="problemset.id"
+                    [title]="problemset.attributes.title"
+                    [created]="problemset.attributes['date-start']">
+                </app-problemset-card>
+               }
             </div>
             <h1 class="title">Active Courses</h1>
 
             <div class="problemsets">
-                <app-admin-dashboard-card  
-                [isCourse]=true
+                @for (course of courses; track $index) {
+                <app-course-card
+                    [id]="course.id"
+                    [title]="course.attributes.title"
+                    [groups]="course.relationships.groups.data.length"
+                    [problemsets]="course.relationships.problemsets.data.length"
+                    [isArchieved]="false"
                 >
-                </app-admin-dashboard-card>
+                </app-course-card>
+                }
             </div>
 
         </div>
