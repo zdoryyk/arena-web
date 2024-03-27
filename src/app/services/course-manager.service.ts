@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable, forkJoin, of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
 import { CoursesService } from './courses.service';
-import { log } from 'console';
-import { ProblemsetsService } from './submissions.service';
-import { Problemset } from '../interfaces/problemset';
+import { ProblemsetsService } from './problemsets.service';
 import { Course } from '../interfaces/course';
+import { Problemset } from '../interfaces/problemset';
+import { Observable, catchError, forkJoin, map, of, switchMap } from 'rxjs';
+import { CourseDetailService } from './course-detail.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +14,7 @@ export class CourseManagerService {
   constructor
   (
     private coursesService: CoursesService,
+    private coursesDetailService: CourseDetailService,
     private problemsetsService: ProblemsetsService
    ) { }
 
@@ -60,6 +60,28 @@ export class CourseManagerService {
       throw error; 
     }
   }
+
+  getCourseDetailsWithExtras(courseId: string): Observable<any> {
+    return this.coursesDetailService.getCourse(courseId).pipe(
+      switchMap(course => {
+        const problemsets$ = this.coursesDetailService.getCourseProblemsets(courseId);
+        const groups$ = this.coursesDetailService.getGroups(courseId);
+        return forkJoin([of(course), problemsets$, groups$]);
+      }),
+      map(([course, problemsets, groups]) => {
+        return {
+          course,
+          problemsets,
+          groups
+        };
+      }),
+      catchError(error => {
+        console.error('Error fetching course details with extras', error);
+        throw error;
+      })
+    );
+  }
+  
   
   
   
@@ -69,16 +91,13 @@ export class CourseManagerService {
         const courseProblemsets = await Promise.all(
             course.relationships.problemsets.data.map(async (ps) => {
                 const problemsetDetail = await this.getProblemsetById(ps.id);
-                return problemsetDetail.data; // Assuming getProblemsetById returns an object wrapped in a { data: Problemset } structure
+                return problemsetDetail.data; 
             })
         );
         allProblemsets = allProblemsets.concat(courseProblemsets);
     }
     return allProblemsets;
 }
-
-  
-
 
   async getProblemsetById(id: string): Promise<any> {
     try {

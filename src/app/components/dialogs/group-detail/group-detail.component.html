@@ -1,36 +1,26 @@
-<h2 mat-dialog-title class="d-flex justify-content-center">{{ data.name }}</h2>
-<mat-dialog-content class="m-1">
+<div class="card">
+    <p-table [value]="students" [ngStyle]="{'width': '50rem', 'border-collapse': 'separate', 'border-spacing': '10px 10px'}" [scrollable]="true" scrollHeight="700px">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="groupName" style="width:20%; font-size: larger; padding: 10px;">Group <p-sortIcon field="groupName"></p-sortIcon></th>
+                <th pSortableColumn="data.attributes.username" style="width:20%; font-size: larger; padding: 10px;">Username <p-sortIcon field="data.attributes.username"></p-sortIcon></th>
+                <th pSortableColumn="fullName" style="width:20%; font-size: larger; padding: 10px;">Full name<p-sortIcon field="fullName"></p-sortIcon></th>
+                <th pSortableColumn="problemSet.title" style="width:20%; font-size: larger; padding: 10px;">Problemset <p-sortIcon field="problemSet.title"></p-sortIcon></th>
+                <th pSortableColumn="problemSet.score" style="width:20%; font-size: larger; padding: 10px;">Evaluation <p-sortIcon field="problemSet.score"></p-sortIcon></th>
+                <th style="width: 5rem"></th></tr>
 
-  <div class="d-flex justify-content-lg-center align-items-center">
-    <mat-spinner *ngIf="loading"></mat-spinner>
-  </div>
-
-  <table mat-table class="w-100" #table [dataSource]="dataSource" *ngIf="!loading">
-
-    <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>
-        Name
-        </th>
-        <td mat-cell *matCellDef="let row">{{ row.attributes['first-name'] + ' ' + row.attributes['last-name'] }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="problemsets">
-      <th mat-header-cell *matHeaderCellDef>Problemsets</th>
-      <td mat-cell *matCellDef="let row">
-        <button class="problemsets-button" mat-raised-button color="primary" (click)="openMemberProblemsetsDialog(row.id, (row.attributes['first-name'] + ' ' + row.attributes['last-name']))">
-          <i class="material-icons" aria-hidden="true">extension</i>
-          Problemsets
-      </button>
-      </td>
-  </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-  <mat-paginator #paginator hidePageSize="true" [length]="groupStudents.length" [pageSize]="5"></mat-paginator>
-  
-</mat-dialog-content>
-
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Close</button>
-  </mat-dialog-actions>
+        </ng-template>
+        <ng-template pTemplate="body" let-student>
+            <tr>
+                <td style="padding: 10px;">{{student.groupName}}</td>
+                <td style="padding: 10px;">{{student.data.attributes.username}}</td>
+                <td style="padding: 10px;">{{student.fullName}}</td>
+                <td style="padding: 10px;">{{student.problemSet.title}}</td>
+                <td style="padding: 10px;">{{student.problemSet.score}}</td>
+                <td>
+                    <button mat-raised-button color="primary">Check</button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

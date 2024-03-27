@@ -8,7 +8,7 @@ import { CommonModule, DatePipe } from '@angular/common';
   standalone: true,
   imports: [RouterModule, DatePipe, CommonModule],
   templateUrl: './submission-card.component.html',
-  styleUrl: './submission-card.component.css',
+  styleUrl: './submission-card.component.scss',
 })
 export class SubmissionCardComponent implements Submission, OnInit {
   @Input() title: string;

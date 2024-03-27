@@ -10,7 +10,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
   standalone: true,
   imports: [RouterModule, DatePipe, CommonModule,MatIconModule,HttpClientModule],
   templateUrl: './course-card.component.html',
-  styleUrl: './course-card.component.css'
+  styleUrl: './course-card.component.scss'
 })
 export class CourseCardComponent implements OnInit  {
 

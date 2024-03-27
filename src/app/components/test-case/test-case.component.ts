@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './test-case.component.html',
-  styleUrl: './test-case.component.css',
+  styleUrl: './test-case.component.scss',
 })
 export class TestCaseComponent implements OnInit {
   @ViewChild('contentDiv', { static: false }) contentDiv: ElementRef;

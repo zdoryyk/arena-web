@@ -1,0 +1,86 @@
+.header-flex {
+    display: flex;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.title.left {
+    text-align: left;
+    font-size: 30px;
+    margin: 0;
+}
+
+.buttons {
+    display: flex;
+    margin-left: 50px;
+}
+
+.btn {
+    margin: 20px;
+}
+
+.btn.add, .btn.archive {
+    background-color: #8FBE48; /* По умолчанию для .add */
+    color: white;
+    padding: 10px 20px;
+    font-size: 24px;
+    cursor: pointer;
+    border-radius: 22px;
+    width: 250px;
+    height: 85px;
+}
+
+.btn.archive {
+    background-color: #797979; /* Специфика для .archive */
+}
+
+.content-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.table-container, .chart-container {
+    height: 700px;
+}
+
+.table-container {
+    width: 75%;
+    overflow-y: auto;
+}
+
+.chart-container {
+    width: 35%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .header-flex {
+        flex-direction: column;
+    }
+
+    .title.left, .buttons {
+        width: 100%; /* Ensure full width */
+        text-align: center; /* Center-align the title and buttons */
+    }
+
+    .buttons {
+        padding-top: 20px; /* Space between title and buttons */
+    }
+
+    .btn.add, .btn.archive {
+        justify-content: center;
+        width: auto; /* Natural width */
+        margin: 10px auto; /* Center and space */
+    }
+
+    .content-wrapper {
+        flex-direction: column;
+    }
+
+    .table-container, .chart-container {
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* Adjustments for tablets and desktops with specific widths are omitted to avoid repetition */

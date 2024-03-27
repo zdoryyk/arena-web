@@ -22,4 +22,21 @@
     margin-left: 8px;
   }
 
+  .calendar-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px; 
+  }
   
+  .calendar-item {
+    flex: 1; 
+  }
+  
+  .ng-invalid.ng-touched:not(form) .p-inputtext {
+    border-color: red;
+  }
+  
+  small {
+    color: red;
+  }

@@ -1,37 +1,40 @@
 <main id="main" class="main">
     <section class="section">
         <div class="container">
-            <header>
-                <div class="title center">{{this.course.attributes.title}}</div>
-                <div class="buttons">
-                    <button class="btn add" (click)="openNewProblemsetDialog()">ADD PROBLEMSET</button>
-                    <button class="btn archive" (click)="openConfirmationDialog()">ARCHIVE</button>
-                </div>
-            </header>
-            <div class="paginator wrapper">
-                <p-paginator (onPageChange)="onPageChange($event)" [rows]="rows" [first]="first" [totalRecords]="groups.length" [showCurrentPageReport]="true" [alwaysShow]="false"></p-paginator>
-            </div>
-            <section class="groups">
-                @for (group of paginatedGroups; track $index) {   
-                        <div class="group"(click)="test()" >
-                            <h2>{{ group.attributes.name }}</h2>
-                            <p>{{group.relationships.students.data.length}} students</p>
-                        </div>
+            <header class="header-flex">
+                <div class="title left">Course: {{this.course.attributes.title}}</div>
+                @if (isLecturer) {
+                    <div class="buttons">
+                        <button class="btn add" (click)="openNewProblemsetDialog()">ADD PROBLEMSET</button>
+                        <button class="btn archive" (click)="openConfirmationDialog()">ARCHIVE</button>
+                    </div>
                 }
-                <div class="paginator-wrapper">
-                    <p-paginator (onPageChange)="onPageChange($event)" [rows]="rows" [first]="first" [totalRecords]="groups.length" [showCurrentPageReport]="true" [alwaysShow]="false"></p-paginator>
+            </header>
+            <div class="content-wrapper">
+                <div class="table-container">
+                    @if (!loading) {
+                        <div class="table">
+                            <app-group-detail
+                            [groups]="groups"
+                            [problemsets]="problemsets"
+                            >    
+                            </app-group-detail>
+                        </div>
+                    }
                 </div>
-            </section>
-            <div class="dashboard-chart">
-                <p-chart
-                  class="line-chart"
-                  type="line"
-                  [data]="lineData"
-                  [options]="lineOptions"
-                  width="100%"
-                  height="100%"
-                ></p-chart>
-              </div>
+                <div class="chart-container">
+                    <div class="dashboard-chart">
+                        <p-chart
+                          class="line-chart"
+                          type="line"
+                          [data]="lineData"
+                          [options]="lineOptions"
+                          width="100%"
+                          height="100%"
+                        ></p-chart>
+                      </div>
+                </div>
+            </div>
         </div>   
     </section>
 </main>

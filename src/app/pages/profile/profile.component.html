@@ -4,7 +4,9 @@
       <div class="profile">
         <div>
           <div class="profile-content">
-            <p class="profile-name">Danil Zdoryk</p>
+            @if (user && user.fullName) {
+              <p class="profile-name">{{user.fullName}}</p>
+            }@else {  <p class="profile-name">loading..</p>}
             <div class="profile-info">
               <p class="profile-label">
                 Type <span class="profile-text-value">Student</span>
@@ -13,26 +15,44 @@
                 Joined <span class="profile-text-value">Sep 2021</span>
               </p>
               <p class="profile-label">
-                Isic number
-                <span class="profile-text-value">12512051025912095</span>
+                username
+                @if (user && user.data.attributes.username) {
+                  <span class="profile-text-value">{{user.data.attributes.username}}</span>
+                }@else{
+                  <span class="profile-text-value">loading..</span>
+                }
               </p>
             </div>
           </div>
           <div class="cases">
             <div class="case">
-              <p class="case-value">7</p>
-              <p class="case-label">Problemsets done</p>
+              @if (user && user.problemsetsLength) {
+              <p class="case-value">{{user.problemsetsLength}}</p>
+              }@else {  <p class="case-value">loading..</p>}
+              <p class="case-label">Problemsets gone</p>
             </div>
             <div class="case">
-              <p class="case-value">48</p>
+              @if (user && user.submissionsLength) {
+                <p class="case-value">{{user.submissionsLength}}</p>
+              }@else {
+                <p class="case-value">loading..</p>
+              }
               <p class="case-label">Submissions</p>
             </div>
             <div class="case">
-              <p class="case-value success">92%</p>
+              @if (user && user.rate) {
+                <p class="case-value success">{{user.rate}}%</p>
+              }@else {
+                <p class="case-value success">loading..</p>
+              }
               <p class="case-label">Success rate</p>
             </div>
             <div class="case">
-              <p class="case-value">66.8</p>
+              @if (user && user.totalScore) {
+                <p class="case-value">{{user.totalScore}}</p>
+              }@else {
+                <p class="case-value">loading..</p>
+              }
               <p class="case-label">Summary points</p>
             </div>
           </div>
@@ -55,7 +75,7 @@
             ></p-chart>
           </div>
           <div style="align-self: stretch; position: relative">
-            <h5 class="chart-label">Last 7 problemsets</h5>
+            <h5 class="chart-label">Last 7 Submissions</h5>
             <p-chart
               type="bar"
               class="bar"
@@ -69,5 +89,6 @@
         </div>
       </div>
     </div>
+  
   </section>
 </main>

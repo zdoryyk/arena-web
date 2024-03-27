@@ -20,7 +20,7 @@ import { NewCourseServiceService } from './new-course-service.service';
     ReactiveFormsModule,
   ],
   templateUrl: './new-course.component.html',
-  styleUrl: './new-course.component.css'
+  styleUrl: './new-course.component.scss'
 })
 export class NewCourseComponent implements OnInit {
   form: FormGroup;

@@ -19,7 +19,7 @@ import { ProblemsetCardComponent } from '../../../components/problemset-card/pro
   standalone: true,
   imports: [RouterModule, DatePipe, CommonModule,MatIconModule,HttpClientModule,CourseCardComponent,ProblemsetCardComponent],
   templateUrl: './admin-courses.component.html',
-  styleUrl: './admin-courses.component.css'
+  styleUrl: './admin-courses.component.scss'
 })
 export class AdminCoursesComponent implements OnInit {
 

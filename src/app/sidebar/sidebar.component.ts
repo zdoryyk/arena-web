@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, PLATFORM_ID, booleanAttribute } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, TransferState, booleanAttribute, makeStateKey } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { isPlatformBrowser } from '@angular/common';
@@ -8,7 +8,7 @@ import { isPlatformBrowser } from '@angular/common';
   standalone: true,
   imports: [RouterModule],
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css'
+  styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent implements OnInit {
 
@@ -23,12 +23,12 @@ export class SidebarComponent implements OnInit {
   }
 
 
-  ngOnInit(): void {
+  async ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
       this.isTeacher = localStorage.getItem('arena-permission') === 'Teacher';
-      const user = JSON.parse(localStorage.getItem("arena-user") || '{}');
-      if(user['first-name'] && user['last-name']) {
-        this.fullName = `${user['first-name']} ${user['last-name']}`;
+      const user = await this.authService.checkIsUserInStorage();
+      if(user.attributes['first-name'] && user.attributes['last-name']) {
+        this.fullName = `${user.attributes['first-name']} ${user.attributes['last-name']}`;
       }
       if(this.isTeacher){
         this.dynamicRouteDashboard =  '/admin-dashboard';
@@ -36,24 +36,6 @@ export class SidebarComponent implements OnInit {
       }
     }
     
-  }
-
-  navigateToDashboard(){
-    console.log(this.isTeacher);
-    if(this.isTeacher){
-      this.router.navigate(['/admin-dashboard']);
-      return;
-    }
-    this.router.navigate(['/dashboard']);
-  }
-
-
-  navigateToProblemsetsOrCourses(){
-    if(this.isTeacher){
-      this.router.navigate(['/admin-courses']);
-      return;
-    }
-    this.router.navigate(['/courses']);
   }
 
 

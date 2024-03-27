@@ -4,16 +4,20 @@ import { ChartModule } from 'primeng/chart';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { TestGroupComponent } from '../../../components/test-group/test-group.component';
 import { TestCaseComponent } from '../../../components/test-case/test-case.component';
+import { AuthService } from '../../../services/auth.service';
+import { UserData } from '../../../interfaces/user';
 
 @Component({
   selector: 'app-problemset-detail',
   standalone: true,
   imports: [RouterModule, ChartModule, TestGroupComponent, TestCaseComponent],
   templateUrl: './problemset-detail.component.html',
-  styleUrl: './problemset-detail.component.css',
+  styleUrl: './problemset-detail.component.scss',
 })
 export class ProblemsetDetailComponent implements OnInit {
   private _testCaseData = [];
+  user: UserData;
+
 
   get testCaseData() {
     return this._testCaseData
@@ -28,7 +32,7 @@ export class ProblemsetDetailComponent implements OnInit {
   barData: any;
   barOptions: any;
   barPlugins: any;
-  constructor() {
+  constructor(private authService: AuthService) {
     this._testCaseData = [
       {
         id: 1,
@@ -101,7 +105,8 @@ export class ProblemsetDetailComponent implements OnInit {
     ];
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    await this.loadUserData();
     this.barData = {
       labels: [1, 2, 3, 4, 5, 6, 7],
       datasets: [
@@ -177,6 +182,13 @@ export class ProblemsetDetailComponent implements OnInit {
     };
     this.barPlugins = [ChartDataLabels];
   }
+
+  private async loadUserData() {
+    this.user = await this.authService.checkIsUserInStorage();
+    console.log('user, ', this.user);
+  }
+
+
 
   onGetData(field: string, parentIndex: number) {
     if (parentIndex < 0 || parentIndex >= this._testCaseData.length) return;

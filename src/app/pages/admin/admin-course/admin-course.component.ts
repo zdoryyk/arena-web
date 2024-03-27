@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { PaginatorModule } from 'primeng/paginator';
-import { GroupPaginationModel } from '../../../interfaces/interfaces';
+import { GroupPaginationModel, UserSubmission } from '../../../interfaces/interfaces';
 import { NewProblemsetComponent } from '../../../components/dialogs/new-problemset/new-problemset.component';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { ConfirmDialogComponent } from '../../../components/dialogs/confirm-dialog/confirm-dialog.component';
@@ -15,23 +15,24 @@ import { GroupDetailComponent } from '../../../components/dialogs/group-detail/g
 import { Course } from '../../../interfaces/course';
 import { Subscription } from 'rxjs';
 import { CourseDetailService } from '../../../services/course-detail.service';
-import { group, log } from 'console';
 import { Group, GroupResponse } from '../../../interfaces/group';
+import { ProblemsetData } from '../../../interfaces/problemset';
+import { CourseManagerService } from '../../../services/course-manager.service';
 
 @Component({
   selector: 'app-admin-course',
   standalone: true,
-  imports: [RouterModule, DatePipe, CommonModule,MatIconModule,HttpClientModule,PaginatorModule, ChartModule],
+  imports: [RouterModule, DatePipe, CommonModule,MatIconModule,HttpClientModule,PaginatorModule, ChartModule, GroupDetailComponent],
   providers:[],
   templateUrl: './admin-course.component.html',
-  styleUrl: './admin-course.component.css'
+  styleUrl: './admin-course.component.scss'
 })
 export class AdminCourseComponent implements OnInit{
 
   course: Course;
   groups: Group[] = [];
-  paginatedGroups: Group[] = [];
-  loading = false;
+  problemsets: ProblemsetData[] = [];
+  loading = true;
   first: number = 0;
   rows: number = 4;
   lineData: any;
@@ -43,8 +44,12 @@ export class AdminCourseComponent implements OnInit{
   private courseProblemsetsSubscription: Subscription = new Subscription;
   private userSubscription: Subscription = new Subscription;
   private problemsetStatSubscription: Subscription = new Subscription;
+  isLecturer: boolean = true;
+
+
   constructor(
     private courseDetailService: CourseDetailService,
+    private courseMagenerService: CourseManagerService,
     private activeRoute: ActivatedRoute,
     private matIconRegistery: MatIconRegistry,
     private domSanitizer: DomSanitizer,
@@ -81,23 +86,20 @@ export class AdminCourseComponent implements OnInit{
     };
     this.setChart();
     this.course.id = this.activeRoute.snapshot.paramMap.get('id');
-    this.courseSubscription = this.courseDetailService.getCourse(this.course.id).subscribe(result => {
-      this.course.attributes.title = result.data.attributes.title;
-      this.course.attributes.archived = result.data.attributes.archived;
-      this.course.attributes.description = result.data.attributes.description;
-      this.courseDetailService.getGroups(this.course.id).subscribe({
-        next: (response) => {
-          this.groups = response.data;
-          console.log(this.first);
-          this.updatePaginatedGroups();
-        },
-        error: (error) => {
-          console.error('Произошла ошибка при получении групп:', error);
-        }
-      });
+    this.courseSubscription = this.courseMagenerService.getCourseDetailsWithExtras(this.course.id).subscribe({
+      next: ({ course, problemsets, groups }) => {
+        this.course = course.data;
+        this.problemsets = problemsets.data;
+        this.groups = groups.data;
+        this.loading = false; 
+        
+      },
+      error: (error) => {
+        console.error('Error fetching course details with extras', error);
+        this.loading = false; 
+      }
     });
   }
-
 
   setChart(){
     this.lineData = {
@@ -136,38 +138,24 @@ export class AdminCourseComponent implements OnInit{
     };
   }
 
-  test(){
-    var _popup =  this.dialog.open(GroupDetailComponent,{
-      enterAnimationDuration: '1000ms',
-      exitAnimationDuration:'500ms',
-      width: '40%',
-      data: {
-        title: 'Title'
-      }
-     })
-  
-     _popup.afterClosed().subscribe(item => {
-      console.log(item);
-     })
-  }
-
-  openNewProblemsetDialog() {
-  var _popup =  this.dialog.open(NewProblemsetComponent,{
-    enterAnimationDuration: '1000ms',
-    exitAnimationDuration:'500ms',
-    width: '40%',
-   
-    data: {
-      title: 'Title'
+    openNewProblemsetDialog() {
+      const dialogWidth = window.innerWidth < 768 ? '75%' : '55%'; // Responsive dialog width
+      var _popup = this.dialog.open(NewProblemsetComponent, {
+        enterAnimationDuration: '1000ms',
+        exitAnimationDuration: '500ms',
+        width: dialogWidth,
+        data: {
+          title: 'Title'
+        }
+      });
+    
+      _popup.afterClosed().subscribe(item => {
+        console.log(item);
+      });
     }
-   })
+  
 
-   _popup.afterClosed().subscribe(item => {
-    console.log(item);
-   })
-  }
-
-  openConfirmationDialog() {
+    openConfirmationDialog() {
     var _popup =  this.dialog.open(ConfirmDialogComponent,{
       enterAnimationDuration: '1000ms',
       exitAnimationDuration:'500ms',
@@ -183,17 +171,11 @@ export class AdminCourseComponent implements OnInit{
      })
     }
 
-    updatePaginatedGroups(): void {
-      this.paginatedGroups = this.groups.slice(this.first, this.first + this.rows);
-      console.log(this.paginatedGroups);
-      
+
+    ngOnDestroy(): void {
+      if (this.courseSubscription) {
+        this.courseSubscription.unsubscribe();
+      }
     }
-  
-    onPageChange(event: any): void {
-      this.first = event.first;
-      console.log(this.first);
-      this.updatePaginatedGroups();
-    }
-  
 
 }

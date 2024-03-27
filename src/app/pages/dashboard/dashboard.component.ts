@@ -2,18 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ChartModule } from 'primeng/chart';
 import { SubmissionCardComponent } from '../../components/submission-card/submission-card.component';
+import { AuthService } from '../../services/auth.service';
+import { UserData } from '../../interfaces/user';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [RouterModule, ChartModule,SubmissionCardComponent],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css',
+  styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
   lineData: any;
   lineOptions: any;
   linePlugins: any;
+  user: UserData;
   submissionData = {
     title: 'PROBLEMS TO SOLVE',
     totalSubmissions: 10,
@@ -25,7 +28,14 @@ export class DashboardComponent implements OnInit {
   };
 
 
-  ngOnInit(): void {
+  constructor(private authService: AuthService){
+
+  }
+
+  
+  
+  async ngOnInit() {
+    await this.loadUserData();
     this.lineData = {
       labels: [
         '00:00',
@@ -67,5 +77,10 @@ export class DashboardComponent implements OnInit {
         },
       },
     };
+  }
+
+  private async loadUserData() {
+    this.user = await this.authService.checkIsUserInStorage();
+    console.log('user, ', this.user);
   }
 }

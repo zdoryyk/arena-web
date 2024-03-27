@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
     MatIconModule
   ],
   templateUrl: './confirm-dialog.component.html',
-  styleUrl: './confirm-dialog.component.css'
+  styleUrl: './confirm-dialog.component.scss'
 })
 export class ConfirmDialogComponent {
 

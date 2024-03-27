@@ -1,8 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { GroupResponse } from '../interfaces/group';
+import { ProblemsetsResponse } from '../interfaces/problemset';
+import { User } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +24,7 @@ export class CourseDetailService {
 
   getGroup(groupId: string): Observable<any> {
     var routePath = environment.api_url + "/groups/" + groupId;
+    
     return this.http.get<any>(routePath, {
       headers: {
           "Authorization": 'token ' + localStorage.getItem("arena-token")
@@ -38,12 +41,12 @@ export class CourseDetailService {
     });
   }
 
-  getCourseProblemset(courseId: string): Observable<any> {
-    var routePath = environment.api_url + "/courses/" + courseId + "/problemsets";
-    return this.http.get<any>(routePath, {
-      headers: {
-          "Authorization": 'token ' + localStorage.getItem("arena-token")
-      }
+  getCourseProblemsets(courseId: string): Observable<ProblemsetsResponse> {
+    const routePath = `${environment.api_url}/courses/${courseId}/problemsets`;
+    return this.http.get<ProblemsetsResponse>(routePath, {
+      headers: new HttpHeaders({
+        "Authorization": `token ${localStorage.getItem("arena-token")}`
+      })
     });
   }
 
@@ -65,23 +68,41 @@ export class CourseDetailService {
       }
     });
   }
-  getUserById(id: any): Observable<any> {
-    var routePath = environment.api_url + "/users/" + id;
+
+  getCourseProblemset(courseId: string): Observable<any> {
+    var routePath = environment.api_url + "/courses/" + courseId + "/problemsets";
+    return this.http.get<any>(routePath, {
+      headers: {
+          "Authorization": 'token ' + localStorage.getItem("arena-token")
+      }
+    });
+  }
+
+  getUserById(id: any): Observable<User> {
+    const routePath = `${environment.api_url}/users/${id}`;
+    return this.http.get<User>(routePath, {
+      headers: {
+        "Authorization": `token ${localStorage.getItem("arena-token")}`,
+      },
+    });
+  }
+
+
+  getLatestSubmissions(): Observable<any> {
+    var routePath = environment.api_url + "/submissions/";
     return this.http.get<any>(routePath, {
       headers: {
         "Authorization": 'token ' + localStorage.getItem("arena-token")
       }
-
     });
   }
 
-  getLatestSubmission(id: any): Observable<any> {
+  getLatestSubmissionById(id: any): Observable<any> {
     var routePath = environment.api_url + "/submissions/" + id;
     return this.http.get<any>(routePath, {
       headers: {
         "Authorization": 'token ' + localStorage.getItem("arena-token")
       }
-
     });
   }
 

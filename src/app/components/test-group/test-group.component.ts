@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './test-group.component.html',
-  styleUrl: './test-group.component.css',
+  styleUrl: './test-group.component.scss',
 })
 export class TestGroupComponent implements OnInit {
   @Input() title: string;

@@ -22,36 +22,6 @@
         <mat-label>Maximum number of evaluations (per student):</mat-label>
         <input matInput type="number" formControlName="maxNumberOfEvaluation">
       </mat-form-field>
-      <mat-form-field>
-        <mat-label>Enter a date range</mat-label>
-        <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
-          <input matStartDate formControlName="start" placeholder="Start date">
-          <input matEndDate formControlName="end" placeholder="End date">
-        </mat-date-range-input>
-        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
-      
-        @if (range.controls.start.hasError('matStartDateInvalid')) {
-          <mat-error>Invalid start date</mat-error>
-        }
-        @if (range.controls.end.hasError('matEndDateInvalid')) {
-          <mat-error>Invalid end date</mat-error>
-        }
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Start Time</mat-label>
-        <input matInput [matDatepicker]="pickerStart" formControlName="startTime">
-        <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
-        <mat-datepicker #pickerStart></mat-datepicker>
-      </mat-form-field>
-      
-      <mat-form-field>
-        <mat-label>End Time</mat-label>
-        <input matInput [matDatepicker]="pickerEnd" formControlName="endTime">
-        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
-        <mat-datepicker #pickerEnd></mat-datepicker>
-      </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Minutes between evaluation rounds</mat-label>
         <input matInput type="number" formControlName="minutesBetweenEvalRounds">
@@ -60,8 +30,33 @@
         <mat-label>Revision number of the tests:</mat-label>
         <input matInput type="number" formControlName="revisionNumberOfTheTests">
       </mat-form-field>
+      <div class="calendar-container">
+        <div class="calendar-item">
+          <mat-label>Start Date*</mat-label>
+          <div class="card flex flex-wrap gap-3 p-fluid">
+            <div class="flex-auto">
+              <p-calendar formControlName="startTime" [showTime]="true" [showSeconds]="true" [showIcon]="true" inputId="buttondisplay" [showWeek]="true"></p-calendar>
+              @if(form.get('startTime')?.invalid && (form.get('startTime')?.touched || form.get('startTime')?.dirty)){
+                <small>Start time is required.</small>
+              }
+            </div>
+          </div>
+        </div>
+        <div class="calendar-item">
+          <mat-label>End Date*</mat-label>
+          <div class="card flex flex-wrap gap-3 p-fluid">
+            <div class="flex-auto">
+              <p-calendar formControlName="endTime" [showTime]="true" [showSeconds]="true" [showIcon]="true" inputId="buttondisplay"></p-calendar>
+              @if(form.get('endTime')?.invalid && (form.get('endTime')?.touched || form.get('endTime')?.dirty)){
+                <small>End time is required.</small>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
       
-    </div>
+    </div>      
+   
     <div mat-dialog-actions>
       <button mat-raised-button color="primary">Submit</button>
       <button mat-raised-button (click)="closeDialog()" color="accent">Close</button>

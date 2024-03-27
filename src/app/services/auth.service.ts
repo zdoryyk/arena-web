@@ -1,8 +1,12 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, TransferState, makeStateKey } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { Permission } from '../interfaces/permissions';
+import { User, UserData } from '../interfaces/user';
+import { environment } from '../../environments/environment';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { data } from 'jquery';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +18,7 @@ export class AuthService {
   private isLoggedInSource = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this.isLoggedInSource.asObservable();
 
-  constructor(@Inject(PLATFORM_ID) platformId: Object,private router: Router) {
+  constructor(@Inject(PLATFORM_ID) platformId: Object,private router: Router, private transferState: TransferState,private http: HttpClient) {
     this.platformId = platformId;
     if(isPlatformBrowser(platformId)){
       const isLoggedIn = !!localStorage.getItem('arena-token'); 
@@ -28,6 +32,7 @@ export class AuthService {
     }
     this.isLoggedInSource.next(isLoggedIn);
   }
+  
   isAuthed(): boolean{
     if(isPlatformBrowser(this.platformId) && !!localStorage.getItem('arena-token')){
        return true;
@@ -46,20 +51,30 @@ export class AuthService {
     return true;
   }
 
-
-
-   getUser() {
-    if(!isPlatformBrowser(this.platformId)){
-      return;
+  async checkIsUserInStorage(): Promise<UserData> {
+    if (!this.transferState.hasKey(makeStateKey('arena-user'))) {
+      const user = await this.getUser(); 
+      if (user) { 
+        this.transferState.set<UserData>(makeStateKey('arena-user'), user);
+      }
+      return user;
     }
-    const data = localStorage.getItem('arena-user');
-    if (data) {
-      this.identity = JSON.parse(data);
-    } else {
+    return this.transferState.get<UserData>(makeStateKey('arena-user'), null);
+  }
 
-      return;
+
+  async getUser(): Promise<UserData> {
+    if (!isPlatformBrowser(this.platformId)) {
+      return null;
     }
-    return this.identity;
+    const token = this.getToken();
+    if (token) {
+      const user: User = await firstValueFrom(this.getUserMe(token));
+      this.transferState.set<UserData>(makeStateKey<UserData>('arena-user'), user.data);
+      this.identity = user;
+      return user.data;
+    }
+    return null; 
   }
 
    getToken() {
@@ -95,5 +110,13 @@ export class AuthService {
     
   }
 
+  getUserMe(token: any): Observable<User> {
+    var routePath = environment.api_url + "/users/me";
+    return this.http.get<User>(routePath, {
+      headers: {
+        "Authorization": 'token ' + token
+      }
+    });
+  }
 
 }

@@ -10,7 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   standalone: true,
   imports: [RouterModule, DatePipe, CommonModule,MatIconModule,HttpClientModule],
   templateUrl: './problemset-card.component.html',
-  styleUrl: './problemset-card.component.css'
+  styleUrl: './problemset-card.component.scss'
 })
 export class ProblemsetCardComponent {
 

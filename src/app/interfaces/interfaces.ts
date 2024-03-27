@@ -39,10 +39,6 @@ export interface CourseModelGet {
   problemsets: any[],
 }
 
- 
-
-
-
 export interface GroupPaginationModel {
   name: string,
   submissions: number,
@@ -51,4 +47,17 @@ export interface GroupPaginationModel {
 export interface ConfirmDialogData {
   title: string;
   message : string;
+}
+
+
+export interface UserSubmission {
+  user: string;
+  group: string;
+  submissions: SubmissionChart[];
+}
+
+export interface SubmissionChart {
+  id: string;
+  score: number;
+  "date-evaluated": any;
 }
