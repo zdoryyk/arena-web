@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TransferState, makeStateKey } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ChartModule } from 'primeng/chart';
 import { SubmissionCardComponent } from '../../components/submission-card/submission-card.component';
@@ -17,6 +17,9 @@ export class DashboardComponent implements OnInit {
   lineOptions: any;
   linePlugins: any;
   user: UserData;
+  latestSubmissions: any = [];
+
+
   submissionData = {
     title: 'PROBLEMS TO SOLVE',
     totalSubmissions: 10,
@@ -28,7 +31,11 @@ export class DashboardComponent implements OnInit {
   };
 
 
-  constructor(private authService: AuthService){
+  constructor
+  (
+    private transferState: TransferState,
+    private authService: AuthService
+  ){
 
   }
 
@@ -36,6 +43,12 @@ export class DashboardComponent implements OnInit {
   
   async ngOnInit() {
     await this.loadUserData();
+    if (this.transferState.hasKey(makeStateKey('latestProblemsets'))) {
+      this.latestSubmissions =  this.transferState.get(makeStateKey('latestProblemsets'), []);
+      console.log(this.latestSubmissions);
+      
+    } 
+
     this.lineData = {
       labels: [
         '00:00',

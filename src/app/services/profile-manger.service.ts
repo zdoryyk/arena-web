@@ -51,16 +51,18 @@ export class ProfileMangerService {
   
 
 
-   async getSubmissionsByLimit(limit: number): Promise<Map<number, number[]>> {
+   async getSubmissionsByLimit(limit: number): Promise<any> {
     let user = await this.authService.checkIsUserInStorage();
-    let problemsets = await this.problemsetService.getUserProblemsetsByUserId(user.id).toPromise();
+    let userProblemsets = await this.problemsetService.getUserProblemsetsByUserId(user.id).toPromise();
 
-    let lastProblemset = problemsets.data.reduce((max, problemset) => problemset.id > max.id ? problemset : max, problemsets.data[0]);
-    let problemsetId = lastProblemset.relationships.problemset.data.id;
+    let lastUserProblemset = userProblemsets.data.reduce((max, problemset) => problemset.id > max.id ? problemset : max, userProblemsets.data[0]);
+    let problemsetId = lastUserProblemset.relationships.problemset.data.id;
     
-    let submissions = await this.problemsetService.getUserSubmissionByProblemset(lastProblemset.id).toPromise();
+    let submissions = await this.problemsetService.getUserSubmissionByProblemset(lastUserProblemset.id).toPromise();
     let lastProblemsetDetails = await this.problemsetService.getProblemSetDetailsByProblemsetId(problemsetId).toPromise();
     let maxScore = lastProblemsetDetails.data.attributes['max-score'];
+    let problemsetTitle = this.trimTitleFromLastYearOrColon(lastProblemsetDetails.data.attributes.title);
+    
 
     let sortedSubmissions = submissions.data.sort((a, b) => {
         return new Date(b.attributes['date-evaluated']).getTime() - new Date(a.attributes['date-evaluated']).getTime();
@@ -70,15 +72,28 @@ export class ProfileMangerService {
         sortedSubmissions = sortedSubmissions.slice(0, limit);
     }
 
-    let submissionsMap = new Map<number, number[]>();
     let scores: number[] = []; 
-
     sortedSubmissions.forEach(element => {
         scores.push(element.attributes.score); 
     });
 
-    submissionsMap.set(maxScore, scores); 
-    return submissionsMap;
+    return {maxScore,scores,problemsetTitle};
+
+  }
+
+  private trimTitleFromLastYearOrColon(title: string): string {
+    const lastYearMatch = title.match(/\d{4}(?!.*\d{4})/); // Ищем последний год
+    const lastYearIndex = lastYearMatch ? lastYearMatch.index + 4 : -1; // +4, чтобы перейти за год
+  
+    const lastColonIndex = title.lastIndexOf(":");
+  
+    let startIndex = Math.max(lastYearIndex, lastColonIndex);
+  
+    if (title[startIndex] === " " || title[startIndex] === ":") {
+      startIndex++;
+    }
+  
+    return title.substring(startIndex).trim();
   }
 
 }

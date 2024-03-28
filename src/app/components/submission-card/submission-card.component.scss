@@ -20,8 +20,17 @@
 
 .submission-heading {
   font-family: Inter;
-  font-size: 30px;
   font-weight: 700;
+
+  &.smallest {
+    font-size: 14px;
+  }
+  &.small {
+    font-size: 20px; 
+  }
+  &.big {
+    font-size: 30px; 
+  }
 }
 
 .submission-subtext {
@@ -36,6 +45,7 @@
   font-size: 15px;
   font-weight: 500;
 }
+
 
 .submission-date {
   color: #817e7e;
@@ -84,12 +94,24 @@
     width: 350px;
   }
 
+
   .submission-data {
     padding: 15px 10px 0;
   }
 
-  .submission-heading {
-    font-size: 17px;
+   .submission-heading {
+
+    &.smallest {
+      font-size: 12px;
+    }
+
+    &.small {
+      font-size: 15px;
+    }
+
+    &.big {
+      font-size: 17px;
+    }
   }
 
   .submission-subtext {

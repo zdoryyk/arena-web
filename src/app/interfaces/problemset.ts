@@ -1,3 +1,16 @@
+export interface ProblemsetExtra {
+  problemset: Problemset,
+  title: string,
+  submissionsLength: number,
+  lastSubmissionScore: number,
+  maxSubmissionScore: number
+  lastSubmissionDate: Date,
+  isActive: boolean,
+  completeStatus: Map<string, string>
+}
+
+
+
 export interface Problemset {
 
       type: string;

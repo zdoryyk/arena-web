@@ -14,8 +14,11 @@ export class SubmissionCardComponent implements Submission, OnInit {
   @Input() title: string;
   @Input() totalSubmissions: number;
   @Input() lastEvaluation: number;
+  @Input() maxProblemsetScore: number;
   @Input() lastSubmitDate: Date;
   @Input() completeStatus: Map<string, string>;
+  @Input() isActive: boolean;
+
 
   ngOnInit(): void {
     console.log(this.completeStatus.entries());

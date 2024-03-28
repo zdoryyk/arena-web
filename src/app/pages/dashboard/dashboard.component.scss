@@ -23,17 +23,35 @@
   padding: 20px;
   text-align: center;
   border: 1px solid #000;
-  min-height: 400px;
-  width: 100%;
+  height: 100px;
+  width: 100%; 
 }
 
 .empty {
   color: #afafaf;
-  font-family: Inter;
+  font-family: Inter, sans-serif; /* Ensure consistency in font usage */
   font-size: 25px;
   font-weight: 700;
-  display: inline-block;
+  display: block; /* Makes it a block element to center it correctly */
   margin-top: 20%;
+  text-align: center;
+}
+
+.sub-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.row-title .row-evaluation .index{
+  font-size: 20px;
+}
+
+.sub-row > div:not(:first-child) {
+  margin-left: 20px;
 }
 
 .line-chart {

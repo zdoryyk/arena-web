@@ -28,14 +28,14 @@
             <div class="case">
               @if (user && user.problemsetsLength) {
               <p class="case-value">{{user.problemsetsLength}}</p>
-              }@else {  <p class="case-value">loading..</p>}
+              }@else {  <p class="case-value">..</p>}
               <p class="case-label">Problemsets gone</p>
             </div>
             <div class="case">
               @if (user && user.submissionsLength) {
                 <p class="case-value">{{user.submissionsLength}}</p>
               }@else {
-                <p class="case-value">loading..</p>
+                <p class="case-value">..</p>
               }
               <p class="case-label">Submissions</p>
             </div>
@@ -43,7 +43,7 @@
               @if (user && user.rate) {
                 <p class="case-value success">{{user.rate}}%</p>
               }@else {
-                <p class="case-value success">loading..</p>
+                <p class="case-value success">..</p>
               }
               <p class="case-label">Success rate</p>
             </div>
@@ -51,7 +51,7 @@
               @if (user && user.totalScore) {
                 <p class="case-value">{{user.totalScore}}</p>
               }@else {
-                <p class="case-value">loading..</p>
+                <p class="case-value">..</p>
               }
               <p class="case-label">Summary points</p>
             </div>

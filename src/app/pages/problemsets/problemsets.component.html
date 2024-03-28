@@ -3,38 +3,41 @@
         <div class="container">
             <h2 class="title">Ongoing problems</h2>
             <div class="submissions problemsets">
-                <app-submission-card 
-                    [title]="submissionData.title"
-                    [totalSubmissions]="submissionData.totalSubmissions"
-                    [lastEvaluation]="submissionData.lastEvaluation"
-                    [lastSubmitDate]="submissionData.lastSubmitDate"
-                    [completeStatus]="submissionData.completeStatus">
-                </app-submission-card>
-                
-                <app-submission-card 
-                    [title]="submissionData.title"
-                    [totalSubmissions]="submissionData.totalSubmissions"
-                    [lastEvaluation]="submissionData.lastEvaluation"
-                    [lastSubmitDate]="submissionData.lastSubmitDate"
-                    [completeStatus]="submissionData.completeStatus">
-                </app-submission-card>
+                @if (problemsets) {
+                    @for (problemset of problemsets; track $index) {
+                        @if (problemset.isActive) {
+                            <app-submission-card 
+                            [title]="problemset.title"
+                            [totalSubmissions]="problemset.submissionsLength"
+                            [lastEvaluation]="problemset.lastSubmissionScore"
+                            [lastSubmitDate]="problemset.lastSubmissionDate"
+                            [maxProblemsetScore]="problemset.maxSubmissionScore"
+                            [completeStatus]="problemset.completeStatus"
+                            [isActive]="problemset.isActive"
+                            >
+                            </app-submission-card>
+                        }
+                    }
+            }
             </div>
             <h2 class="title">Closed problems</h2>
             <div class="submissions">
-                <app-submission-card 
-                    [title]="submissionData.title"
-                    [totalSubmissions]="submissionData.totalSubmissions"
-                    [lastEvaluation]="submissionData.lastEvaluation"
-                    [lastSubmitDate]="submissionData.lastSubmitDate"
-                    [completeStatus]="submissionData.completeStatus">
-                </app-submission-card>
-                <app-submission-card 
-                [title]="submissionData.title"
-                [totalSubmissions]="submissionData.totalSubmissions"
-                [lastEvaluation]="submissionData.lastEvaluation"
-                [lastSubmitDate]="submissionData.lastSubmitDate"
-                [completeStatus]="submissionData.completeStatus">
-            </app-submission-card>
+                @if (problemsets) {
+                    @for (problemset of problemsets; track $index) {
+                        @if (!problemset.isActive) {
+                            <app-submission-card 
+                            [title]="problemset.title"
+                            [totalSubmissions]="problemset.submissionsLength"
+                            [lastEvaluation]="problemset.lastSubmissionScore"
+                            [lastSubmitDate]="problemset.lastSubmissionDate"
+                            [maxProblemsetScore]="problemset.maxSubmissionScore"
+                            [completeStatus]="problemset.completeStatus"
+                            [isActive]="problemset.isActive"
+                            >
+                            </app-submission-card>
+                    }
+                    }
+            }
             </div>
         </div>
     </section>

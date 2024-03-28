@@ -34,20 +34,42 @@ export class ProfileComponent implements OnInit{
     private profileManager: ProfileMangerService
   ){}
   
+
   
   async ngOnInit() {
     this.setCharts();
-    if(this.transferState.hasKey(makeStateKey('profileData'))){
-      this.user = this.transferState.get(makeStateKey('profileData'),null);
-      console.log('user from profile ',this.user);
-      this.latestProblemsets = this.user.latestProblemsets;
-    }else{
-      await this.loadUserData();
-      this.latestProblemsets = await this.profileManager.getSubmissionsByLimit(7);
-    }
+    await this.loadData();  
     await this.updateChartData();
   }
+
+  private async loadData() {
+    if (this.transferState.hasKey(makeStateKey('profileData'))) {
+      this.loadProfileDataFromState();
+    } else {
+      await this.loadUserData();
+      await this.loadLatestProblemsets();
+    }
+  }
+
+  private async loadLatestProblemsets() {
+    if (this.transferState.hasKey(makeStateKey('latestProblemsets'))) {
+      this.latestProblemsets = this.transferState.get(makeStateKey('latestProblemsets'), []);
+    } else {
+      await this.fetchAndStoreLatestProblemsets();
+    }
+  }
   
+  private async fetchAndStoreLatestProblemsets() {
+    this.latestProblemsets = await this.profileManager.getSubmissionsByLimit(7);
+    if (!this.transferState.hasKey(makeStateKey('latestProblemsets'))) {
+      this.transferState.set<any>(makeStateKey('latestProblemsets'), this.latestProblemsets);
+    }
+  }
+
+  private loadProfileDataFromState() {
+    this.user = this.transferState.get(makeStateKey('profileData'), null);
+    this.loadLatestProblemsets();
+  }
 
   private async loadUserData() {
     this.userData = await this.authService.checkIsUserInStorage();
@@ -71,8 +93,8 @@ export class ProfileComponent implements OnInit{
 
   async updateChartData() {
     let submissionsMap = this.latestProblemsets;
-    let maxScore = Array.from(submissionsMap.keys())[0] as number;
-    let scores = submissionsMap.get(maxScore); 
+    let maxScore = submissionsMap.maxScore;
+    let scores = submissionsMap.scores; 
     let lastSubmissionEvaluationInPercents = (scores[0]/maxScore) * 100;
     let remainingPercentage = 100 - lastSubmissionEvaluationInPercents;
     this.barData = {

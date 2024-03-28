@@ -1,7 +1,7 @@
 <main id="main" class="main">
   <section class="section">
     <div class="container">
-      <h2 class="title">Current Submissions</h2>
+      <h2 class="title">Current Problemsets</h2>
       <div class="submissions">
         <app-submission-card 
                 [title]="submissionData.title"
@@ -21,7 +21,17 @@
       <div class="summary">
         <div class="history">
           <h2 class="title">Last Submissions</h2>
-          <p class="empty">You don’t have yet</p>
+          @if(!latestSubmissions){
+            <p class="empty">You don’t have yet</p>
+          }@else {
+            @for (score of latestSubmissions.scores; track $index) {
+               <div class="sub-row">
+                <div class="index">{{$index + 1}}</div>
+                <div class="row-title">{{latestSubmissions.problemsetTitle}}</div>
+                <div class="row-evaluation">{{score}}/{{latestSubmissions.maxScore}}  </div>
+               </div>          
+            }
+          }
         </div>
         <div class="dashboard-chart">
           <p-chart
