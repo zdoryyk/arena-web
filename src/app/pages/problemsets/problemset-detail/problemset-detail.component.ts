@@ -1,23 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ChartModule } from 'primeng/chart';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { TestGroupComponent } from '../../../components/test-group/test-group.component';
 import { TestCaseComponent } from '../../../components/test-case/test-case.component';
 import { AuthService } from '../../../services/auth.service';
-import { UserData } from '../../../interfaces/user';
+import { UserData, UserProblemSetData } from '../../../interfaces/user';
+import { ProblemsetsService } from '../../../services/problemsets.service';
+import { firstValueFrom } from 'rxjs';
+import { DatePipe } from '@angular/common';
+import { data } from 'jquery';
+import { Problemset } from '../../../interfaces/problemset';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-problemset-detail',
   standalone: true,
-  imports: [RouterModule, ChartModule, TestGroupComponent, TestCaseComponent],
+  imports: [RouterModule, ChartModule, TestGroupComponent, TestCaseComponent,DatePipe],
   templateUrl: './problemset-detail.component.html',
   styleUrl: './problemset-detail.component.scss',
 })
 export class ProblemsetDetailComponent implements OnInit {
+
   private _testCaseData = [];
   user: UserData;
-
+  submissionId: string; 
+  submissionData: any;
+  problemsetData: any;
 
   get testCaseData() {
     return this._testCaseData
@@ -32,7 +41,13 @@ export class ProblemsetDetailComponent implements OnInit {
   barData: any;
   barOptions: any;
   barPlugins: any;
-  constructor(private authService: AuthService) {
+  constructor
+  (
+    private router: Router,
+    private authService: AuthService,
+    private activeRoute: ActivatedRoute,
+    private problemsetService: ProblemsetsService
+  ) {
     this._testCaseData = [
       {
         id: 1,
@@ -106,7 +121,31 @@ export class ProblemsetDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.submissionId = this.activeRoute.snapshot.paramMap.get('id');
+    this.setCharts();
     await this.loadUserData();
+    this.getSubmissionHeadData();
+  }
+
+
+  private async getSubmissionHeadData(){
+    let submissionData = await firstValueFrom(this.problemsetService.getSubmissionById(this.submissionId));
+    this.submissionData = submissionData.data;
+    let userProblemsetId = this.submissionData.relationships['user-problemset'].data.id;
+    let problemsetData = await firstValueFrom(this.problemsetService.getProblemsetByUserProblemset(userProblemsetId));
+    this.problemsetData = problemsetData.data;
+    this.problemsetData.attributes.title = this.problemsetService.trimTitleFromLastYearOrColon( this.problemsetData.attributes.title);
+    
+  }
+
+
+  routeToSubmissionList() {
+    const problemsetId = this.submissionData.relationships['user-problemset'].data.id;
+    this.router.navigate(['/problemsets-detail', problemsetId]);
+  }
+
+
+  setCharts(){
     this.barData = {
       labels: [1, 2, 3, 4, 5, 6, 7],
       datasets: [
@@ -202,4 +241,6 @@ export class ProblemsetDetailComponent implements OnInit {
       return sum + testCase[field];
     }, 0);
   }
+
+
 }

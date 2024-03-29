@@ -6,11 +6,27 @@
 }
 
 .main-title {
-    color: #F87C3C;
+    color: #000000; 
     font-family: Inter;
     font-size: 50px;
     font-weight: 700;
     text-align: center;
+}
+
+.main-title.success {
+    color: #a3d985; 
+}
+
+.main-title.danger {
+    color: #dc3545; 
+}
+
+.main-title.warning {
+    color: #f87c3c; 
+}
+
+.main-title.info {
+    color: #17a2b8; 
 }
 
 .single-progress {
@@ -30,7 +46,7 @@
 }
 
 .single-progress-divide {
-    color: #040404;
+    color: #040404; 
     font-family: Inter;
     font-size: 25px;
     font-style: normal;
@@ -40,9 +56,24 @@
     padding-top: 20px;
 }
 
+.single-progress-divide.success {
+    color: #a3d985;
+}
+
+.single-progress-divide.danger {
+    color: #dc3545;
+}
+
+.single-progress-divide.warning {
+    color: #f87c3c;
+}
+
+.single-progress-divide.info {
+    color: #17a2b8;
+}
+
 .single-task-bar {
     border-radius: 13px;
-    background: #F87C3C;
     padding: 8px 31px;
     color: #FFF;
     font-family: Inter;
@@ -50,6 +81,22 @@
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+}
+
+.single-task-bar.success {
+    background:  #a3d985;;
+}
+
+.single-task-bar.danger {
+    background: #dc3545; 
+}
+
+.single-task-bar.warning {
+    background: #f87c3c;
+}
+
+.single-task-bar.info {
+    background: #17a2b8;
 }
 
 .submissions {
@@ -88,3 +135,18 @@
         justify-content: center;
     }
 }
+
+@media (min-width: 1200px) and (max-width: 1900px) {
+    
+    .head {
+        width: 66rem;
+    }
+}
+
+@media (min-width: 1904px) {
+   
+    .submissions {
+        max-width: 1900px;
+    }
+}
+

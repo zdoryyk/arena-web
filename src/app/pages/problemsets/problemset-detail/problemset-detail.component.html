@@ -2,39 +2,45 @@
   <section class="section">
     <div class="container">
       <div class="details-head">
-        <h2 class="main-title">TOP SECRET</h2>
+        @if (problemsetData) {
+        <h2 class="main-title">{{problemsetData.attributes.title}}</h2>
+        }@else { <h2 class="main-title">Loading..</h2>}
         <div class="single-progress">
-          <span class="single-progress-divide">30/100</span>
+          @if (submissionData && problemsetData) {
+            <span class="single-progress-divide">{{submissionData.attributes.score}}/{{problemsetData.attributes['max-score']}}</span>
+          }@else {<span class="single-progress-divide">..</span>}
         </div>
       </div>
       <div class="details-info">
-        <div class="details-bar">Submission detail</div>
+        <div class="details-bar">SUBMISSION SUMMARY</div>
         <div class="details-frame">
-          <p class="details-heading">Summary</p>
           <ul class="details-list">
             <li class="detail-list-item">
               <p>Author</p>
-              <span class="user">Danil Zdoryk</span>
-            </li>
-            <li class="detail-list-item">
-              <p>Problem</p>
-              <span>OOP 2022 Project Ellen</span>
+              @if (user) {
+                <span class="user">{{user.attributes['first-name']}} {{user.attributes['last-name']}}</span>
+              }
             </li>
             <li class="detail-list-item">
               <p>Submission ID</p>
-              <span>f2f7dad4-b85d-48c8-a71a-1e2edcfff601</span>
+              <span>{{submissionId}}</span>
             </li>
-            <li class="detail-list-item">
+            <!-- <li class="detail-list-item">
               <p>Submited on</p>
               <span>Dec. 3, 2022, 15:24</span>
-            </li>
+            </li> -->
             <li class="detail-list-item">
               <p>Evaluated on</p>
-              <span>Dec. 3, 2022, 18:02</span>
+              @if (submissionData) {
+              <span>{{submissionData.attributes['date-evaluated'] | date : 'MMM. d, y, HH:mm'}}</span>
+              }
             </li>
             <li class="detail-list-item">
               <p>Summary score</p>
-              <span><b>84.50</b> out of 100 <b>(84.50%)</b></span>
+              @if (submissionData && problemsetData) {
+                <span><b>{{submissionData.attributes.score}}</b> out of {{problemsetData.attributes['max-score']}} <b>
+                  ({{(submissionData.attributes.score/problemsetData.attributes['max-score']) * 100}}%)</b></span>
+              }
             </li>
           </ul>
 
@@ -51,8 +57,8 @@
                 SSH
               </a>
             </li>
-            <li class="tools-item">
-              <a href="#">
+            <li (click)="routeToSubmissionList()" class="tools-item">
+              <a>
                 <img src="assets/icons/list.svg" alt="list" />
                 SUBMISSION LIST
               </a>

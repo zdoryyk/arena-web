@@ -10,6 +10,7 @@ import { AdminCourseComponent } from './pages/admin/admin-course/admin-course.co
 import { EmptyComponent } from './pages/empty/empty.component';
 import { AuthGuard } from './guards/auth.guard';
 import { TeacherGuard } from './guards/teacher.guard';
+import { ProblemestsDetailComponent } from './pages/problemsets/problemests-detail/problemests-detail.component';
 
 
 export const routes: Routes = [
@@ -39,7 +40,12 @@ export const routes: Routes = [
     canActivate: [AuthGuard], 
   },
   {
-    path: 'problemset-detail',
+    path: 'problemsets-detail/:id',
+    component: ProblemestsDetailComponent,
+    canActivate: [AuthGuard], 
+  },
+  {
+    path: 'problemset-detail/:id',
     component: ProblemsetDetailComponent,
     canActivate: [AuthGuard]
   },

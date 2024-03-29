@@ -37,11 +37,9 @@ export class ProblemsetsComponent implements OnInit{
     await this.loadUserProblemsets();
   }
 
-
-
   private async loadUserProblemsets(){
     let userProblemsets = await firstValueFrom(this.problemsetService.getUserProblemsets());
-    for(const userProblemset of userProblemsets.data){
+    for(const userProblemset of userProblemsets.data.reverse()){
       let problemset = await firstValueFrom(this.problemsetService.getProblemsetDetailById(userProblemset.relationships.problemset.data.id));
       let submissions = await firstValueFrom(this.problemsetService.getUserSubmissionByProblemset(userProblemset.id));
       let lastSubmission = submissions.data[0];      
@@ -52,6 +50,7 @@ export class ProblemsetsComponent implements OnInit{
       const submissionsLength = submissions.data.length;
       const lastScore = lastSubmission.attributes.score;
       const lastSubmitted = lastSubmission.attributes['date-evaluated'];
+      
       let completeStatus =new Map<string, string>([
         ['warning','Task Incompleted'],
       ])
@@ -60,8 +59,9 @@ export class ProblemsetsComponent implements OnInit{
           ['success','Task completed'],
         ])
       }
+      
       let problemsetExtra:ProblemsetExtra = {
-        problemset: problemset,
+        id: userProblemset.id,
         title: this.trimTitleFromLastYearOrColon(title),
         submissionsLength: submissionsLength,
         lastSubmissionScore: lastScore,
@@ -71,11 +71,8 @@ export class ProblemsetsComponent implements OnInit{
         completeStatus: completeStatus
       };
       this.problemsets = [...this.problemsets,problemsetExtra];
-    }
-
-    console.log(this.problemsets);
+    }  
     this.tranferState.set<ProblemsetExtra[]>(makeStateKey('problemsetsCards'),this.problemsets);
-    
   }
 
 

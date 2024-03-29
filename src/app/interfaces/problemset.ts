@@ -1,5 +1,5 @@
 export interface ProblemsetExtra {
-  problemset: Problemset,
+  id: string,
   title: string,
   submissionsLength: number,
   lastSubmissionScore: number,

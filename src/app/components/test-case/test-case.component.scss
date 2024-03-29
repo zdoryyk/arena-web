@@ -38,6 +38,10 @@
 .test-right button {
   display: flex;
   align-items: center;
+  border: none; 
+  background: none;
+  padding: 0;
+  outline: none;
 }
 
 .rotate {

@@ -15,9 +15,9 @@
         ><span>{{ assessment }}</span>
       </div>
       <button>
-        <img src="assets/icons/check.svg" alt="check" *ngIf="checkBtnVisible" />
-        <img src="assets/icons/close.svg" alt="close" *ngIf="closeBtnVisible" />
-        <img src="assets/icons/minus.svg" alt="minus" *ngIf="minusBtnVisible" />
+        @if (checkBtnVisible){<img src="assets/icons/check.svg" alt="check"/>}
+        @if (closeBtnVisible){<img src="assets/icons/close.svg" alt="close"/>}
+        @if (minusBtnVisible){<img src="assets/icons/minus.svg" alt="minus"/>}
       </button>
     </div>
   </div>

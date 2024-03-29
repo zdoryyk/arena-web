@@ -7,13 +7,13 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-// import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 
 @Component({
   selector: 'app-test-case',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,MatIconModule],
   templateUrl: './test-case.component.html',
   styleUrl: './test-case.component.scss',
 })
@@ -37,6 +37,17 @@ export class TestCaseComponent implements OnInit {
   isCompetedVisible: string = '';
   bgColor: string;
   @Output() dataToParent = new EventEmitter<string>();
+
+
+
+  constructor(
+  ){
+   
+  }
+
+
+
+
 
   onToggle(): void {
     this.contentHeight = this.contentDiv.nativeElement.offsetHeight + 'px';

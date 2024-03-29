@@ -7,17 +7,18 @@
                     @for (problemset of problemsets; track $index) {
                         @if (problemset.isActive) {
                             <app-submission-card 
+                            [id]="problemset.id"
                             [title]="problemset.title"
                             [totalSubmissions]="problemset.submissionsLength"
                             [lastEvaluation]="problemset.lastSubmissionScore"
                             [lastSubmitDate]="problemset.lastSubmissionDate"
                             [maxProblemsetScore]="problemset.maxSubmissionScore"
                             [completeStatus]="problemset.completeStatus"
-                            [isActive]="problemset.isActive"
+                            [isActive]="true"
                             >
                             </app-submission-card>
-                        }
                     }
+                }
             }
             </div>
             <h2 class="title">Closed problems</h2>
@@ -26,16 +27,17 @@
                     @for (problemset of problemsets; track $index) {
                         @if (!problemset.isActive) {
                             <app-submission-card 
+                            [id]="problemset.id"
                             [title]="problemset.title"
                             [totalSubmissions]="problemset.submissionsLength"
                             [lastEvaluation]="problemset.lastSubmissionScore"
                             [lastSubmitDate]="problemset.lastSubmissionDate"
                             [maxProblemsetScore]="problemset.maxSubmissionScore"
                             [completeStatus]="problemset.completeStatus"
-                            [isActive]="problemset.isActive"
+                            [isActive]="false"
                             >
                             </app-submission-card>
-                    }
+                        }
                     }
             }
             </div>

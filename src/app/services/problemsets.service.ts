@@ -58,6 +58,14 @@ export class ProblemsetsService {
     });
   }
 
+  getProblemsetByUserProblemset(id: string): Observable<any> {
+    return this.http.get<any>(`${environment.api_url}/user-problemsets/${id}/problemset`, {
+      headers: {
+        "Authorization": `token ${localStorage.getItem("arena-token")}`
+      }
+    });
+  }
+
   getProblemSetDetailsByProblemsetId(id: string): Observable<any> {
     return this.http.get<any>(`${environment.api_url}/problemsets/${id}`, {
       headers: {
@@ -65,4 +73,39 @@ export class ProblemsetsService {
       }
     });
   }
-}
+
+  getSubmissionTasks(submissionId: string): Observable<any> {
+    var routePath = environment.api_url + "/submissions/" + submissionId + "/tasks";
+    return this.http.get<any>(routePath, {
+      headers: {
+        "Authorization": 'token ' + localStorage.getItem("arena-token")
+      }
+    });
+  }
+
+  getSubmissionById(submissionId: string): Observable<any> {
+    var routePath = environment.api_url + "/submissions/" + submissionId;
+    return this.http.get<any>(routePath, {
+      headers: {
+        "Authorization": 'token ' + localStorage.getItem("arena-token")
+      }
+    });
+  }
+
+
+  trimTitleFromLastYearOrColon(title: string): string {
+    const lastYearMatch = title.match(/\d{4}(?!.*\d{4})/); // Ищем последний год
+    const lastYearIndex = lastYearMatch ? lastYearMatch.index + 4 : -1; // +4, чтобы перейти за год
+  
+    const lastColonIndex = title.lastIndexOf(":");
+  
+    let startIndex = Math.max(lastYearIndex, lastColonIndex);
+  
+    if (title[startIndex] === " " || title[startIndex] === ":") {
+      startIndex++;
+    }
+  
+    return title.substring(startIndex).trim();
+  }
+
+} 

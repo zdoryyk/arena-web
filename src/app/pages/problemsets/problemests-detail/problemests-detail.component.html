@@ -2,47 +2,39 @@
     <section class="section">
         <div class="container">
             <div class="head">
-                <h2 class="main-title">TOP SECRET</h2>
+                @if (problemset) {
+                    <h2 class="main-title {{submissions[0].completeStatus.keys().next().value }} ">{{problemset.attributes.title}}</h2>
+                }@else {
+                    <h2 class="main-title">loading..</h2>
+                }
                 <div class="single-progress">
-                    <span class="single-progress-divide">30/100</span>
+                    @if (problemset && submissions) {
+                        <span class="single-progress-divide {{submissions[0].completeStatus.keys().next().value }} ">{{submissions[0].attributes.score}}/{{problemset.attributes['max-score']}}</span>
+                    }@else{
+                        <span class="single-progress-divide">...</span>
+                    }
                 </div>
-                <div class="single-task-bar">
-                    2 submissions
+                <div class="single-task-bar {{submissions[0].completeStatus.keys().next().value }}">
+                    @if (submissions) {
+                        {{submissions.length}} submissions
+                    }@else {loading..}
                 </div>
             </div>
             <div class="submissions">
-                <div class="submission" [routerLink]="['/problemset-detail']">
-                    <div class="submission-data">
-                        <div class="submission-top">
-                            <div class="submission-stats">
-                                <h3 class="submission-heading warning">TOP SECRET</h3>
-                                <p class="submission-subtext">10 submissions</p>
-                            </div>
-                            <div class="submission-stats">
-                                <h3 class="submission-heading warning">30%</h3>
-                                <p class="submission-rating">30/100</p>
-                            </div>
-                        </div>
-                        <p class="submission-date">March. 1, 2022, 15:02</p>
-                    </div>
-                    <p class="submission-status warning-bg">Task Complete</p>
-                </div>
-                <div class="submission">
-                    <div class="submission-data">
-                        <div class="submission-top">
-                            <div class="submission-stats">
-                                <h3 class="submission-heading danger">PROBLEMS TO SOLVE</h3>
-                                <p class="submission-subtext">10 submissions</p>
-                            </div>
-                            <div class="submission-stats">
-                                <h3 class="submission-heading danger">0%</h3>
-                                <p class="submission-rating">0/100</p>
-                            </div>
-                        </div>
-                        <p class="submission-date">March. 1, 2022, 18:02</p>
-                    </div>
-                    <p class="submission-status danger-bg">Compilation Error</p>
-                </div>
+                @if(submissions){
+                    @for (submission of submissions; track $index) {
+                        <app-submission-detail-card 
+                            [id]="submission.id"
+                            [title]="problemset.attributes.title"
+                            [lastSubmitDate]="submission.attributes['date-evaluated']"
+                            [lastEvaluation]="submission.attributes.score"
+                            [maxProblemsetScore]="problemset.attributes['max-score']"
+                            [completeStatus]="submission.completeStatus"
+                            >
+                        </app-submission-detail-card>
+                    }
+
+                }
             </div>
         </div>
     </section>
