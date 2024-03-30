@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
@@ -92,6 +94,13 @@ export class ProblemsetsService {
     });
   }
 
+  async getLimitedSubmissionsByUserProblemsetId(limit: number, problemsetId: string): Promise<any> {
+    const submissionsData = await firstValueFrom(this.getUserSubmissionByProblemset(problemsetId));
+    const actualLimit = Math.min(submissionsData.data.length, limit);
+    const limitedSubmissions = submissionsData.data.slice(0, actualLimit);
+    
+    return limitedSubmissions; 
+}
 
   trimTitleFromLastYearOrColon(title: string): string {
     const lastYearMatch = title.match(/\d{4}(?!.*\d{4})/); // Ищем последний год

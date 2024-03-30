@@ -9,9 +9,9 @@ import { UserData, UserProblemSetData } from '../../../interfaces/user';
 import { ProblemsetsService } from '../../../services/problemsets.service';
 import { firstValueFrom } from 'rxjs';
 import { DatePipe } from '@angular/common';
-import { data } from 'jquery';
-import { Problemset } from '../../../interfaces/problemset';
-import { environment } from '../../../../environments/environment';
+import { Submission } from '../../../interfaces/interfaces';
+import { NgZone } from '@angular/core';
+
 
 @Component({
   selector: 'app-problemset-detail',
@@ -27,6 +27,9 @@ export class ProblemsetDetailComponent implements OnInit {
   submissionId: string; 
   submissionData: any;
   problemsetData: any;
+  submissionTasks: Submission[] = [];
+  submissionsBefore: any[] = [];
+  routePaths: string[] = [];
 
   get testCaseData() {
     return this._testCaseData
@@ -46,7 +49,8 @@ export class ProblemsetDetailComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private activeRoute: ActivatedRoute,
-    private problemsetService: ProblemsetsService
+    private problemsetService: ProblemsetsService,
+    private ngZone: NgZone,
   ) {
     this._testCaseData = [
       {
@@ -124,34 +128,23 @@ export class ProblemsetDetailComponent implements OnInit {
     this.submissionId = this.activeRoute.snapshot.paramMap.get('id');
     this.setCharts();
     await this.loadUserData();
-    this.getSubmissionHeadData();
+    await this.getSubmissionHeadData();
+    await this.getSubmissionsScoresBeforeAndReloadChart();
   }
 
 
-  private async getSubmissionHeadData(){
-    let submissionData = await firstValueFrom(this.problemsetService.getSubmissionById(this.submissionId));
-    this.submissionData = submissionData.data;
-    let userProblemsetId = this.submissionData.relationships['user-problemset'].data.id;
-    let problemsetData = await firstValueFrom(this.problemsetService.getProblemsetByUserProblemset(userProblemsetId));
-    this.problemsetData = problemsetData.data;
-    this.problemsetData.attributes.title = this.problemsetService.trimTitleFromLastYearOrColon( this.problemsetData.attributes.title);
-    
-  }
 
 
-  routeToSubmissionList() {
-    const problemsetId = this.submissionData.relationships['user-problemset'].data.id;
-    this.router.navigate(['/problemsets-detail', problemsetId]);
-  }
-
-
-  setCharts(){
+  private async getSubmissionsScoresBeforeAndReloadChart(){
+    const id = this.submissionData.relationships['user-problemset']['data']['id'];
+    this.submissionsBefore = (await this.problemsetService.getLimitedSubmissionsByUserProblemsetId(7, id));
+    this.routePaths = this.submissionsBefore.map(submission => `http://localhost:4500/problemset-detail/${submission.id}`);
     this.barData = {
-      labels: [1, 2, 3, 4, 5, 6, 7],
+      labels: this.submissionsBefore.map((_, index) => index + 1),
       datasets: [
         {
           label: '',
-          data: [65, 59, 79, 41, 56, 55, 40],
+          data: this.submissionsBefore.map(submission => submission.attributes.score),
           barPercentage: 0.6,
           backgroundColor: (color: any) => {
             const highestIndex = this.barData.datasets[0].data.indexOf(
@@ -162,8 +155,35 @@ export class ProblemsetDetailComponent implements OnInit {
         },
       ],
     };
+  }
 
+  private async getSubmissionHeadData(){
+    let submissionData = await firstValueFrom(this.problemsetService.getSubmissionById(this.submissionId));
+    this.submissionData = submissionData.data;
+    let userProblemsetId = this.submissionData.relationships['user-problemset'].data.id;
+    let problemsetData = await firstValueFrom(this.problemsetService.getProblemsetByUserProblemset(userProblemsetId));
+    this.problemsetData = problemsetData.data;
+    this.problemsetData.attributes.title = this.problemsetService.trimTitleFromLastYearOrColon( this.problemsetData.attributes.title);
+  }    
+
+  routeToSubmissionList() {
+    const problemsetId = this.submissionData.relationships['user-problemset'].data.id;
+    this.router.navigate(['/problemsets-detail', problemsetId]);
+  }
+
+
+  setCharts(){
     this.barOptions = {
+      onClick: (event, elements, chart) => {
+        if (elements.length > 0) {
+          const firstElementIndex = elements[0].index;
+          const urls = this.routePaths;
+          const url = urls[firstElementIndex];
+          if (url) {
+            window.location.href = url;
+          }
+        }
+      },
       plugins: {
         legend: {
           display: false,

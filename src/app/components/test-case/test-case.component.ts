@@ -38,16 +38,7 @@ export class TestCaseComponent implements OnInit {
   bgColor: string;
   @Output() dataToParent = new EventEmitter<string>();
 
-
-
-  constructor(
-  ){
-   
-  }
-
-
-
-
+  
 
   onToggle(): void {
     this.contentHeight = this.contentDiv.nativeElement.offsetHeight + 'px';
