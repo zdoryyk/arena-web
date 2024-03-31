@@ -64,6 +64,7 @@ export class AdminCourseComponent implements OnInit{
 
 
   ngOnInit(): void {
+    console.log(window.innerWidth);
     this.course = {
       type: '',
       id: '', 

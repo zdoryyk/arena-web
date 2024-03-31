@@ -2,7 +2,7 @@
     <div class="card-data">
         <div class="card-top">
             <div class="card-stats">
-                <h3 class="card-heading-blue">{{title}}</h3>
+                <h3 class="card-heading-blue  {{title.length < 20 ? 'big': title.length < 27 ? 'small' : 'smallest'}} ">{{title}}</h3>
                 <div class="card-subtexts"> 
                     <p class="card-subtext">Course name</p>
                     <p class="card-subtext-groups">{{ groups }} groups</p>

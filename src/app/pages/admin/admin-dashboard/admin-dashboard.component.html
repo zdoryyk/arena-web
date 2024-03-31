@@ -17,13 +17,18 @@
             </div>
             <h1 class="title">Active Problemsets</h1>
             <div class="problemsets">
-               @for (problemset of problemsets; track $index) {
+                <app-problemset-card
+                    [id]="123"
+                    [title]="'Hello'"
+                    [created]="da">
+                </app-problemset-card>
+               <!-- @for (problemset of problemsets; track $index) {
                     <app-problemset-card
                     [id]="problemset.id"
                     [title]="problemset.attributes.title"
                     [created]="problemset.attributes['date-start']">
-                </app-problemset-card>
-               }
+                </app-problemset-card> -->
+               <!-- } -->
             </div>
             <h1 class="title">Active Courses</h1>
 

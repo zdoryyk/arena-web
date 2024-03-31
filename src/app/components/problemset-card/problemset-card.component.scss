@@ -29,6 +29,16 @@
     font-size: 30px;
     font-weight: 700;
     color: #4D93FD;
+
+    &.smallest {
+      font-size: 21px;
+    }
+    &.small {
+      font-size: 23px; 
+    }
+    &.big {
+      font-size: 30px; 
+    }
   }
   
   .card-heading-grey {
@@ -93,19 +103,20 @@
     background: #4D93FD;
     color: #fff;
     text-align: center;
+    margin-top: 10px;
   }
   
   .custom-icon-size {
-    width: 24px; /* Примерный размер */
-    height: 24px; /* Примерный размер */
-    vertical-align: middle; /* Помогает выравнивать иконки и текст */
+    width: 24px; 
+    height: 24px;
+    vertical-align: middle;
   }
   
   .card-status {
-    margin: 0; /* Убираем внешние отступы */
-    display: flex; /* Помогает с выравниванием, если внутри несколько строк текста */
-    align-items: center; /* Выравниваем текст по центру по вертикали */
-    vertical-align: middle; /* Для дополнительной коррекции выравнивания */
+    margin: 0; 
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
   }
   
   .blue-bg {
@@ -123,6 +134,7 @@
   
   
   @media (max-width: 576px) {
+
     .card {
       width: 350px;
     }
@@ -151,10 +163,16 @@
     .card-status.blue-bg {
       font-size: 16px; 
       padding: 5px 15px; 
+      margin-top: 28px;
     }
   
     .card-status.green-bg {
       font-size: 16px;
       padding: 5px 15px;
+      margin-top: 28px;
+
     }
+
+
+
   }

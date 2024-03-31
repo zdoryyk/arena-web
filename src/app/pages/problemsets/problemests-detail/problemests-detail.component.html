@@ -2,7 +2,7 @@
     <section class="section">
         <div class="container">
             <div class="head">
-                @if (problemset) {
+                @if (problemset && submissions) {
                     <h2 class="main-title {{submissions[0].completeStatus.keys().next().value }} ">{{problemset.attributes.title}}</h2>
                 }@else {
                     <h2 class="main-title">loading..</h2>
@@ -14,11 +14,15 @@
                         <span class="single-progress-divide">...</span>
                     }
                 </div>
-                <div class="single-task-bar {{submissions[0].completeStatus.keys().next().value }}">
-                    @if (submissions) {
+                @if(submissions){
+                    <div class="single-task-bar {{submissions[0].completeStatus.keys().next().value }}">
                         {{submissions.length}} submissions
-                    }@else {loading..}
+                    </div>
+                }@else{
+                <div class="single-task-bar warning">
+                        loading submissions
                 </div>
+                }
             </div>
             <div class="submissions">
                 @if(submissions){

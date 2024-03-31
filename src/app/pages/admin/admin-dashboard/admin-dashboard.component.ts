@@ -30,6 +30,7 @@ export class AdminDashboardComponent implements OnInit {
   isLecturer: boolean = false;
   totalSubmissions = 0;
   totalGroups = 0;
+  da = Date.now();
 
 
   constructor(

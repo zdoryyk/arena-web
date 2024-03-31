@@ -47,8 +47,6 @@ export class LoginComponent implements OnInit{
     var casToken = {
       "cas_token": casTokenValue
     };
-    console.log(casTokenValue);
-    
     this.tokenSubscription = this.loginService.getToken(casToken).subscribe(resultToken => {
       this.userSubscription = this.loginService.getUserMe(resultToken.token).subscribe(resultUser => {
         console.log(resultUser)

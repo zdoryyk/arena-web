@@ -3,6 +3,7 @@ import { Injectable, TransferState } from '@angular/core';
 import { AuthService } from './auth.service';
 import { ProblemsetsService } from './problemsets.service';
 import { CourseDetailService } from './course-detail.service';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -53,8 +54,11 @@ export class ProfileMangerService {
 
    async getSubmissionsByLimit(limit: number): Promise<any> {
     let user = await this.authService.checkIsUserInStorage();
-    let userProblemsets = await this.problemsetService.getUserProblemsetsByUserId(user.id).toPromise();
-
+    let userProblemsets = await firstValueFrom(this.problemsetService.getUserProblemsetsByUserId(user.id));
+    if(userProblemsets.data.length == 0){
+      return;
+    }
+    
     let lastUserProblemset = userProblemsets.data.reduce((max, problemset) => problemset.id > max.id ? problemset : max, userProblemsets.data[0]);
     let problemsetId = lastUserProblemset.relationships.problemset.data.id;
     

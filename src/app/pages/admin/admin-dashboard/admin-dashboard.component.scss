@@ -16,7 +16,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; /* Центрирование содержимого карты по горизонтали */
+  align-items: center;
 }
   
   .card-icon {
@@ -46,29 +46,29 @@
     margin-bottom: 90px;
 }
 
-  /* For mobile devices */
-  @media (max-width: 575px) {
-    .cards {
-      flex-direction: column; 
-      gap: 20px; 
-    }
-    .card {
-      width: 100%; 
-     
-    }
+@media (max-width: 575px) {
+  .cards {
+    flex-direction: column;
+    gap: 20px;
   }
+  .card {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .problemsets{
+    justify-content: center;
+    align-items: center;
+  }
+}
   
-  /* For tablets and small desktops, you can keep the original flex-row layout or make any adjustments as needed */
   @media (min-width: 576px) and (max-width: 991px) {
-    /* Your styles for tablets and small desktops here */
   }
   
-  /* For larger desktops */
   @media (min-width: 992px) {
-    /* Your styles for larger desktops here */
   }
   
   @media (min-width: 1400px) {
-    /* Your styles for very large screens here */
   }
   

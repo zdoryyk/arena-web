@@ -66,9 +66,6 @@ export class GroupDetailComponent implements OnInit,OnChanges,OnDestroy {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['problemsets'] && this.problemsets) {
         console.log('Problemsets received: ', this.problemsets);
-        // You can call loadGroupDetails here if it depends on problemsets being set
-        // this.loadGroupDetails(this.groups);
-        
     }
 }
 
@@ -102,7 +99,6 @@ export class GroupDetailComponent implements OnInit,OnChanges,OnDestroy {
                 data: userData.data
               };
               this.students = [...this.students,studentNew];
-              console.log('new student, ', studentNew);
             }
           }
         } catch (error) {

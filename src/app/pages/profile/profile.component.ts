@@ -6,6 +6,7 @@ import {  ExtendedUserProfile, UserData } from '../../interfaces/user';
 import { LoginService } from '../login/login.service';
 import { AuthService } from '../../services/auth.service';
 import { ProfileMangerService } from '../../services/profile-manger.service';
+import { retry } from 'rxjs';
 
 
 
@@ -92,6 +93,9 @@ export class ProfileComponent implements OnInit{
 
 
   async updateChartData() {
+    if(!this.latestProblemsets){
+      return;
+    }
     let submissionsMap = this.latestProblemsets;
     let maxScore = submissionsMap.maxScore;
     let scores = submissionsMap.scores; 
@@ -174,7 +178,7 @@ export class ProfileComponent implements OnInit{
         labels: ['Last Submission'],
         datasets: [
           {
-            data: [99, 17], // [max: 100, 116 - [1]]
+            data: [0, 16], // [max: 100, 116 - [1]]
             backgroundColor: ['#A9BEF4', 'transparent'],
             cutout: 115,
             borderWidth: 0,
@@ -197,7 +201,7 @@ export class ProfileComponent implements OnInit{
         labels: ['Earned points'],
         datasets: [
           {
-            data: [332, 684], // [max: 100, 1016 - [1]]
+            data: [0, 382], // [max: 100, 1016 - [1]]
             backgroundColor: ['#cf93cd', 'transparent'],
             cutout: 115,
             borderWidth: 0,
@@ -264,7 +268,7 @@ export class ProfileComponent implements OnInit{
         datasets: [
           {
             label: '',
-            data: [5, 59, 80, 41, 56, 35, 40],
+            data: [2, 2, 2, 2, 2, 2, 2],
             backgroundColor: '#1B59F8',
             borderRadius: 50,
             barPercentage: 0.5,

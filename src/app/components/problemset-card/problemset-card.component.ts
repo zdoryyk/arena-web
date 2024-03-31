@@ -34,12 +34,27 @@ export class ProblemsetCardComponent {
   }
   
   ngOnInit(): void {
-    
+    this.title = this.trimTitleFromLastYearOrColon(this.title);
   }
 
   navigateToDetail(): void {
     console.log(this.id);
     this.router.navigate(['/admin-course', this.id]);
+  }
+
+  private trimTitleFromLastYearOrColon(title: string): string {
+    const lastYearMatch = title.match(/\d{4}(?!.*\d{4})/); // Ищем последний год
+    const lastYearIndex = lastYearMatch ? lastYearMatch.index + 4 : -1; // +4, чтобы перейти за год
+  
+    const lastColonIndex = title.lastIndexOf(":");
+  
+    let startIndex = Math.max(lastYearIndex, lastColonIndex);
+  
+    if (title[startIndex] === " " || title[startIndex] === ":") {
+      startIndex++;
+    }
+  
+    return title.substring(startIndex).trim();
   }
 
 }

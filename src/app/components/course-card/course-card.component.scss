@@ -22,6 +22,16 @@
     font-size: 30px;
     font-weight: 700;
     color: #8FBE48;
+
+    &.smallest {
+      font-size: 14px;
+    }
+    &.small {
+      font-size: 20px; 
+    }
+    &.big {
+      font-size: 30px; 
+    }
   }
   
   .card-heading-blue {
@@ -29,6 +39,17 @@
     font-size: 30px;
     font-weight: 700;
     color: #4D93FD;
+
+    &.smallest {
+      font-size: 14px;
+    }
+    &.small {
+      font-size: 20px; 
+    }
+    &.big {
+      font-size: 30px; 
+    }
+
   }
   
   .card-heading-grey {
@@ -151,10 +172,14 @@
     .card-status.blue-bg {
       font-size: 16px; 
       padding: 5px 15px; 
+      margin-top: 28px;
     }
   
     .card-status.green-bg {
       font-size: 16px;
       padding: 5px 15px;
+      margin-top: 28px;
     }
+
+    
   }

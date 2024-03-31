@@ -26,7 +26,6 @@ export class ProblemestsDetailComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private problemsetService: ProblemsetsService,
-    private tranferState: TransferState,
     private activeRoute: ActivatedRoute,
   ){}
 
@@ -52,16 +51,12 @@ export class ProblemestsDetailComponent implements OnInit {
       }
       sub.completeStatus = completeStatus;
     });
-
-    console.log(this.submissions);
-    
   }
 
   private async getProblemsetData(){
     let problemsetData = await firstValueFrom(this.problemsetService.getProblemsetByUserProblemset(this.problemsetId));
     this.problemset = problemsetData.data;
     this.problemset.attributes.title = this.problemsetService.trimTitleFromLastYearOrColon(this.problemset.attributes.title);
-    console.log(this.problemset);
     
   }
 
@@ -73,8 +68,5 @@ export class ProblemestsDetailComponent implements OnInit {
 
   private async loadUserData() {
     this.user = await this.authService.checkIsUserInStorage();
-    console.log('user, ', this.user);
   }
-
- 
 }
