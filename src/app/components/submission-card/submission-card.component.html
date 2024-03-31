@@ -1,4 +1,4 @@
-<div class="submission" [routerLink]="['/problemsets-detail',id]" >
+<div class="submission" [routerLink]="['/problemsets-detail',id]">
     <div class="submission-data">
         <div class="submission-top">
             <div class="submission-stats">
@@ -8,12 +8,11 @@
                 }
             </div>
             <div class="submission-stats">
-                <h3 class="submission-heading {{completeStatus.keys().next().value }} big">{{ maxProblemsetScore > 0 ? ((lastEvaluation / maxProblemsetScore) * 100 | number:'1.0') : 0 }}%</h3>
+                <h3 class="submission-heading {{completeStatus.keys().next().value }} big">{{ maxProblemsetScore > 0 ? ((lastEvaluation / maxProblemsetScore) * 100 | number:'1.0-1') : 0 }}%</h3>
                 <p class="submission-rating">{{lastEvaluation}}/{{maxProblemsetScore}}</p>
             </div>
         </div>
         <p class="submission-date">{{lastSubmitDate | date : 'MMM. d, y, HH:mm'}}</p>
     </div>
-    <!-- TODO ADD STATUSES -->
     <p class="submission-status {{completeStatus.keys().next().value }}-bg">{{completeStatus.values().next().value }}</p>
 </div>

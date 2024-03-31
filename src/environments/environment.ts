@@ -10,7 +10,7 @@
 export const environment = {
   production: false,
   api_url: "https://arena.kpi.fei.tuke.sk/api/v1",
-  base_url: "https://arena-seven.vercel.app"
+  base_url: "http://localhost:4500/"
 };
   
 /*
