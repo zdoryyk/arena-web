@@ -8,7 +8,7 @@ import { AuthService } from '../../../services/auth.service';
 import { UserData, UserProblemSetData } from '../../../interfaces/user';
 import { ProblemsetsService } from '../../../services/problemsets.service';
 import { firstValueFrom } from 'rxjs';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Submission } from '../../../interfaces/interfaces';
 import { NgZone } from '@angular/core';
 
@@ -16,7 +16,7 @@ import { NgZone } from '@angular/core';
 @Component({
   selector: 'app-problemset-detail',
   standalone: true,
-  imports: [RouterModule, ChartModule, TestGroupComponent, TestCaseComponent,DatePipe],
+  imports: [RouterModule, ChartModule, TestGroupComponent, TestCaseComponent,DatePipe,CommonModule],
   templateUrl: './problemset-detail.component.html',
   styleUrl: './problemset-detail.component.scss',
 })

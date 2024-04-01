@@ -3,7 +3,7 @@
     <div class="container">
       <div class="details-head">
         @if (problemsetData) {
-        <h2 class="main-title">{{problemsetData.attributes.title}}</h2>
+        <h2 class="main-title">{{problemsetData.attributes.title | uppercase}}</h2>
         }@else { <h2 class="main-title">Loading..</h2>}
         <div class="single-progress">
           @if (submissionData && problemsetData) {
