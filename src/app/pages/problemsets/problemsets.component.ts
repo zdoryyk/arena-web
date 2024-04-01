@@ -5,20 +5,19 @@ import { SubmissionCardComponent } from '../../components/submission-card/submis
 import { AuthService } from '../../services/auth.service';
 import { UserData } from '../../interfaces/user';
 import { ProblemsetExtra } from '../../interfaces/problemset';
-import { ProblemsetsService } from '../../services/problemsets.service';
-import { firstValueFrom } from 'rxjs';
-import { log } from 'console';
 import { ProblemsetManagerService } from '../../services/problemset-manager.service';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-problemsets',
   standalone: true,
-  imports: [RouterModule,SubmissionCardComponent],
+  imports: [RouterModule,SubmissionCardComponent,SkeletonModule],
   templateUrl: './problemsets.component.html',
   styleUrl: './problemsets.component.scss'
 })
 export class ProblemsetsComponent implements OnInit{
 
+  isLoading = true;
   user: UserData;
   problemsets: ProblemsetExtra[] = [];
   constructor
@@ -33,9 +32,10 @@ export class ProblemsetsComponent implements OnInit{
     await this.loadUserData();
     if(this.transferState.hasKey(makeStateKey('problemsetsCards'))){
         this.problemsets = this.transferState.get(makeStateKey('problemsetsCards'),null);
-        return;
-    }
+    }else{
     this.problemsets = await this.problemsetManager.loadUserProblemsets();
+    }
+    this.isLoading = false;
   }
 
 

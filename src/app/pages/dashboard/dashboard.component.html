@@ -3,7 +3,10 @@
     <div class="container">
       <h2 class="title">Current Problemsets</h2>
       <div class="submissions">
-        @if (problemsets) {
+        @if (isLoading) {
+          <div class="skeleton"><p-skeleton width="100%" height="100%" ></p-skeleton></div>
+        }
+        @if (problemsets && !isLoading) {
           @for (problemset of problemsets; track $index) {
               @if (problemset.isActive) {
                   <app-submission-card 

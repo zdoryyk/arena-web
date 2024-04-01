@@ -6,14 +6,14 @@ import {  ExtendedUserProfile, UserData } from '../../interfaces/user';
 import { LoginService } from '../login/login.service';
 import { AuthService } from '../../services/auth.service';
 import { ProfileMangerService } from '../../services/profile-manger.service';
-import { retry } from 'rxjs';
+import { SkeletonModule } from 'primeng/skeleton';
 
 
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [AvatarModule, AvatarGroupModule, ChartModule],
+  imports: [AvatarModule, AvatarGroupModule, ChartModule,SkeletonModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })

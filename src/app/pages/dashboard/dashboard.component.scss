@@ -1,14 +1,12 @@
 .submissions {
-  display: flex;
-  gap: 40px;
-  flex-wrap: wrap;
-  justify-content: center;
-  max-width: 1060px;
-  margin-bottom: 90px;
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+    width: 100%;
+    margin-bottom: 90px;
 }
-
-.submissions > app-submission-card:only-child {
-  margin-right: auto;
+.submissions > app-submission-card:only-child,
+.submissions > .skeleton {
   margin-left: 0;
 }
 
@@ -34,10 +32,10 @@
 
 .empty {
   color: #afafaf;
-  font-family: Inter, sans-serif; /* Ensure consistency in font usage */
+  font-family: Inter, sans-serif; 
   font-size: 25px;
   font-weight: 700;
-  display: block; /* Makes it a block element to center it correctly */
+  display: block; 
   margin-top: 20%;
   text-align: center;
 }
@@ -63,6 +61,47 @@
   display: block !important;
   height: 200px;
 }
+
+.skeleton {
+  width: 500px;
+  height: 200px;
+}
+
+
+
+@media (max-width: 576px) {
+  .submissions {
+    justify-content: center; /* Ensures items within submissions are centered */
+  }
+
+  .submissions > .skeleton {
+    margin: auto; 
+  }
+  .title, .sub-row, .row-title, .row-evaluation, .index {
+    font-size: smaller; /* Adjust the font size to ensure readability */
+  }
+
+  .empty {
+    font-size: 20px; /* Adjust for smaller screens */
+    margin-top: 10%; /* Reduce margin to use space efficiently */
+  }
+
+  .history, .dashboard-chart {
+    width: 100%; /* Ensure they take full width on smaller screens */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  }
+
+  .history {
+    padding: 20px; /* Adjust padding as needed for readability */
+    height: auto; /* Allow the height to adjust based on content */
+  }
+
+  .line-chart {
+    height: 200px; /* Adjust chart height for better visibility on small screens */
+  }
+
+}
+
 
 @media (min-width: 576px) {
   .history {

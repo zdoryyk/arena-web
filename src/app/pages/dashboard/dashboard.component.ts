@@ -7,15 +7,17 @@ import { UserData } from '../../interfaces/user';
 import { ProblemsetManagerService } from '../../services/problemset-manager.service';
 import { ProblemsetExtra } from '../../interfaces/problemset';
 import { ProfileMangerService } from '../../services/profile-manger.service';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [RouterModule, ChartModule,SubmissionCardComponent],
+  imports: [RouterModule, ChartModule,SubmissionCardComponent,SkeletonModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
+  isLoading = true;
   lineData: any;
   lineOptions: any;
   linePlugins: any;
@@ -38,12 +40,14 @@ export class DashboardComponent implements OnInit {
     await this.loadUserData();
     if(this.transferState.hasKey(makeStateKey('problemsetsCards'))){
       this.problemsets = this.transferState.get(makeStateKey('problemsetsCards'),null);
+      this.isLoading = false;
     }else{
       this.problemsets = await this.problemsetManager.loadUserProblemsets();
     }
     await this.getLastSubmissionsByActiveProblemsets();
     this.setCharts();
     this.latestSubmissions = await this.profileManager.getSubmissionsByLimit(10);
+    this.isLoading = false;
   }
 
 

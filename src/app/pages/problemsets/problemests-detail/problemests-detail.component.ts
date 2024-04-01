@@ -8,11 +8,12 @@ import { firstValueFrom } from 'rxjs';
 import { SubmissionPreview } from '../../../interfaces/submission';
 import { Problemset } from '../../../interfaces/problemset';
 import { SubmissionDetailCardComponent } from '../../../components/submission-detail-card/submission-detail-card.component';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-problemests-detail',
   standalone: true,
-  imports: [RouterModule,SubmissionDetailCardComponent],
+  imports: [RouterModule,SubmissionDetailCardComponent,SkeletonModule],
   templateUrl: './problemests-detail.component.html',
   styleUrl: './problemests-detail.component.scss'
 })

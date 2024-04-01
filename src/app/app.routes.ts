@@ -39,12 +39,12 @@ export const routes: Routes = [
     canActivate: [AuthGuard], 
   },
   {
-    path: 'problemsets-detail/:id',
+    path: 'problemset-submissions/:id',
     component: ProblemestsDetailComponent,
     canActivate: [AuthGuard], 
   },
   {
-    path: 'problemset-detail/:id',
+    path: 'submission/:id',
     component: ProblemsetDetailComponent,
     canActivate: [AuthGuard]
   },

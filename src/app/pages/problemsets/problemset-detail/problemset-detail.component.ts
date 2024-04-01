@@ -50,7 +50,6 @@ export class ProblemsetDetailComponent implements OnInit {
     private authService: AuthService,
     private activeRoute: ActivatedRoute,
     private problemsetService: ProblemsetsService,
-    private ngZone: NgZone,
   ) {
     this._testCaseData = [
       {
@@ -144,7 +143,7 @@ export class ProblemsetDetailComponent implements OnInit {
       datasets: [
         {
           label: '',
-          data: this.submissionsBefore.map(submission => submission.attributes.score),
+          data: this.submissionsBefore.map(submission => submission.attributes.score.toFixed(1)),
           barPercentage: 0.6,
           backgroundColor: (color: any) => {
             const highestIndex = this.barData.datasets[0].data.indexOf(
