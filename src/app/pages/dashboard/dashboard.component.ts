@@ -33,8 +33,6 @@ export class DashboardComponent implements OnInit {
   ){
 
   }
-
-  
   
   async ngOnInit() {
     await this.loadUserData();
@@ -46,7 +44,6 @@ export class DashboardComponent implements OnInit {
     await this.getLastSubmissionsByActiveProblemsets();
     this.setCharts();
     this.latestSubmissions = await this.profileManager.getSubmissionsByLimit(10);
-    
   }
 
 
@@ -59,7 +56,6 @@ export class DashboardComponent implements OnInit {
         }
     }
 }
-
 
 
 setCharts() {
@@ -85,7 +81,6 @@ setCharts() {
     labels: time, 
     datasets: datasets,
   };
-
 
     this.lineOptions = {
       plugins: {
@@ -128,6 +123,4 @@ setCharts() {
       return submission;
     });
   }
-  
-
 }
