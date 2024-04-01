@@ -137,7 +137,7 @@ export class ProblemsetDetailComponent implements OnInit {
   private async getSubmissionsScoresBeforeAndReloadChart(){
     const id = this.submissionData.relationships['user-problemset']['data']['id'];
     this.submissionsBefore = (await this.problemsetService.getLimitedSubmissionsByUserProblemsetId(7, id));
-    this.routePaths = this.submissionsBefore.map(submission => `http://localhost:4500/problemset-detail/${submission.id}`);
+    this.routePaths = this.submissionsBefore.map(submission => `http://localhost:4500/submission/${submission.id}`);
     this.barData = {
       labels: this.submissionsBefore.map((_, index) => index + 1),
       datasets: [
