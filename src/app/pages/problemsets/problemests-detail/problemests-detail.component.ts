@@ -63,6 +63,7 @@ export class ProblemestsDetailComponent implements OnInit {
   private async getSubmissions(){
    let submissionsData= await firstValueFrom(this.problemsetService.getUserSubmissionByProblemset(this.problemsetId));
    this.submissions = submissionsData.data;
+
   }
 
 

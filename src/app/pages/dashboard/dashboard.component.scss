@@ -7,6 +7,11 @@
   margin-bottom: 90px;
 }
 
+.submissions > app-submission-card:only-child {
+  margin-right: auto;
+  margin-left: 0;
+}
+
 .summary {
   display: flex;
   justify-content: center;

@@ -3,20 +3,23 @@
     <div class="container">
       <h2 class="title">Current Problemsets</h2>
       <div class="submissions">
-        <app-submission-card 
-                [title]="submissionData.title"
-                [totalSubmissions]="submissionData.totalSubmissions"
-                [lastEvaluation]="submissionData.lastEvaluation"
-                [lastSubmitDate]="submissionData.lastSubmitDate"
-                [completeStatus]="submissionData.completeStatus">
-        </app-submission-card>
-        <app-submission-card 
-                [title]="submissionData.title"
-                [totalSubmissions]="submissionData.totalSubmissions"
-                [lastEvaluation]="submissionData.lastEvaluation"
-                [lastSubmitDate]="submissionData.lastSubmitDate"
-                [completeStatus]="submissionData.completeStatus">
-        </app-submission-card>
+        @if (problemsets) {
+          @for (problemset of problemsets; track $index) {
+              @if (problemset.isActive) {
+                  <app-submission-card 
+                  [id]="problemset.id"
+                  [title]="problemset.title"
+                  [totalSubmissions]="problemset.submissionsLength"
+                  [lastEvaluation]="problemset.lastSubmissionScore"
+                  [lastSubmitDate]="problemset.lastSubmissionDate"
+                  [maxProblemsetScore]="problemset.maxSubmissionScore"
+                  [completeStatus]="problemset.completeStatus"
+                  [isActive]="true"
+                  >
+                  </app-submission-card>
+              }   
+          }
+        }
       </div>
       <div class="summary">
         <div class="history">
@@ -24,11 +27,11 @@
           @if(!latestSubmissions){
             <p class="empty">You don’t have yet</p>
           }@else {
-            @for (score of latestSubmissions.scores; track $index) {
+            @for (detail of latestSubmissions.submissionDetails; track $index) {
                <div class="sub-row">
                 <div class="index">{{$index + 1}}</div>
                 <div class="row-title">{{latestSubmissions.problemsetTitle}}</div>
-                <div class="row-evaluation">{{score}}/{{latestSubmissions.maxScore}}  </div>
+                <div class="row-evaluation">{{detail.score.toFixed(1)}}/{{latestSubmissions.maxScore}}  </div>
                </div>          
             }
           }

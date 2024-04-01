@@ -98,22 +98,22 @@ export class ProfileComponent implements OnInit{
     }
     let submissionsMap = this.latestProblemsets;
     let maxScore = submissionsMap.maxScore;
-    let scores = submissionsMap.scores; 
-    let lastSubmissionEvaluationInPercents = (scores[0]/maxScore) * 100;
+    let submissionDetails = submissionsMap.submissionDetails;
+    let lastSubmissionEvaluationInPercents = (submissionDetails[0].score / maxScore) * 100;
     let remainingPercentage = 100 - lastSubmissionEvaluationInPercents;
     this.barData = {
-      labels: ['latest', 2, 3, 4, 5, 6, 7],
+      labels: submissionDetails.map((_, index) => index + 1), // Используем индекс для меток
       datasets: [
         {
-          label: '',
-          data: scores,
+          label: 'Score',
+          data: submissionDetails.map(detail => detail.score),
           backgroundColor: '#1B59F8',
           borderRadius: 50,
           barPercentage: 0.5,
         },
         {
-          label: '',
-          data: [maxScore, maxScore, maxScore, maxScore, maxScore, maxScore, maxScore],
+          label: 'Max Score',
+          data: new Array(submissionDetails.length).fill(maxScore),
           backgroundColor: '#F2F7FF',
           borderRadius: 50,
           barPercentage: 0.5,

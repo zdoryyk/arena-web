@@ -7,7 +7,6 @@ import { ProblemsetDetailComponent } from "./pages/problemsets/problemset-detail
 import { AdminDashboardComponent } from './pages/admin/admin-dashboard/admin-dashboard.component';
 import { AdminCoursesComponent } from './pages/admin/admin-courses/admin-courses.component';
 import { AdminCourseComponent } from './pages/admin/admin-course/admin-course.component';
-import { EmptyComponent } from './pages/empty/empty.component';
 import { AuthGuard } from './guards/auth.guard';
 import { TeacherGuard } from './guards/teacher.guard';
 import { ProblemestsDetailComponent } from './pages/problemsets/problemests-detail/problemests-detail.component';
@@ -64,7 +63,6 @@ export const routes: Routes = [
     component: AdminCourseComponent,
     canActivate: [AuthGuard,TeacherGuard]
   },
-  // Wildcard route for a 404 page or redirecting to a default route
   {
     path: '**',
     redirectTo: '/dashboard', pathMatch: 'full',

@@ -52,10 +52,10 @@ export class ProfileMangerService {
   
 
 
-   async getSubmissionsByLimit(limit: number): Promise<any> {
+  async getSubmissionsByLimit(limit: number): Promise<any> {
     let user = await this.authService.checkIsUserInStorage();
     let userProblemsets = await firstValueFrom(this.problemsetService.getUserProblemsetsByUserId(user.id));
-    if(userProblemsets.data.length == 0){
+    if (userProblemsets.data.length == 0) {
       return;
     }
     
@@ -71,19 +71,18 @@ export class ProfileMangerService {
     let sortedSubmissions = submissions.data.sort((a, b) => {
         return new Date(b.attributes['date-evaluated']).getTime() - new Date(a.attributes['date-evaluated']).getTime();
     });
-
     if (limit > 0 && sortedSubmissions.length > limit) {
         sortedSubmissions = sortedSubmissions.slice(0, limit);
     }
 
-    let scores: number[] = []; 
-    sortedSubmissions.forEach(element => {
-        scores.push(element.attributes.score); 
-    });
+    let submissionDetails = sortedSubmissions.map(element => ({
+        score: element.attributes.score,
+        dateEvaluated: element.attributes['date-evaluated']
+    }));
 
-    return {maxScore,scores,problemsetTitle};
+    return { maxScore, submissionDetails, problemsetTitle };
+}
 
-  }
 
   private trimTitleFromLastYearOrColon(title: string): string {
     const lastYearMatch = title.match(/\d{4}(?!.*\d{4})/); // Ищем последний год

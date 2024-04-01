@@ -36,12 +36,20 @@ export class LoginComponent implements OnInit{
     
 
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.checkIsUserLoggedIn();
     this.route.queryParams.subscribe(params => {
       if (params['cas_token']) {
         this.handleThirdPartyLogin(params['cas_token']);
       }
     });
+  }
+
+  async checkIsUserLoggedIn(){
+    let user = await this.authSerivce.checkIsUserInStorage();
+    if(user){
+      this.router.navigate(['/dashboard']);
+    }
   }
 
   private handleThirdPartyLogin(casTokenValue: string){
