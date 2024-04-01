@@ -16,7 +16,7 @@ import { SkeletonModule } from 'primeng/skeleton';
   styleUrl: './problemsets.component.scss'
 })
 export class ProblemsetsComponent implements OnInit{
-
+  isAnyActiveProblemset = false;
   isLoading = true;
   user: UserData;
   problemsets: ProblemsetExtra[] = [];
@@ -31,16 +31,23 @@ export class ProblemsetsComponent implements OnInit{
   async ngOnInit() {
     await this.loadUserData();
     if(this.transferState.hasKey(makeStateKey('problemsetsCards'))){
-        this.problemsets = this.transferState.get(makeStateKey('problemsetsCards'),null);
+      this.problemsets = this.transferState.get(makeStateKey('problemsetsCards'),null);
     }else{
-    this.problemsets = await this.problemsetManager.loadUserProblemsets();
+      this.problemsets = await this.problemsetManager.loadUserProblemsets();
     }
+    this.checkForAnyActiveProblemset();
     this.isLoading = false;
   }
-
 
   private async loadUserData() {
     this.user = await this.authService.checkIsUserInStorage();
   }
-   
+  
+  private checkForAnyActiveProblemset(){
+    for(const problemset of this.problemsets){
+      if(problemset.isActive){
+        this.isAnyActiveProblemset = true;
+      }
+    }
+  }
 }

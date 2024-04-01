@@ -17,7 +17,7 @@
               <p class="profile-label">
                 username
                 @if (user && user.data.attributes.username) {
-                  <span class="profile-text-value">{{user.data.attributes.username}}</span>
+                  <span class="profile-text-value-username">{{user.data.attributes.username}}</span>
                 }@else{
                   <p-skeleton width="5rem" height="1rem" styleClass="mb-2" ></p-skeleton>
                 }
@@ -29,7 +29,7 @@
             <div class="case">
               @if (user && user.problemsetsLength) {
               <p class="case-value">{{user.problemsetsLength}}</p>
-              <p class="case-label">Problemsets gone</p>
+              <p class="case-label">Problemsets fixed</p>
               }@else {<p-skeleton width="5rem" height="1rem" styleClass="mb-2"></p-skeleton>}
             </div>
             <div class="case">

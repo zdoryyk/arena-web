@@ -22,14 +22,6 @@
   width: 100%;
 }
 
-.history {
-  padding: 20px;
-  text-align: center;
-  border: 1px solid #000;
-  height: 100px;
-  width: 100%; 
-}
-
 .empty {
   color: #afafaf;
   font-family: Inter, sans-serif; 
@@ -40,22 +32,6 @@
   text-align: center;
 }
 
-.sub-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  font-size: 18px;
-  margin-bottom: 30px;
-}
-
-.row-title .row-evaluation .index{
-  font-size: 20px;
-}
-
-.sub-row > div:not(:first-child) {
-  margin-left: 20px;
-}
 
 .line-chart {
   display: block !important;
@@ -67,37 +43,45 @@
   height: 200px;
 }
 
+.index, .row-title, .row-evaluation {
+  text-align: center; 
+  flex: 1;
+}
+
+.row-evaluation {
+  min-width: 50px; 
+  text-align: center;
+}
+
+.history{
+  width: 800px;
+}
+
 
 
 @media (max-width: 576px) {
   .submissions {
-    justify-content: center; /* Ensures items within submissions are centered */
+    justify-content: center; 
   }
 
   .submissions > .skeleton {
     margin: auto; 
   }
   .title, .sub-row, .row-title, .row-evaluation, .index {
-    font-size: smaller; /* Adjust the font size to ensure readability */
+    font-size: smaller; 
   }
 
   .empty {
-    font-size: 20px; /* Adjust for smaller screens */
-    margin-top: 10%; /* Reduce margin to use space efficiently */
+    font-size: 20px; 
+    margin-top: 10%;
   }
-
-  .history, .dashboard-chart {
-    width: 100%; /* Ensure they take full width on smaller screens */
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
-  }
-
-  .history {
-    padding: 20px; /* Adjust padding as needed for readability */
-    height: auto; /* Allow the height to adjust based on content */
-  }
-
-  .line-chart {
-    height: 200px; /* Adjust chart height for better visibility on small screens */
+  .sub-row {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    width: 100%;
+    font-size: 18px;
+    margin-bottom: 30px;
   }
 
 }
@@ -139,5 +123,20 @@
 
   .dashboard-chart {
     width: 50%;
+  }
+}
+
+@media (min-width: 1803px) {
+  .summary {
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .dashboard-chart {
+    width: 50%;
+  }
+
+  .history{
+    width: 770px;
   }
 }

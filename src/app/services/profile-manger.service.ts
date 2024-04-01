@@ -77,7 +77,8 @@ export class ProfileMangerService {
 
     let submissionDetails = sortedSubmissions.map(element => ({
         score: element.attributes.score,
-        dateEvaluated: element.attributes['date-evaluated']
+        dateEvaluated: element.attributes['date-evaluated'],
+        id: element.id
     }));
 
     return { maxScore, submissionDetails, problemsetTitle };
