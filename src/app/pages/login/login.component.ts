@@ -6,13 +6,13 @@ import { Permission } from '../../interfaces/permissions';
 import { environment } from '../../../environments/environment';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
-import { Message, MessageService } from 'primeng/api';
+
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [RouterModule],
-  providers:[MessageService],
+  providers:[],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -23,7 +23,6 @@ export class LoginComponent implements OnInit{
   private userSubscription: Subscription = new Subscription;
   constructor
   (
-    private messageService: MessageService,
     private route: ActivatedRoute,
     private router: Router,
     private loginService: LoginService,
@@ -32,9 +31,6 @@ export class LoginComponent implements OnInit{
   ){
     this.platformId = platformId;
   }
-
-    
-
 
   async ngOnInit() {
     this.checkIsUserLoggedIn();
@@ -72,7 +68,6 @@ export class LoginComponent implements OnInit{
           localStorage.setItem("arena-token", resultToken.token);
           this.authSerivce.checkIsUserInStorage();
         }
-        this.showSuccess();
         setTimeout(() => {
           if(resultUser.data.attributes['is-lecturer']) {
             this.router.navigate(['/admin-courses']);
@@ -91,12 +86,5 @@ export class LoginComponent implements OnInit{
     window.open(environment.api_url + "/cas-token?callback=" + environment.base_url + "/login", "_self");
   }
 
-  showSuccess() {
-    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
-  }
-
-  clear() {
-    this.messageService.clear();
-}
 
 }

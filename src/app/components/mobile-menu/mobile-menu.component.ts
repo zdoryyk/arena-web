@@ -23,12 +23,12 @@ export class MobileMenuComponent implements OnInit{
     this.platformId = platformId;
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
       this.isTeacher = localStorage.getItem('arena-permission') === 'Teacher';
-      const user = JSON.parse(localStorage.getItem("arena-user") || '{}');
-      if(user['first-name'] && user['last-name']) {
-        this.fullName = `${user['first-name']} ${user['last-name']}`;
+      const user = await this.authService.checkIsUserInStorage();
+      if(user.attributes['first-name'] && user.attributes['last-name']) {
+        this.fullName = `${user.attributes['first-name']} ${user.attributes['last-name']}`;
       }
       if(this.isTeacher){
         this.dynamicRouteDashboard =  '/admin-dashboard';
@@ -38,12 +38,10 @@ export class MobileMenuComponent implements OnInit{
   }
   
 
-  onLogout(){
-    this.isLoggedIn = !this.isLoggedIn;
-    if(!this.isLoggedIn){
-      this.router.navigate(['/login']);
-    }
-
+  onLogout() {
+    this.authService.setLoggedIn(false);
+    localStorage.clear();
+    this.router.navigate(['/login']);
     this.onToggle();
   }
   

@@ -1,6 +1,6 @@
 <aside id="sidebar" class="vh-100" style="left: -200px;">
     <div class="d-flex align-items-end justify-content-between" style="padding-right: 10px;">
-        <a href="#" class="link-dark d-flex align-items-center gap-2">
+        <a class="link-dark d-flex align-items-center gap-2">
             <img src="assets/icons/cube.svg" class="img-fluid" alt="logo">
             <span class="logo-name fw-bold">Arena</span>
         </a>
@@ -15,8 +15,8 @@
     <div id="sidebar-main" style="display: none;">
         <nav class="col-xlg-2 sidebar">
             <ul>
-                <li class="list-item">
-                    <a [routerLink]="dynamicRouteDashboard" routerLinkActive="active" (click)="onToggle()">
+                <li class="list-item" [routerLink]="dynamicRouteDashboard" routerLinkActive="active" (click)="onToggle()">
+                    <a>
                         <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
                             <path
                                 d="M10.2084 15.6771H7.29175C3.76258 15.6771 1.823 13.7375 1.823 10.2083V7.29167C1.823 3.76251 3.76258 1.82292 7.29175 1.82292H10.2084C13.7376 1.82292 15.6772 3.76251 15.6772 7.29167V10.2083C15.6772 13.7375 13.7376 15.6771 10.2084 15.6771ZM7.29175 4.01042C4.98758 4.01042 4.0105 4.98751 4.0105 7.29167V10.2083C4.0105 12.5125 4.98758 13.4896 7.29175 13.4896H10.2084C12.5126 13.4896 13.4897 12.5125 13.4897 10.2083V7.29167C13.4897 4.98751 12.5126 4.01042 10.2084 4.01042H7.29175Z"
@@ -34,8 +34,8 @@
                         Dashboard
                     </a>
                 </li>
-                <li class="list-item">
-                    <a [routerLink]="dynamicRouteCoursesOrProblemsets" routerLinkActive="active" (click)="onToggle()">
+                <li class="list-item" [routerLink]="dynamicRouteCoursesOrProblemsets" routerLinkActive="active" (click)="onToggle()">
+                    <a>
                         <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
                             <path
                                 d="M13.125 18.9583C12.1625 19.4396 11.3605 20.1542 10.7625 21.0438C10.4271 21.5542 10.4271 22.1958 10.7625 22.7063C11.3605 23.5958 12.1625 24.3104 13.125 24.7917"
@@ -53,8 +53,8 @@
                     </a>
                 </li>
                 @if(!isTeacher){
-                    <li class="list-item">
-                        <a [routerLink]="['/profile']" routerLinkActive="active" (click)="onToggle()">
+                    <li class="list-item" [routerLink]="['/profile']" routerLinkActive="active" (click)="onToggle()">
+                        <a>
                             <svg fill="#000000" width="35px" height="35px" viewBox="0 0 32 32"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
