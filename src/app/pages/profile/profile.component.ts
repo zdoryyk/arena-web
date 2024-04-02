@@ -100,7 +100,12 @@ export class ProfileComponent implements OnInit{
     let maxScore = submissionsMap.maxScore;
     let submissionDetails = submissionsMap.submissionDetails;
     let lastSubmissionEvaluationInPercents = (submissionDetails[0].score / maxScore) * 100;
-    let remainingPercentage = 100 - lastSubmissionEvaluationInPercents;
+    let remainingToReachFull = ((this.user.totalScore/this.user.maxTotalScore) * 100).toFixed(0);
+    
+    console.log('123',this.user.totalScore,this.user.maxTotalScore);
+    console.log('321,',remainingToReachFull);
+    
+    
     this.barData = {
       labels: submissionDetails.map((_, index) => index + 1), // Используем индекс для меток
       datasets: [
@@ -127,7 +132,7 @@ export class ProfileComponent implements OnInit{
       labels: ['Last Submission'],
       datasets: [
         {
-          data: [lastSubmissionEvaluationInPercents, remainingPercentage], // [max: 100, 116 - [1]]
+          data: [lastSubmissionEvaluationInPercents, 116-lastSubmissionEvaluationInPercents], // [max: 100, 116 - [1]]
           backgroundColor: ['#A9BEF4', 'transparent'],
           cutout: 115,
           borderWidth: 0,
@@ -142,6 +147,7 @@ export class ProfileComponent implements OnInit{
           borderColor: 'rgba(231, 196, 242, 0.4)',
           hoverBorderColor: 'rgba(231, 196, 242, 0.4)',
         },
+        {value: lastSubmissionEvaluationInPercents}
       ],
     };
 
@@ -151,7 +157,7 @@ export class ProfileComponent implements OnInit{
       labels: ['Earned points'],
       datasets: [
         {
-          data: [50, 66], // [max: 100, 1016 - [1]]
+          data: [remainingToReachFull, 116 - parseInt(remainingToReachFull)], // [max: 100, 116 - [1]]
           backgroundColor: ['#cf93cd', 'transparent'],
           cutout: 115,
           borderWidth: 0,
@@ -159,18 +165,18 @@ export class ProfileComponent implements OnInit{
           spacing: -45,
         },
         {
-          data: [800],
+          data: [],
           backgroundColor: 'transparent',
           cutout: 115,
           borderWidth: 10,
           borderColor: 'rgba(231, 196, 242, 0.4)',
           hoverBorderColor: 'rgba(231, 196, 242, 0.4)',
         },
+        {value: this.user.totalScore}
       ],
     };
-
   }
-  
+   
 
   setCharts(){
       this.leftDoughnutData = {
@@ -201,7 +207,7 @@ export class ProfileComponent implements OnInit{
         labels: ['Earned points'],
         datasets: [
           {
-            data: [0, 382], // [max: 100, 1016 - [1]]
+            data: [100,16], // [max: 100, 116 - [1]]
             backgroundColor: ['#cf93cd', 'transparent'],
             cutout: 115,
             borderWidth: 0,
@@ -246,7 +252,7 @@ export class ProfileComponent implements OnInit{
           beforeDatasetsDraw(chart: any) {
             const { ctx, data, config } = chart;
             const labelEnd =
-              config._config.data.id === 'rightDoughnut' ? '' : '%';
+              config._config.data.id === 'rightDoughnut' ? '%' : '%';
             const textColor =
               config._config.data.id === 'rightDoughnut' ? '#C391C8' : '#7F8EC6';
 

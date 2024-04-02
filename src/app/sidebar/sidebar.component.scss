@@ -95,14 +95,6 @@
   stroke: #3e91fa;
 }
 
-.theme-toggle-container {
-  position: absolute;
-  bottom: 20px; /* Adjust based on desired spacing from bottom */
-  left: 50%;
-  transform: translateX(-50%);
-  /* Additional styling for the container if needed */
-}
-
 @media (min-width: 768px) {
   #sidebar {
     display: block;
