@@ -35,7 +35,6 @@ export class SidebarComponent implements OnInit {
         this.dynamicRouteCoursesOrProblemsets = '/admin-courses';
       }
     }
-    
   }
 
   onLogout() {
