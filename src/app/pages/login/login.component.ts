@@ -4,20 +4,40 @@ import { LoginService } from './login.service';
 import { Subscription } from 'rxjs';
 import { Permission } from '../../interfaces/permissions';
 import { environment } from '../../../environments/environment';
-import { isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule,CommonModule],
   providers:[],
+  animations: [
+    trigger('slideInFromLeft', [
+      transition(':enter', [
+        style({ transform: 'translateX(-100%)', opacity: 0 }),
+        animate('0.5s ease-out', style({ transform: 'translateX(0)', opacity: 1 }))
+      ])
+    ]),
+    trigger('slideInFromTop', [
+      transition(':enter', [
+        style({ transform: 'translateY(-100%)', opacity: 0 }),
+        animate('0.5s ease-out', style({ transform: 'translateY(0)', opacity: 1 }))
+      ])
+    ]),
+    trigger('slideInFromRight', [
+      transition(':enter', [
+        style({ transform: 'translateX(100%)', opacity: 0 }),
+        animate('0.5s ease-out', style({ transform: 'translateX(0)', opacity: 1 }))
+      ])
+    ])
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit{
-
   platformId: Object;
   private tokenSubscription: Subscription = new Subscription;
   private userSubscription: Subscription = new Subscription;
@@ -26,7 +46,7 @@ export class LoginComponent implements OnInit{
     private route: ActivatedRoute,
     private router: Router,
     private loginService: LoginService,
-    private authSerivce: AuthService,
+    private authService: AuthService,
     @Inject(PLATFORM_ID) platformId: Object
   ){
     this.platformId = platformId;
@@ -42,40 +62,41 @@ export class LoginComponent implements OnInit{
   }
 
   async checkIsUserLoggedIn(){
-    let user = await this.authSerivce.checkIsUserInStorage();
+    let user = await this.authService.checkIsUserInStorage();
     if(user){
       this.router.navigate(['/dashboard']);
     }
   }
 
-  private handleThirdPartyLogin(casTokenValue: string){
+  private async handleThirdPartyLogin(casTokenValue: string){
     var casToken = {
       "cas_token": casTokenValue
     };
-    this.tokenSubscription = this.loginService.getToken(casToken).subscribe(resultToken => {
-      this.userSubscription = this.loginService.getUserMe(resultToken.token).subscribe(resultUser => {
-        console.log(resultUser)
-        this.authSerivce.setLoggedIn(true);
-        if (resultUser.data.attributes['is-lecturer']) {
-          if(isPlatformBrowser(this.platformId))
-          localStorage.setItem('arena-permission', Permission.Teacher)
+    this.tokenSubscription = this.loginService.getToken(casToken).subscribe(async resultToken => {
+      this.userSubscription = this.loginService.getUserMe(resultToken.token).subscribe(async resultUser => {
+          if (resultUser.data.attributes['is-lecturer']) {
+            if(isPlatformBrowser(this.platformId)){
+              localStorage.setItem('arena-permission', Permission.Teacher)
+            }
         }
         else {
-          if(isPlatformBrowser(this.platformId))
-          localStorage.setItem('arena-permission', Permission.Student)
+          if(isPlatformBrowser(this.platformId)){
+            localStorage.setItem('arena-permission', Permission.Student)
+          }
         }
+        this.authService.setLoggedIn(true);
         if(isPlatformBrowser(this.platformId)){
           localStorage.setItem("arena-token", resultToken.token);
-          this.authSerivce.checkIsUserInStorage();
+          let test = await this.authService.checkIsUserInStorage();
+          console.log('test',test);
+          
         }
-        setTimeout(() => {
-          if(resultUser.data.attributes['is-lecturer']) {
-            this.router.navigate(['/admin-courses']);
-          }
-          else {
-            this.router.navigate(['/dashboard']);
-          }
-        }, 3000);
+        if(resultUser.data.attributes['is-lecturer']) {
+          this.router.navigate(['/admin-courses']);
+        }
+        else {
+          this.router.navigate(['/dashboard']);
+        }
       });
     });
   }
@@ -85,6 +106,4 @@ export class LoginComponent implements OnInit{
   loginViaThirdPartyService(){
     window.open(environment.api_url + "/cas-token?callback=" + environment.base_url + "/login", "_self");
   }
-
-
 }

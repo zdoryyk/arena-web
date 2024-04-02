@@ -20,6 +20,7 @@
     font-size: 48px;
     font-style: normal;
     font-weight: 600;
+    padding-top: 140px;
 }
 
 .form-label {
@@ -46,17 +47,18 @@
 }
 
 .btn-tuke {
-    background-color: #6c757d; /* Bootstrap's secondary button color for reference */
+    background-color: #6c757d; 
     color: #fff;
     padding: 18px;
     border-radius: 5px;
     width: 100%;
     border: none; 
-    margin-top: 150px; 
+    margin-top: 30px; 
+    font-size: 23px;
 }
 
 .btn-tuke:hover {
-    background-color: #5a6268; /* Darker shade for hover effect */
+    background-color: #5a6268; 
 }
 
 
@@ -66,8 +68,14 @@
         margin: 0 auto;
     }
 
+
     .btn-tuke{
         margin-top: 30px;
+        font-size: 15px;
+    }
+
+    .form-title{
+        padding-top: 10px;
     }
 }
 

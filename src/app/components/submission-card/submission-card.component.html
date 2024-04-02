@@ -9,7 +9,7 @@
             </div>
             <div class="submission-stats">
                 <h3 class="submission-heading {{completeStatus.keys().next().value }} big">{{ maxProblemsetScore > 0 ? ((lastEvaluation / maxProblemsetScore) * 100 | number:'1.0-1') : 0 }}%</h3>
-                <p class="submission-rating">{{lastEvaluation.toFixed(1)}}/{{maxProblemsetScore}}</p>
+                <p class="submission-rating">{{formatEvaluationScore(lastEvaluation)}}/{{maxProblemsetScore}}</p>
             </div>
         </div>
         <p class="submission-date">{{lastSubmitDate | date : 'MMM. d, y, HH:mm'}}</p>

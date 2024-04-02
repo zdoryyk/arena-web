@@ -24,4 +24,9 @@ export class SubmissionCardComponent implements Submission, OnInit {
   ngOnInit(): void {
   }
 
+  formatEvaluationScore(score: number): string {
+    const roundedScore = score.toFixed(1);
+    return roundedScore.endsWith('.0') ? Math.floor(score).toString() : roundedScore;
+  }
+
 }

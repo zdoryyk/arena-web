@@ -27,7 +27,7 @@ export class MobileMenuComponent implements OnInit{
     if(isPlatformBrowser(this.platformId)){
       this.isTeacher = localStorage.getItem('arena-permission') === 'Teacher';
       const user = await this.authService.checkIsUserInStorage();
-      if(user.attributes['first-name'] && user.attributes['last-name']) {
+      if(user && user.attributes['first-name'] && user.attributes['last-name']) {
         this.fullName = `${user.attributes['first-name']} ${user.attributes['last-name']}`;
       }
       if(this.isTeacher){
