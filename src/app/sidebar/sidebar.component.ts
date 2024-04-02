@@ -12,13 +12,12 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent implements OnInit {
-
   dynamicRouteDashboard: string | any[] = '/dashboard';
   dynamicRouteCoursesOrProblemsets: string | any[] = '/problemsets';
   platformId: Object;
   isTeacher = false; 
+  isLoggedIn = true;  
   fullName: string = 'none';
-  isDarkMode: boolean;
   constructor(private router: Router, private authService: AuthService,@Inject(PLATFORM_ID) platformId: Object) {
     this.platformId = platformId;
   }
@@ -28,7 +27,7 @@ export class SidebarComponent implements OnInit {
     if(isPlatformBrowser(this.platformId)){
       this.isTeacher = localStorage.getItem('arena-permission') === 'Teacher';
       const user = await this.authService.checkIsUserInStorage();
-      if (user && user.attributes['first-name'] && user.attributes['last-name']) {
+      if(user && user.attributes['first-name'] && user.attributes['last-name']) {
         this.fullName = `${user.attributes['first-name']} ${user.attributes['last-name']}`;
       }
       if(this.isTeacher){
@@ -36,10 +35,12 @@ export class SidebarComponent implements OnInit {
         this.dynamicRouteCoursesOrProblemsets = '/admin-courses';
       }
     }
+    
   }
 
   onLogout() {
     this.authService.setLoggedIn(false);
+    localStorage.clear();
     this.router.navigate(['/login']);
   }
 

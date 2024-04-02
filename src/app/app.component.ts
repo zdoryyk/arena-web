@@ -31,7 +31,6 @@ export class AppComponent {
   isLoggedIn = false;
   isLoading = true;
   constructor(private authService: AuthService) {
-  
     this.authService.isLoggedIn$.subscribe((loggedIn) => {
       this.isLoggedIn = loggedIn;
       this.isLoading = false;

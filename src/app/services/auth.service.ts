@@ -6,17 +6,20 @@ import { Permission } from '../interfaces/permissions';
 import { User, UserData } from '../interfaces/user';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { data } from 'jquery';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private identity: any;
   private permission: Permission = 'None';
   platformId: Object;
   private isLoggedInSource = new BehaviorSubject<boolean>(false);
   isLoggedIn$ = this.isLoggedInSource.asObservable();
 
   constructor(@Inject(PLATFORM_ID) platformId: Object,private router: Router, private transferState: TransferState,private http: HttpClient) {
+    this.platformId = platformId;
     if(isPlatformBrowser(platformId)){
       const isLoggedIn = !!localStorage.getItem('arena-token'); 
       this.isLoggedInSource.next(isLoggedIn);
@@ -68,6 +71,7 @@ export class AuthService {
     if (token) {
       const user: User = await firstValueFrom(this.getUserMe(token));
       this.transferState.set<UserData>(makeStateKey<UserData>('arena-user'), user.data);
+      this.identity = user;
       return user.data;
     }
     return null; 
@@ -91,16 +95,19 @@ export class AuthService {
     if(!isPlatformBrowser(this.platformId)){
       return;
     }
-    const data = localStorage.getItem('arena-permission');
-    if (data) {
+      const data = localStorage.getItem('arena-permission');
+      
+      if (data) {
         if(data === 'Student'){
           this.permission = Permission.Student;
         }
         else {
           this.permission = Permission.Teacher;
         }
-    }
-    return this.permission;
+      } else {
+      }
+      return this.permission;
+    
   }
 
   getUserMe(token: any): Observable<User> {

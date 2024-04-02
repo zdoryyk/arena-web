@@ -38,6 +38,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit{
+  
   platformId: Object;
   private tokenSubscription: Subscription = new Subscription;
   private userSubscription: Subscription = new Subscription;
@@ -51,6 +52,9 @@ export class LoginComponent implements OnInit{
   ){
     this.platformId = platformId;
   }
+
+    
+
 
   async ngOnInit() {
     this.checkIsUserLoggedIn();
@@ -68,35 +72,32 @@ export class LoginComponent implements OnInit{
     }
   }
 
-  private async handleThirdPartyLogin(casTokenValue: string){
+  private handleThirdPartyLogin(casTokenValue: string){
     var casToken = {
       "cas_token": casTokenValue
     };
-    this.tokenSubscription = this.loginService.getToken(casToken).subscribe(async resultToken => {
-      this.userSubscription = this.loginService.getUserMe(resultToken.token).subscribe(async resultUser => {
-          if (resultUser.data.attributes['is-lecturer']) {
-            if(isPlatformBrowser(this.platformId)){
-              localStorage.setItem('arena-permission', Permission.Teacher)
-            }
+    this.tokenSubscription = this.loginService.getToken(casToken).subscribe(resultToken => {
+      this.userSubscription = this.loginService.getUserMe(resultToken.token).subscribe(resultUser => {
+        console.log(resultUser)
+        this.authService.setLoggedIn(true);
+        if (resultUser.data.attributes['is-lecturer']) {
+          if(isPlatformBrowser(this.platformId))
+          localStorage.setItem('arena-permission', Permission.Teacher)
         }
         else {
-          if(isPlatformBrowser(this.platformId)){
-            localStorage.setItem('arena-permission', Permission.Student)
-          }
+          if(isPlatformBrowser(this.platformId))
+          localStorage.setItem('arena-permission', Permission.Student)
         }
-        this.authService.setLoggedIn(true);
         if(isPlatformBrowser(this.platformId)){
           localStorage.setItem("arena-token", resultToken.token);
-          let test = await this.authService.checkIsUserInStorage();
-          console.log('test',test);
-          
+          this.authService.checkIsUserInStorage();
         }
-        if(resultUser.data.attributes['is-lecturer']) {
-          this.router.navigate(['/admin-courses']);
-        }
-        else {
-          this.router.navigate(['/dashboard']);
-        }
+          if(resultUser.data.attributes['is-lecturer']) {
+            this.router.navigate(['/admin-courses']);
+          }
+          else {
+            this.router.navigate(['/dashboard']);
+          }
       });
     });
   }
