@@ -164,4 +164,9 @@ export class DashboardComponent implements OnInit {
       return submission;
     });
   }
+
+  formatEvaluationScore(score: number): string {
+    const roundedScore = score.toFixed(1);
+    return roundedScore.endsWith('.0') ? Math.floor(score).toString() : roundedScore;
+  }
 }

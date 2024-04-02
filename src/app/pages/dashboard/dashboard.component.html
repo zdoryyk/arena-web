@@ -50,15 +50,15 @@
                       <tr>
                           <th style="width:5%; font-size: larger; padding: 10px; margin-left: 20px;"></th>
                           <th style="width:40%; font-size: larger; padding: 10px; margin-left: 20px;">Probleset</th>
-                          <th style="width:40%; font-size: larger; padding: 10px;">Score</th>
-                          <th style="width:40%; font-size: larger; padding: 10px;">Action</th>
+                          <th style="width:35%; font-size: larger; padding: 10px;">Score</th>
+                          <th style="width:30%; font-size: larger; padding: 10px;">Action</th>
                       </tr>
                   </ng-template>
                   <ng-template pTemplate="body" let-sub>
                       <tr>
                           <td style="padding: 10px; "></td>
                           <td style="padding: 10px; ">{{latestSubmissions.problemsetTitle}}</td>
-                          <td style="padding: 10px; ">{{sub.score.toFixed(1)}}/{{latestSubmissions.maxScore}}  </td>
+                          <td style="padding: 10px; ">{{formatEvaluationScore(sub.score)}}/{{latestSubmissions.maxScore}}  </td>
                           <td style="padding: 10px; "><button mat-raised-button color="primary" (click)="navigateToSubmission(sub.id)" >View</button></td>
                       </tr>
                   </ng-template>
