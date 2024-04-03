@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable, firstValueFrom } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Submission } from '../interfaces/submission';
 
 
 @Injectable({

@@ -2,6 +2,7 @@ import { Injectable, TransferState, makeStateKey } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { ProblemsetsService } from './problemsets.service';
 import { ProblemsetExtra } from '../interfaces/problemset';
+import { Submission, TaskData } from '../interfaces/submission';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,42 @@ export class ProblemsetManagerService {
     private tranferState: TransferState,
   ) { }
 
+
+
+
+  async getSortedTasksByTypeAndSuits(id: string):Promise<{structureChecks: Submission[],suites: Map<TaskData, Submission[]>}> {
+    let currentSuite: TaskData = null;
+    let tempTasks: Submission[] = [];
+    let structureChecks: any[] = [];
+    let suites: Map<TaskData, Submission[]> = new Map();
+    let data = await firstValueFrom(this.problemsetService.getSubmissionTasks(id));
+  
+    for (const task of data.data) {
+      if (task.attributes.document.type === 'suite') {
+        if (currentSuite != null) {
+          suites.set(currentSuite, tempTasks);
+          tempTasks = []; 
+        }
+        currentSuite = task;
+        tempTasks = []; 
+      } else {
+          if (currentSuite == null) {
+            structureChecks.push(task);
+          } else {
+            tempTasks.push(task);
+          }
+        }
+    }
+    if (currentSuite != null) {
+      suites.set(currentSuite, tempTasks);
+    }
+
+    return { structureChecks, suites };
+  }
+  
+  getSubmissionTestType(submission: Submission){
+    let testType = 0;
+  }
 
 
   async getProblemsetLastSubmissionsByLimitById(limit: number, id:string){
@@ -65,5 +102,4 @@ export class ProblemsetManagerService {
     this.tranferState.set<ProblemsetExtra[]>(makeStateKey('problemsetsCards'),problemsets);
     return problemsets;
   }
-
 }

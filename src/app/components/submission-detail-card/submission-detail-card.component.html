@@ -5,11 +5,10 @@
                 <h3 class="submission-heading {{completeStatus.keys().next().value }} {{title.length < 20 ? 'big': title.length < 27 ? 'small' : 'smallest'}}">{{title}}</h3>
             </div>
             <div class="submission-stats">
-                <h3 class="submission-heading {{completeStatus.keys().next().value }} big">{{lastEvaluation.toFixed(1)}}/{{maxProblemsetScore}}</h3>
+                <h3 class="submission-heading {{completeStatus.keys().next().value }} big">{{formatEvaluationScore(lastEvaluation)}}/{{maxProblemsetScore}}</h3>
             </div>
         </div>
         <p class="submission-date">{{lastSubmitDate | date : 'MMM. d, y, HH:mm'}}</p>
     </div>
-    <!-- TODO ADD STATUSES -->
     <p class="submission-status {{completeStatus.keys().next().value }}-bg">{{completeStatus.values().next().value }}</p>
 </div>

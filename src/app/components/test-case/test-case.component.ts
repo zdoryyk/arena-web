@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { Submission } from '../../interfaces/submission';
 
 @Component({
   selector: 'app-test-case',
@@ -22,9 +23,10 @@ export class TestCaseComponent implements OnInit {
   @Input() orderedNumber: number;
   @Input() completed: number;
   @Input() assessment: number;
-  @Input() text: string;
   @Input() isProcessing: boolean;
-  @Input() isError: boolean;
+  @Input() submission: Submission;
+
+
 
   checkBtnVisible: boolean = false;
   closeBtnVisible: boolean = false;
@@ -50,25 +52,32 @@ export class TestCaseComponent implements OnInit {
       this.contentHeight = '0px';
     }
   }
-
   ngOnInit(): void {
-    if (this.isProcessing) {
-      if (this.isError) {
-        this.minusBtnVisible = true;
-        this.bgColor = 'red';
-        return;
-      }
+    
+    let passed = this.submission.attributes.passed;
+    let isError  = this.submission.attributes.document.result['return-code'] == 2;
+    if(this.submission?.attributes?.document?.expected?.['return-code'] !== undefined) {
+      console.log(this.submission.attributes.document.expected['return-code']);
+    }
+    if (!this.submission.attributes.strict) {
       this.isVisible = 'visible';
-      if (this.completed === this.assessment) {
+      if (passed) {
         this.bgColor = 'green';
-        this.isCompetedVisible = 'hidden';
+        this.isCompetedVisible = 'visible';
         this.checkBtnVisible = true;
       } else {
         this.closeBtnVisible = true;
         this.bgColor = 'orange';
       }
     } else {
+      if (isError) {
+        this.minusBtnVisible = true;
+        this.bgColor = 'red';
+        return;
+      }
       this.minusBtnVisible = true;
     }
   }
 }
+
+

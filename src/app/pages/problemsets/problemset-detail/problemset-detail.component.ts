@@ -9,8 +9,8 @@ import { UserData, UserProblemSetData } from '../../../interfaces/user';
 import { ProblemsetsService } from '../../../services/problemsets.service';
 import { firstValueFrom } from 'rxjs';
 import { CommonModule, DatePipe } from '@angular/common';
-import { Submission } from '../../../interfaces/interfaces';
-import { NgZone } from '@angular/core';
+import { ProblemsetManagerService } from '../../../services/problemset-manager.service';
+import { Submission, TaskData } from '../../../interfaces/submission';
 
 
 @Component({
@@ -30,16 +30,19 @@ export class ProblemsetDetailComponent implements OnInit {
   submissionTasks: Submission[] = [];
   submissionsBefore: any[] = [];
   routePaths: string[] = [];
+  structureChecks: Submission[] = [];
+  suites: Map<TaskData, Submission[]> = new Map();
+  suitesArray: any[] = [];
 
-  get testCaseData() {
-    return this._testCaseData
-      .map((parentObject, index) => ({
-        ...parentObject,
-        totalCompleted: this.onGetData('completed', index),
-        totalAssessment: this.onGetData('assessment', index),
-      }))
-      .filter((parentObject) => parentObject.cases.length > 0);
-  }
+  // get testCaseData() {
+  //   return this._testCaseData
+  //     .map((parentObject, index) => ({
+  //       ...parentObject,
+  //       totalCompleted: this.onGetData('completed', index),
+  //       totalAssessment: this.onGetData('assessment', index),
+  //     }))
+  //     .filter((parentObject) => parentObject.cases.length > 0);
+  // }
 
   barData: any;
   barOptions: any;
@@ -50,77 +53,8 @@ export class ProblemsetDetailComponent implements OnInit {
     private authService: AuthService,
     private activeRoute: ActivatedRoute,
     private problemsetService: ProblemsetsService,
+    private problemsetManager: ProblemsetManagerService,
   ) {
-    this._testCaseData = [
-      {
-        id: 1,
-        title: 'Actions',
-        cases: [
-          {
-            orderedNumber: 1,
-            isProcessing: true,
-            completed: 7,
-            assessment: 7,
-            text: 'text',
-            isError: false,
-          },
-          {
-            orderedNumber: 2,
-            isProcessing: false,
-            completed: 0,
-            assessment: 2.5,
-            text: 'text',
-            isError: false,
-          },
-          {
-            orderedNumber: 3,
-            isProcessing: true,
-            completed: 0,
-            assessment: 1.5,
-            text: 'text',
-            isError: false,
-          },
-          {
-            orderedNumber: 4,
-            isProcessing: true,
-            completed: 1,
-            assessment: 5,
-            text: 'text',
-            isError: false,
-          },
-        ],
-      },
-      {
-        id: 2,
-        title: 'Behaviours',
-        cases: [
-          {
-            orderedNumber: 5,
-            isProcessing: true,
-            completed: 2,
-            assessment: 4,
-            text: 'text',
-            isError: true,
-          },
-          {
-            orderedNumber: 6,
-            isProcessing: false,
-            completed: 0,
-            assessment: 1,
-            text: 'text',
-            isError: false,
-          },
-          {
-            orderedNumber: 7,
-            isProcessing: true,
-            completed: 4,
-            assessment: 4,
-            text: 'text',
-            isError: false,
-          },
-        ],
-      },
-    ];
   }
 
   async ngOnInit() {
@@ -128,10 +62,31 @@ export class ProblemsetDetailComponent implements OnInit {
     this.setCharts();
     await this.loadUserData();
     await this.getSubmissionHeadData();
+    await this.getSubmissionTasks();
     await this.getSubmissionsScoresBeforeAndReloadChart();
   }
 
 
+  private async getSubmissionTasks(): Promise<void> {
+    const { structureChecks, suites } = await this.problemsetManager.getSortedTasksByTypeAndSuits(this.submissionId);
+    this.structureChecks = structureChecks;
+    this.suites = suites;
+    this.convertMapToArray();
+  }
+
+  convertMapToArray() {
+    this.suites.forEach((submissions, taskData) => {
+      console.log(taskData);
+      this.suitesArray.push({
+        title: taskData.attributes.title, 
+        score: taskData.attributes.score,
+        maxScore: taskData.attributes['max-score'],
+        submissions: submissions
+      });
+    });
+    console.log(this.suitesArray);
+    
+  }
 
 
   private async getSubmissionsScoresBeforeAndReloadChart(){
