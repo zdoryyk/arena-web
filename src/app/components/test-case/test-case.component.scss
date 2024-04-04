@@ -63,8 +63,8 @@
 }
 
 .red {
-  background: #ff0000;
-  border-color: #ff0000;
+  background: #d44038;
+  border-color: #d44038;
 }
 
 .test-progress {
@@ -150,6 +150,14 @@
   padding-top: 40px;
   font-size: 20px;
   margin-left: 20px;
+}
+
+.code {
+  padding: 2px 4px;
+  font-size: 100%;
+  color: #c7254e;
+  background-color: #f9f2f4;
+  border-radius: 4px;
 }
 
 @media (min-width: 768px) {

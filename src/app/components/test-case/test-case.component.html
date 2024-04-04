@@ -39,9 +39,9 @@
             <h1 class="h1-ok">OK</h1>
           }
         }@else{
-          @if(submission.attributes.document.description){
+          @if(parseDescription){
             <div class="testcase-description">
-              <pre class="description-str">{{ submission.attributes.document.description }}</pre>
+              <div class="description-str" [innerHTML]="safeHtml"></div>
             </div>
           }
           @if(!!submission.attributes.document.duration || !!submission.attributes.document.result['return-code']){
@@ -55,9 +55,7 @@
                 <div class="return-code">
                   <span style="color: #073051; font-weight: 700;">Return code:</span><span> {{ submission.attributes.document.result['return-code'] }}</span> 
                   @if(submission?.attributes?.document?.result?.['return-code'] !== 0){
-                    <span style="color: red;">
-                    , EXPECTED 0
-                    </span>
+                    <strong style="color: red;" >EXPECTED 0</strong>
                   }
                 </div>
               }
@@ -67,6 +65,7 @@
               <app-stdout
               [originStdout]="submission.attributes.document.result.stdout"
               [expectedStdout]="submission?.attributes?.document?.expected?.stdout"
+              (displayTextChanged)="handleDisplayTextChange()"
               >
               </app-stdout>
           }

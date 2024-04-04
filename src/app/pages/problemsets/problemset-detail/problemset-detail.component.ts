@@ -76,7 +76,6 @@ export class ProblemsetDetailComponent implements OnInit {
 
   convertMapToArray() {
     this.suites.forEach((submissions, taskData) => {
-      console.log(taskData);
       this.suitesArray.push({
         title: taskData.attributes.title, 
         score: taskData.attributes.score,
@@ -84,7 +83,6 @@ export class ProblemsetDetailComponent implements OnInit {
         submissions: submissions
       });
     });
-    console.log(this.suitesArray);
     
   }
 
@@ -198,7 +196,6 @@ export class ProblemsetDetailComponent implements OnInit {
 
   private async loadUserData() {
     this.user = await this.authService.checkIsUserInStorage();
-    console.log('user, ', this.user);
   }
 
 

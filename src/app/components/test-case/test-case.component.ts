@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -10,8 +11,9 @@ import {
 import { CommonModule } from '@angular/common';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { Submission } from '../../interfaces/submission';
-import { StdoutComponent } from '../test-card-components/stdout/stdout.component';
-import { StderrComponent } from '../test-card-components/stderr/stderr.component';
+import { StdoutComponent } from '../test-case-components/stdout/stdout.component';
+import { StderrComponent } from '../test-case-components/stderr/stderr.component';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-test-case',
@@ -21,6 +23,8 @@ import { StderrComponent } from '../test-card-components/stderr/stderr.component
   styleUrl: './test-case.component.scss',
 })
 export class TestCaseComponent implements OnInit {
+
+  safeHtml: SafeHtml;
   @ViewChild('contentDiv', { static: false }) contentDiv: ElementRef;
   @Input() orderedNumber: number;
   @Input() completed: number;
@@ -28,6 +32,7 @@ export class TestCaseComponent implements OnInit {
   @Input() isProcessing: boolean;
   @Input() submission: Submission;
 
+  constructor(private cdRef: ChangeDetectorRef,private sanitizer: DomSanitizer){}
 
   isExpanded: boolean = false;
   checkBtnVisible: boolean = false;
@@ -40,6 +45,7 @@ export class TestCaseComponent implements OnInit {
   isVisible: string = '';
   isCompetedVisible: string = '';
   bgColor: string;
+  parsedDescription = '';
   @Output() dataToParent = new EventEmitter<string>();
 
   
@@ -54,19 +60,49 @@ export class TestCaseComponent implements OnInit {
     
   }
 
+  handleDisplayTextChange() {
+    this.cdRef.detectChanges();
+    setTimeout(() => {
+      this.updateContentSize();
+    });
+  }
+
+  updateContentSize() {
+    this.contentHeight = this.contentDiv.nativeElement.offsetHeight + 'px';
+  }
+
+  parseDescription(description: string): string {
+    description = description.replace(/`([^`]+)`/g, '<code>$1</code>');
+    description = description.replace(/\*\*([^\*]+)\*\*/g, '<strong>$1</strong>');
+    description = description.replace(/\*([^\*]+)\*/g, '<em>$1</em>');
+    description = description.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a style="color: #8FBE48;text-decoration: none"  href="$2">$1</a>');
+    this.safeHtml = this.sanitizer.bypassSecurityTrustHtml(description);
+    return description;
+  }
+
   ngOnInit(): void {
     
     let passed = this.submission.attributes.passed;
-    let isError  = this.submission.attributes.document.result['return-code'] == 2;
+    let isError  = this.checkIsError();
+    let score = this.submission.attributes.document.score;
+    let maxScore = this.submission.attributes.document['max-score'];
+
+    if (this.submission.attributes.document.description) {
+      this.parsedDescription = this.parseDescription(this.submission.attributes.document.description);
+    }
     if (!this.submission.attributes.strict) {
       this.isVisible = 'visible';
-      if (passed) {
+      if (passed && score != null && maxScore != null) {
         this.bgColor = 'green';
         this.isCompetedVisible = 'visible';
         this.checkBtnVisible = true;
-      } else {
+      } else if(!passed && score != null && maxScore != null) {
         this.closeBtnVisible = true;
         this.bgColor = 'orange';
+      }
+      else{
+        this.isVisible = '';
+        this.minusBtnVisible = true;
       }
     } else {
       if (isError) {
@@ -76,6 +112,13 @@ export class TestCaseComponent implements OnInit {
       }
       this.minusBtnVisible = true;
     }
+  }
+
+  checkIsError():boolean{
+    return this.submission.attributes.document.strict
+     && this.submission.attributes.document.score == null
+     && this.submission.attributes.document['max-score'] == null 
+     && !this.submission.attributes.passed;
   }
 
 }
