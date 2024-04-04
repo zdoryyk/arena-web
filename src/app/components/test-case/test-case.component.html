@@ -39,7 +39,7 @@
             <h1 class="h1-ok">OK</h1>
           }
         }@else{
-          @if(parseDescription){
+          @if(submission?.attributes?.document?.description){
             <div class="testcase-description">
               <div class="description-str" [innerHTML]="safeHtml"></div>
             </div>

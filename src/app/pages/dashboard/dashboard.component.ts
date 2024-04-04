@@ -58,7 +58,6 @@ export class DashboardComponent implements OnInit {
     }
     this.setCharts();
     this.latestSubmissions = await this.profileManager.getSubmissionsByLimit(10);
-    console.log('123',this.latestSubmissions.submissionDetails);
     
     this.isLoading = false;
   }
@@ -93,7 +92,6 @@ export class DashboardComponent implements OnInit {
     for (let [key, submissions] of this.chartData.entries()) {
       const data = submissions.map(submission => submission.score);
       time = submissions.map(submission => submission['date-evaluated']);
-      console.log('time,',time);
       let color = this.getRandomColor();
 
       const newDataset = {
