@@ -1,0 +1,12 @@
+<div class="status-header">
+    <span class="label">STDOUT</span>
+    @if(isExpectedPresent){
+        <span class="buttons">
+        <button [ngClass]="{'active': activeButton === 'produced'}" (click)="setDisplayText('produced')">PRODUCED</button>
+        <button [ngClass]="{'active': activeButton === 'expected'}" (click)="setDisplayText('expected')">EXPECTED</button>
+        <button [ngClass]="{'active': activeButton === 'diff'}" (click)="setDisplayText('diff')">DIFF</button>
+        </span>
+    }
+  </div>
+  <pre>{{displayText}}</pre>
+  

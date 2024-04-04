@@ -1,7 +1,7 @@
 <div class="test {{ bgColor }}" (click)="onToggle()">
   <div class="test-header">
     <div class="test-left">
-      <span>#{{ orderedNumber }}</span>
+      <span>#{{ orderedNumber + 1 }}</span>
       <img
         src="assets/icons/arrow.svg"
         alt="arrow"
@@ -21,21 +21,21 @@
       </button>
     </div>
   </div>
-  <div class="test-content" [style.height]="contentHeight">
+  <div class="test-content" [style.height]="contentHeight" (click)="$event.stopPropagation()">
     <div class="test-content-inner" #contentDiv>
         @if(submission.attributes.type === 'test:ws'){
-          @if(submission.attributes.document.result.response.warnings.length){
+          @if(submission?.attributes?.document?.result?.response?.warnings?.length){
             <h1 class="warings-title">Warnings</h1>
             @for (warning of this.submission.attributes.document.result.response.warnings; track $index) {
                <li class="war-error-str" >{{warning}}</li>
             }
           }
-          @if (submission.attributes.document.result.response.errors.length) {
+          @if (submission?.attributes?.document?.result?.response?.errors?.length) {
             @for (error of this.submission.attributes.document.result.response.errors; track $index) {
               <li class="war-error-str" >{{error}}</li>
            }
           }
-          @if((submission.attributes.document.result.response.errors?.length ?? 0) == 0 && (this.submission.attributes.document.result.response.warnings?.length ?? 0) == 0){
+          @if( submission?.attributes?.document?.result == null || ((submission?.attributes?.document?.result?.response?.errors?.length ?? 0) == 0 && (this.submission.attributes.document.result.response.warnings?.length ?? 0) == 0)){
             <h1 class="h1-ok">OK</h1>
           }
         }@else{
@@ -54,23 +54,29 @@
               @if(submission?.attributes?.document?.result?.['return-code'] !== undefined){
                 <div class="return-code">
                   <span style="color: #073051; font-weight: 700;">Return code:</span><span> {{ submission.attributes.document.result['return-code'] }}</span> 
-                  @if(submission?.attributes?.document?.expected && submission.attributes.document.expected['return-code'] !== undefined){
+                  @if(submission?.attributes?.document?.result?.['return-code'] !== 0){
                     <span style="color: red;">
-                    , EXPECTED {{ submission.attributes.document.expected['return-code'] }}
+                    , EXPECTED 0
                     </span>
                   }
                 </div>
               }
             </div>
           }
-          @if(submission?.attributes?.document?.result?.stderr && submission.attributes.document.result.stderr.length > 0){
-            <pre class="stdouts">STDOUT: {{submission.attributes.document.result.stderr}}</pre>
-          }
           @if(submission?.attributes?.document?.result?.stdout && submission.attributes.document.result.stdout.length > 0){
-            <pre  class="stdouts">STDOUT: {{submission.attributes.document.result.stdout}}</pre>
+              <app-stdout
+              [originStdout]="submission.attributes.document.result.stdout"
+              [expectedStdout]="submission?.attributes?.document?.expected?.stdout"
+              >
+              </app-stdout>
+          }
+          @if(submission?.attributes?.document?.result?.stderr && submission.attributes.document.result.stderr.length > 0){
+            <app-stderr
+            [originStderr]="submission?.attributes?.document?.result?.stderr"
+            >
+            </app-stderr>
           }
         }
-
     </div>
   </div>
 </div>
