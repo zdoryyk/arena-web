@@ -2,10 +2,13 @@
   <div class="test-group-info">
     <h1>{{ title }}</h1>
     <div class="test-group-total {{ isVisible }}">
-      <span class="{{ isCompetedVisible }}">{{ totalCompleted }} / </span
-      ><span>{{ totalAssessment }}</span>
+      <span class="{{ isCompetedVisible }}">{{ totalCompleted }} / </span>
+      <span>{{ totalAssessment }}</span>
     </div>
   </div>
+  @if(description){
+    <div class="test-group-description" [innerHTML]="safeHtml"></div>
+  }
   <ul>
     <ng-content select="[ul-content]"></ng-content>
   </ul>

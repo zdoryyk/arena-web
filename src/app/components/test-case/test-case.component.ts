@@ -31,6 +31,8 @@ export class TestCaseComponent implements OnInit {
   @Input() assessment: number;
   @Input() isProcessing: boolean;
   @Input() submission: Submission;
+  @Input() isRecursive: boolean;
+  @Input() scale: number;
 
   constructor(private cdRef: ChangeDetectorRef,private sanitizer: DomSanitizer){}
 
@@ -41,7 +43,6 @@ export class TestCaseComponent implements OnInit {
   contentHeight: string = '0px';
   rotationAngle: number = 0;
   viewHeight: number;
-  showProgress: boolean = false;
   isVisible: string = '';
   isCompetedVisible: string = '';
   bgColor: string;
@@ -51,6 +52,9 @@ export class TestCaseComponent implements OnInit {
   
 
   onToggle(): void {
+    if(!this.isRecursive){
+      this.scale = 1.0;
+    }
     this.contentHeight = this.contentDiv.nativeElement.offsetHeight + 'px';
     this.rotationAngle += 90;
     if (this.rotationAngle === 180) {
@@ -75,22 +79,25 @@ export class TestCaseComponent implements OnInit {
     description = description.replace(/`([^`]+)`/g, '<code>$1</code>');
     description = description.replace(/\*\*([^\*]+)\*\*/g, '<strong>$1</strong>');
     description = description.replace(/\*([^\*]+)\*/g, '<em>$1</em>');
+    description = description.replace(/\_([^\_]+)\_/g, '<em>$1</em>'); 
     description = description.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a style="color: #8FBE48;text-decoration: none"  href="$2">$1</a>');
     this.safeHtml = this.sanitizer.bypassSecurityTrustHtml(description);
     return description;
   }
 
-  ngOnInit(): void {
-    
-    let passed = this.submission.attributes.passed;
-    let isError  = this.checkIsError();
-    let score = this.submission.attributes.document.score;
-    let maxScore = this.submission.attributes.document['max-score'];
 
-    if (this.submission.attributes.document.description) {
-      this.parsedDescription = this.parseDescription(this.submission.attributes.document.description);
+  ngOnInit(): void {
+    if(this.submission.attributes.type === 'suite'){
+      console.log('suite');
     }
-    if (!this.submission.attributes.strict) {
+    const { passed, strict, document } = this.submission.attributes;
+    const { score, 'max-score': maxScore, description } = document;
+    const isError = this.checkIsError();
+
+    if (description) {
+      this.parsedDescription = this.parseDescription(description);
+    }
+    if (!strict) {
       this.isVisible = 'visible';
       if (passed && score != null && maxScore != null) {
         this.bgColor = 'green';
@@ -104,13 +111,27 @@ export class TestCaseComponent implements OnInit {
         this.isVisible = '';
         this.minusBtnVisible = true;
       }
-    } else {
+    } else if(strict){
       if (isError) {
         this.minusBtnVisible = true;
         this.bgColor = 'red';
         return;
       }
-      this.minusBtnVisible = true;
+      else if(passed && score != null && maxScore != null){
+        this.isVisible = 'visible';
+        this.bgColor = 'green';
+        this.isCompetedVisible = 'visible';
+        this.checkBtnVisible = true;
+      }
+      else if(!passed && score != null && maxScore != null) {
+        this.isVisible = 'visible';
+        this.closeBtnVisible = true;
+        this.bgColor = 'orange';
+      }
+      else{
+        this.isVisible = '';
+        this.minusBtnVisible = true;
+      }
     }
   }
 
@@ -121,6 +142,14 @@ export class TestCaseComponent implements OnInit {
      && !this.submission.attributes.passed;
   }
 
+
+  nextScale(): any {
+    if(this.scale == 0.2){
+      return 0.2;
+    }
+    return this.scale - 0.2;  
+  }
+    
 }
 
 

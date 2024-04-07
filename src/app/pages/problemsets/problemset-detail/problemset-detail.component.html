@@ -94,6 +94,7 @@
             [title]="group.title"
             [totalCompleted]="group.score"
             [totalAssessment]="group.maxScore"
+            [description]="group.description"
           >
             <div ul-content>
               @for (submission of group.submissions; track $index) {

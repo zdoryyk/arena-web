@@ -1,4 +1,4 @@
-<div class="test {{ bgColor }}" (click)="onToggle()">
+<div class="test {{ bgColor }}" [ngStyle]="{'transform': 'scale(' + scale + ')', 'transform-origin': 'top left'}" (click)="onToggle()">
   <div class="test-header">
     <div class="test-left">
       <span>#{{ orderedNumber + 1 }}</span>
@@ -23,57 +23,61 @@
   </div>
   <div class="test-content" [style.height]="contentHeight" (click)="$event.stopPropagation()">
     <div class="test-content-inner" #contentDiv>
-        @if(submission.attributes.type === 'test:ws'){
-          @if(submission?.attributes?.document?.result?.response?.warnings?.length){
-            <h1 class="warings-title">Warnings</h1>
-            @for (warning of this.submission.attributes.document.result.response.warnings; track $index) {
-               <li class="war-error-str" >{{warning}}</li>
+        @if(submission.attributes.type === 'suite'){
+          <app-test-case [isRecursive]="true" [scale]="nextScale()"></app-test-case>
+        }@else {
+          @if(submission.attributes.type === 'test:ws'){
+            @if(submission?.attributes?.document?.result?.response?.warnings?.length){
+              <h1 class="warings-title" style="color: #F47C3C" >Warnings</h1>
+              @for (warning of this.submission.attributes.document.result.response.warnings; track $index) {
+                 <li class="war-error-str" >{{warning}}</li>
+              }
             }
-          }
-          @if (submission?.attributes?.document?.result?.response?.errors?.length) {
-            @for (error of this.submission.attributes.document.result.response.errors; track $index) {
-              <li class="war-error-str" >{{error}}</li>
-           }
-          }
-          @if( submission?.attributes?.document?.result == null || ((submission?.attributes?.document?.result?.response?.errors?.length ?? 0) == 0 && (this.submission.attributes.document.result.response.warnings?.length ?? 0) == 0)){
-            <h1 class="h1-ok">OK</h1>
-          }
-        }@else{
-          @if(submission?.attributes?.document?.description){
-            <div class="testcase-description">
-              <div class="description-str" [innerHTML]="safeHtml"></div>
-            </div>
-          }
-          @if(!!submission.attributes.document.duration || !!submission.attributes.document.result['return-code']){
-            <div class="duration-row">
-              @if(submission?.attributes?.document?.duration){
-                <div class="duration">
-                  <span style="color: #073051; font-weight: 700">Duration:</span> <span> {{ (submission.attributes.document.duration * 1000).toFixed(3) }} ms</span>
-                </div>
-              }
-              @if(submission?.attributes?.document?.result?.['return-code'] !== undefined){
-                <div class="return-code">
-                  <span style="color: #073051; font-weight: 700;">Return code:</span><span> {{ submission.attributes.document.result['return-code'] }}</span> 
-                  @if(submission?.attributes?.document?.result?.['return-code'] !== 0){
-                    <strong style="color: red;" >EXPECTED 0</strong>
-                  }
-                </div>
-              }
-            </div>
-          }
-          @if(submission?.attributes?.document?.result?.stdout && submission.attributes.document.result.stdout.length > 0){
-              <app-stdout
-              [originStdout]="submission.attributes.document.result.stdout"
-              [expectedStdout]="submission?.attributes?.document?.expected?.stdout"
-              (displayTextChanged)="handleDisplayTextChange()"
+            @if (submission?.attributes?.document?.result?.response?.errors?.length) {
+              @for (error of this.submission.attributes.document.result.response.errors; track $index) {
+                <li class="war-error-str" >{{error}}</li>
+             }
+            }
+            @if( submission?.attributes?.document?.result == null || ((submission?.attributes?.document?.result?.response?.errors?.length ?? 0) == 0 && (this.submission.attributes.document.result.response.warnings?.length ?? 0) == 0)){
+              <h1 class="h1-ok">OK</h1>
+            }
+          }@else{
+            @if(submission?.attributes?.document?.description){
+              <div class="testcase-description">
+                <div class="description-str" [innerHTML]="safeHtml"></div>
+              </div>
+            }
+            @if(!!submission.attributes.document.duration || !!submission.attributes.document.result['return-code']){
+              <div class="duration-row">
+                @if(submission?.attributes?.document?.duration){
+                  <div class="duration">
+                    <span style="color: #073051; font-weight: 700">Duration:</span> <span> {{ (submission.attributes.document.duration * 1000).toFixed(3) }} ms</span>
+                  </div>
+                }
+                @if(submission?.attributes?.document?.result?.['return-code'] !== undefined){
+                  <div class="return-code">
+                    <span style="color: #073051; font-weight: 700;">Return code:</span><span> {{ submission.attributes.document.result['return-code'] }}</span> 
+                    @if(submission?.attributes?.document?.result?.['return-code'] !== 0){
+                      <strong style="color: red;margin-left: 10px;" >EXPECTED 0</strong>
+                    }
+                  </div>
+                }
+              </div>
+            }
+            @if(submission?.attributes?.document?.result?.stdout && submission.attributes.document.result.stdout.length > 0){
+                <app-stdout
+                [originStdout]="submission.attributes.document.result.stdout"
+                [expectedStdout]="submission?.attributes?.document?.expected?.stdout"
+                (displayTextChanged)="handleDisplayTextChange()"
+                >
+                </app-stdout>
+            }
+            @if(submission?.attributes?.document?.result?.stderr && submission.attributes.document.result.stderr.length > 0){
+              <app-stderr
+              [originStderr]="submission?.attributes?.document?.result?.stderr"
               >
-              </app-stdout>
-          }
-          @if(submission?.attributes?.document?.result?.stderr && submission.attributes.document.result.stderr.length > 0){
-            <app-stderr
-            [originStderr]="submission?.attributes?.document?.result?.stderr"
-            >
-            </app-stderr>
+              </app-stderr>
+            }
           }
         }
     </div>

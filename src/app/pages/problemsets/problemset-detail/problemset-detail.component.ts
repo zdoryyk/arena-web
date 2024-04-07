@@ -11,6 +11,7 @@ import { firstValueFrom } from 'rxjs';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ProblemsetManagerService } from '../../../services/problemset-manager.service';
 import { Submission, TaskData } from '../../../interfaces/submission';
+import { environment } from '../../../../environments/environment';
 
 
 @Component({
@@ -31,7 +32,7 @@ export class ProblemsetDetailComponent implements OnInit {
   submissionsBefore: any[] = [];
   routePaths: string[] = [];
   structureChecks: Submission[] = [];
-  suites: Map<TaskData, Submission[]> = new Map();
+  suites: Map<TaskData, TaskData[]> = new Map();
   suitesArray: any[] = [];
 
   // get testCaseData() {
@@ -79,6 +80,7 @@ export class ProblemsetDetailComponent implements OnInit {
       this.suitesArray.push({
         title: taskData.attributes.title, 
         score: taskData.attributes.score,
+        description: taskData.attributes.document.description,
         maxScore: taskData.attributes['max-score'],
         submissions: submissions
       });
@@ -90,7 +92,7 @@ export class ProblemsetDetailComponent implements OnInit {
   private async getSubmissionsScoresBeforeAndReloadChart(){
     const id = this.submissionData.relationships['user-problemset']['data']['id'];
     this.submissionsBefore = (await this.problemsetService.getLimitedSubmissionsByUserProblemsetId(7, id));
-    this.routePaths = this.submissionsBefore.map(submission => `http://localhost:4500/submission/${submission.id}`);
+    this.routePaths = this.submissionsBefore.map(submission => `${environment.base_url}/submission/${submission.id}`);
     this.barData = {
       labels: this.submissionsBefore.map((_, index) => index + 1),
       datasets: [
@@ -120,7 +122,7 @@ export class ProblemsetDetailComponent implements OnInit {
 
   routeToSubmissionList() {
     const problemsetId = this.submissionData.relationships['user-problemset'].data.id;
-    this.router.navigate(['/problemsets-detail', problemsetId]);
+    this.router.navigate(['/problemset-submissions', problemsetId]);
   }
 
 
@@ -197,21 +199,5 @@ export class ProblemsetDetailComponent implements OnInit {
   private async loadUserData() {
     this.user = await this.authService.checkIsUserInStorage();
   }
-
-
-
-  onGetData(field: string, parentIndex: number) {
-    if (parentIndex < 0 || parentIndex >= this._testCaseData.length) return;
-
-    const parentObject = this._testCaseData[parentIndex];
-    const filteredCases = parentObject.cases.filter(
-      (testCase) => !testCase.isError && testCase.isProcessing
-    );
-
-    return filteredCases.reduce((sum, testCase) => {
-      return sum + testCase[field];
-    }, 0);
-  }
-
 
 }

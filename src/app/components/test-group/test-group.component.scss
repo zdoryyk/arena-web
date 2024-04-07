@@ -19,6 +19,23 @@
   display: none;
 }
 
+.test-group-description {
+  font-size: 20px; 
+  margin-top: 10px;
+  margin-bottom: 20px;
+  color: #666;
+  max-width: 100%;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.with-description {
+  border-bottom: 2px solid #ddd; 
+  padding-bottom: 10px; 
+  margin-bottom: 20px;
+}
+
+
 @media (min-width: 768px) {
   .test-group-info {
     font-size: 40px;

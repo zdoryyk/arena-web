@@ -17,11 +17,11 @@ export class ProblemsetManagerService {
 
 
 
-  async getSortedTasksByTypeAndSuits(id: string):Promise<{structureChecks: Submission[],suites: Map<TaskData, Submission[]>}> {
+  async getSortedTasksByTypeAndSuits(id: string):Promise<{structureChecks: Submission[],suites: Map<TaskData, TaskData[]>}> {
     let currentSuite: TaskData = null;
     let tempTasks: Submission[] = [];
     let structureChecks: any[] = [];
-    let suites: Map<TaskData, Submission[]> = new Map();
+    let suites: Map<TaskData, TaskData[]> = new Map();
     let data = await firstValueFrom(this.problemsetService.getSubmissionTasks(id));
   
     for (const task of data.data) {
