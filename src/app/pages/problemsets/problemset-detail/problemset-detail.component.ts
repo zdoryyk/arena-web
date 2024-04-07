@@ -68,6 +68,7 @@ export class ProblemsetDetailComponent implements OnInit {
   convertMapToArray() {
     this.suites.forEach((submissions, taskData) => {
       this.suitesArray.push({
+        order: taskData.iterationNumber,
         title: taskData.attributes.title, 
         score: taskData.attributes.score,
         description: taskData.attributes.document.description,

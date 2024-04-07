@@ -93,7 +93,7 @@
             @if(group.isParentExist){
               <ng-container>
                 <app-test-case
-                  [orderedNumber]="$index + 1"
+                  [orderedNumber]="$index"
                   [submission]="group"
                   [submissionList]="group.submissions"
                   [isRecursive]="true"
@@ -111,7 +111,7 @@
                 @for (submission of group.submissions; track $index) {
                   <ng-container>
                     <app-test-case
-                      [orderedNumber]="$index + 1"
+                      [orderedNumber]="$index"
                       [submission]="submission"
                     ></app-test-case>
                   </ng-container>

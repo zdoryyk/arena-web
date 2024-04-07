@@ -10,6 +10,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
   styleUrl: './test-group.component.scss',
 })
 export class TestGroupComponent implements OnInit {
+
   @Input() title: string;
   @Input() totalCompleted: number;
   @Input() totalAssessment: number;

@@ -148,9 +148,7 @@ export class TestCaseComponent implements OnInit {
   }
 
   updateContentSize() {
-    console.log('before',this.contentHeight);
     this.contentHeight = this.contentDiv.nativeElement.offsetHeight + 'px';
-    console.log('after',this.contentHeight);
   }
 
   parseDescription(description: string): string {

@@ -17,14 +17,17 @@ export class ProblemsetManagerService {
 
 
 
-  async getSortedTasksByTypeAndSuits(id: string):Promise<{structureChecks: Submission[],suites: Map<TaskData, TaskData[]>}> {
+  async getSortedTasksByTypeAndSuits(id: string): Promise<{ structureChecks: Submission[], suites: Map<TaskData, TaskData[]> }> {
     let currentSuite: TaskData = null;
     let tempTasks: Submission[] = [];
     let structureChecks: any[] = [];
     let suites: Map<TaskData, TaskData[]> = new Map();
     let data = await firstValueFrom(this.problemsetService.getSubmissionTasks(id));
-  
+    let iterationNumber = 1; // Initialize iteration number
+
     for (const task of data.data) {
+      task.iterationNumber = iterationNumber; // Assign iteration number to task
+
       if (task.attributes.document.type === 'suite') {
         if (currentSuite != null) {
           suites.set(currentSuite, tempTasks);
@@ -33,23 +36,20 @@ export class ProblemsetManagerService {
         currentSuite = task;
         tempTasks = []; 
       } else {
-          if (currentSuite == null) {
-            structureChecks.push(task);
-          } else {
-            tempTasks.push(task);
-          }
+        if (currentSuite == null) {
+          structureChecks.push(task);
+        } else {
+          tempTasks.push(task);
         }
+      }
+      iterationNumber++; // Increment iteration number for next task
     }
     if (currentSuite != null) {
       suites.set(currentSuite, tempTasks);
     }
 
     return { structureChecks, suites };
-  }
-  
-  getSubmissionTestType(submission: Submission){
-    let testType = 0;
-  }
+}
 
 
   async getProblemsetLastSubmissionsByLimitById(limit: number, id:string){

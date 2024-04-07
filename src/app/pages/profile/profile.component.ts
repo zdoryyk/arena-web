@@ -31,7 +31,6 @@ export class ProfileComponent implements OnInit{
   constructor(
     private transferState: TransferState,
     private authService: AuthService,
-    private loginService: LoginService,
     private profileManager: ProfileMangerService
   ){}
   

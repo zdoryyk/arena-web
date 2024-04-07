@@ -1,4 +1,5 @@
 export interface TaskData {
+  iterationNumber?: number;
   type: string;
   id: string;
   attributes: {
@@ -48,6 +49,7 @@ export interface TaskData {
 
 
 export interface Submission {
+  iterationNumber?: number;
   type: string;
   id: string;
   attributes: Attributes;

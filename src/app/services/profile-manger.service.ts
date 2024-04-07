@@ -27,13 +27,13 @@ export class ProfileMangerService {
     let maxTotalScores = 0;
     let totalsubmissions = 0;
     let rate = 0;
-    let problemsets = await this.problemsetService.getUserProblemsetsByUserId(user.id).toPromise();
+    let problemsets = await firstValueFrom(this.problemsetService.getUserProblemsetsByUserId(user.id));
     
     let maxScore = 0; 
   
     for(let problemset of problemsets.data){
-      let submissions = await this.problemsetService.getUserSubmissionByProblemset(problemset.id).toPromise();
-      let problemsetDetail = await this.problemsetService.getProblemSetDetailsByProblemsetId(problemset.relationships.problemset.data.id).toPromise();
+      let submissions = await firstValueFrom(this.problemsetService.getUserSubmissionByProblemset(problemset.id));
+      let problemsetDetail = await firstValueFrom(this.problemsetService.getProblemSetDetailsByProblemsetId(problemset.relationships.problemset.data.id));
       submissions.data.forEach(submission => {
         let score = submission.attributes.score;
         if(score > maxScore) {
@@ -43,6 +43,7 @@ export class ProfileMangerService {
       maxTotalScores += problemsetDetail.data.attributes['max-score'];
       totalsubmissions += submissions.data.length;
       totalScores += maxScore;
+      maxScore = 0;
     }
         
     rate = Number(((totalScores/maxTotalScores) * 100).toFixed(0));
@@ -86,8 +87,8 @@ export class ProfileMangerService {
 
 
   private trimTitleFromLastYearOrColon(title: string): string {
-    const lastYearMatch = title.match(/\d{4}(?!.*\d{4})/); // Ищем последний год
-    const lastYearIndex = lastYearMatch ? lastYearMatch.index + 4 : -1; // +4, чтобы перейти за год
+    const lastYearMatch = title.match(/\d{4}(?!.*\d{4})/); 
+    const lastYearIndex = lastYearMatch ? lastYearMatch.index + 4 : -1;
   
     const lastColonIndex = title.lastIndexOf(":");
   
