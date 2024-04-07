@@ -90,23 +90,35 @@
       @if(suitesArray){
         <ng-container>
           @for (group of suitesArray; track $index) {
-            <app-test-group
-            [title]="group.title"
-            [totalCompleted]="group.score"
-            [totalAssessment]="group.maxScore"
-            [description]="group.description"
-          >
-            <div ul-content>
-              @for (submission of group.submissions; track $index) {
-                <ng-container>
-                  <app-test-case
-                    [orderedNumber]="$index + 1"
-                    [submission]="submission"
-                  ></app-test-case>
-                </ng-container>
-              }
-            </div>
-          </app-test-group>
+            @if(group.isParentExist){
+              <ng-container>
+                <app-test-case
+                  [orderedNumber]="$index + 1"
+                  [submission]="group"
+                  [submissionList]="group.submissions"
+                  [isRecursive]="true"
+                ></app-test-case>
+              </ng-container>
+            }
+            @else {
+              <app-test-group
+              [title]="group.title"
+              [totalCompleted]="group.score"
+              [totalAssessment]="group.maxScore"
+              [description]="group.description"
+            >
+              <div ul-content>
+                @for (submission of group.submissions; track $index) {
+                  <ng-container>
+                    <app-test-case
+                      [orderedNumber]="$index + 1"
+                      [submission]="submission"
+                    ></app-test-case>
+                  </ng-container>
+                }
+              </div>
+            </app-test-group>
+            }
         }
       </ng-container>
     }

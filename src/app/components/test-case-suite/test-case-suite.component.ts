@@ -1,33 +1,15 @@
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
-import { Submission } from '../../interfaces/submission';
-import { StdoutComponent } from '../test-case-components/stdout/stdout.component';
-import { StderrComponent } from '../test-case-components/stderr/stderr.component';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { subscribe } from 'diagnostics_channel';
-
+import { Submission } from '../../interfaces/interfaces';
 
 @Component({
-  selector: 'app-test-case',
+  selector: 'app-test-case-suite',
   standalone: true,
-  imports: [CommonModule,MatIconModule,StdoutComponent,StderrComponent],
-  templateUrl: './test-case.component.html',
-  styleUrl: './test-case.component.scss',
+  imports: [],
+  templateUrl: './test-case-suite.component.html',
+  styleUrl: './test-case-suite.component.scss'
 })
-export class TestCaseComponent implements OnInit {
-
+export class TestCaseSuiteComponent {
   safeHtml: SafeHtml;
   @ViewChild('contentDiv', { static: false }) contentDiv: ElementRef;
   @Input() orderedNumber: number;
@@ -36,7 +18,10 @@ export class TestCaseComponent implements OnInit {
   @Input() isRecursive: boolean;
   @Input() scale: number;
   @Output() dataToParent = new EventEmitter<string>();
-  @Output() contentHeightChanged: EventEmitter<void> = new EventEmitter();
+  @Output() resizeEvent: EventEmitter<void> = new EventEmitter<void>();
+
+
+  constructor(private cdRef: ChangeDetectorRef,private sanitizer: DomSanitizer){}
 
   isExpanded: boolean = false;
   checkBtnVisible: boolean = false;
@@ -54,8 +39,7 @@ export class TestCaseComponent implements OnInit {
   maxScore: number;
   passed: boolean;
   strict: boolean;
-  
-  constructor(private cdRef: ChangeDetectorRef,private sanitizer: DomSanitizer){}
+
   
   ngOnInit(): void {
     if(!this.isRecursive){
@@ -71,20 +55,11 @@ export class TestCaseComponent implements OnInit {
     this.setAttributes(isError);
   }
 
-
   sortSubmission(){
-    const { passed, strict, document } = this.submission.attributes;
-    const { score, 'max-score': maxScore, description } = document;
-    this.title = this.submission.attributes.title;
-    this.score = score;
-    this.maxScore = maxScore;
-    this.passed = passed;
-    this.strict = strict;
     const isError = this.checkIsError();
-    if (description) {
-      this.parsedDescription = this.parseDescription(description);
-    }
-    this.setAttributes(isError);
+    // if (description) {
+    //   this.parsedDescription = this.parseDescription(description);
+    // }
   }
 
   setAttributes(isError: boolean){
@@ -125,40 +100,41 @@ export class TestCaseComponent implements OnInit {
       }
     }
   }
-  
 
   onToggle(): void {
+    if(!this.isRecursive){
+      this.scale = 1.0;
+    }
     this.contentHeight = this.contentDiv.nativeElement.offsetHeight + 'px';
     this.rotationAngle += 90;
     if (this.rotationAngle === 180) {
       this.rotationAngle = 0;
       this.contentHeight = '0px';
     }
-      this.contentHeightChanged.emit();
-   }
-
-
+  }
 
   handleDisplayTextChange() {
     this.cdRef.detectChanges();
     setTimeout(() => {
       this.updateContentSize();
-    },400);
-    
+    });
+  }
+
+  onSizeChanged(newSize: number) {
+    this.contentHeight = newSize + 'px';
+    this.cdRef.detectChanges();
   }
 
   updateContentSize() {
-    console.log('before',this.contentHeight);
     this.contentHeight = this.contentDiv.nativeElement.offsetHeight + 'px';
-    console.log('after',this.contentHeight);
   }
 
   parseDescription(description: string): string {
-    description = description.replace(/`([^`]+)`/g, '<code>$1</code>')
-                .replace(/\*\*([^\*]+)\*\*/g, '<strong>$1</strong>')
-                .replace(/\*([^\*]+)\*/g, '<em>$1</em>')
-                .replace(/\_([^\_]+)\_/g, '<em>$1</em>') 
-                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a style="color: #8FBE48;text-decoration: none"  href="$2">$1</a>');
+    description = description.replace(/`([^`]+)`/g, '<code>$1</code>');
+    description = description.replace(/\*\*([^\*]+)\*\*/g, '<strong>$1</strong>');
+    description = description.replace(/\*([^\*]+)\*/g, '<em>$1</em>');
+    description = description.replace(/\_([^\_]+)\_/g, '<em>$1</em>'); 
+    description = description.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a style="color: #8FBE48;text-decoration: none"  href="$2">$1</a>');
     this.safeHtml = this.sanitizer.bypassSecurityTrustHtml(description);
     return description;
   }
@@ -174,7 +150,4 @@ export class TestCaseComponent implements OnInit {
   nextScale(): any {
     return this.scale == 0.2 ? 0.2 : this.scale - 0.2;
   }
-
 }
-
-

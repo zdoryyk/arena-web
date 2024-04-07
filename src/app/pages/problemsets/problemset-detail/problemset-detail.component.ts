@@ -35,16 +35,6 @@ export class ProblemsetDetailComponent implements OnInit {
   suites: Map<TaskData, TaskData[]> = new Map();
   suitesArray: any[] = [];
 
-  // get testCaseData() {
-  //   return this._testCaseData
-  //     .map((parentObject, index) => ({
-  //       ...parentObject,
-  //       totalCompleted: this.onGetData('completed', index),
-  //       totalAssessment: this.onGetData('assessment', index),
-  //     }))
-  //     .filter((parentObject) => parentObject.cases.length > 0);
-  // }
-
   barData: any;
   barOptions: any;
   barPlugins: any;
@@ -82,10 +72,12 @@ export class ProblemsetDetailComponent implements OnInit {
         score: taskData.attributes.score,
         description: taskData.attributes.document.description,
         maxScore: taskData.attributes['max-score'],
+        isParentExist: taskData.relationships['parent-task'].data != null,
+        isPassed: taskData.attributes.passed,
+        isStrict: taskData.attributes.strict,
         submissions: submissions
       });
     });
-    
   }
 
 
@@ -124,6 +116,9 @@ export class ProblemsetDetailComponent implements OnInit {
     const problemsetId = this.submissionData.relationships['user-problemset'].data.id;
     this.router.navigate(['/problemset-submissions', problemsetId]);
   }
+
+  
+    
 
 
   setCharts(){
