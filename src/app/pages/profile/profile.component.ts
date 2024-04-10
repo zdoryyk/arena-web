@@ -100,7 +100,6 @@ export class ProfileComponent implements OnInit{
     let submissionDetails = submissionsMap.submissionDetails;
     let lastSubmissionEvaluationInPercents = (submissionDetails[0].score / maxScore) * 100;
     let remainingToReachFull = ((this.user.totalScore/this.user.maxTotalScore) * 100).toFixed(0);
-    
     this.barData = {
       labels: submissionDetails.map((_, index) => index + 1), // Используем индекс для меток
       datasets: [
@@ -127,7 +126,7 @@ export class ProfileComponent implements OnInit{
       labels: ['Last Submission'],
       datasets: [
         {
-          data: [lastSubmissionEvaluationInPercents, 116-lastSubmissionEvaluationInPercents], // [max: 100, 116 - [1]]
+          data: [lastSubmissionEvaluationInPercents.toFixed(1), 116-lastSubmissionEvaluationInPercents], // [max: 100, 116 - [1]]
           backgroundColor: ['#A9BEF4', 'transparent'],
           cutout: 115,
           borderWidth: 0,

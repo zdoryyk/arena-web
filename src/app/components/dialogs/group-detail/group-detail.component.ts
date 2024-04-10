@@ -60,7 +60,6 @@ export class GroupDetailComponent implements OnInit,OnDestroy {
 
 
     ngOnInit() {
-      console.log( window.innerWidth);
       this.cd.markForCheck();
       this.loadGroupDetails(this.groups);
   }
