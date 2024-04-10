@@ -1,18 +1,23 @@
 <div id="menu" class="menu menu-hidden">
     <ul class="menu-list">
         <li>
-            <a [routerLink]="['/dashboard']" routerLinkActive="active-link mobile" class="menu-link" (click)="onToggle()">Dashboard</a>
+            <a [routerLink]="dynamicRouteDashboard" routerLinkActive="active-link mobile" class="menu-link" (click)="onToggle()">Dashboard</a>
         </li>
         <li>
-            <a [routerLink]="['/problemsets']" routerLinkActive="active-link mobile" class="menu-link" (click)="onToggle()">Problemsets</a>
+            <a [routerLink]="dynamicRouteCoursesOrProblemsets" routerLinkActive="active-link mobile" class="menu-link" (click)="onToggle()">@if (isTeacher) {Courses} @else {Problemsets}</a>
         </li>
-        <li>
-            <a [routerLink]="['/profile']" routerLinkActive="active-link mobile" class="menu-link" (click)="onToggle()">Profile</a>
-        </li>
+        @if(!isTeacher){
+            <li>
+                <a [routerLink]="['/profile']" routerLinkActive="active-link mobile" class="menu-link" (click)="onToggle()">Profile</a>
+            </li>
+        }
     </ul>
 
     <div class="menu-auth">
         <span>{{fullName}}</span>
         <a><img src="../../../assets/icons/logout.svg" class="img-fluid" alt="logo" (click)="onLogout()"></a>
+        <a href="mailto:danil.zdoryk@student.tuke.sk?subject=Bug Report(SENT FROM MOBILE)" class="link-dark d-flex align-items-center gap-2">
+            <mat-icon style="width: 25px; height: 25px;" svgIcon="bug"></mat-icon>
+        </a>
     </div>
 </div>

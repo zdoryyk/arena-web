@@ -18,7 +18,9 @@
             <li class="detail-list-item">
               <p>Author</p>
               @if (user) {
-                <span class="user">{{user.attributes['first-name']}} {{user.attributes['last-name']}}</span>
+                <a href="mailto:{{user.attributes.email}}">
+                  <span class="user">{{user.attributes['first-name']}} {{user.attributes['last-name']}}</span>
+                </a>
               }
             </li>
             <li class="detail-list-item">

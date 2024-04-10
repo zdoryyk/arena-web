@@ -31,39 +31,58 @@ export class StdoutComponent implements OnInit {
     const originLines = this.originStdout.split('\n');
     const expectedLines = this.expectedStdout.split('\n');
     let diff = '';
-  
+
     const maxLength = Math.max(originLines.length, expectedLines.length);
-  
+
     for (let i = 0; i < maxLength; i++) {
-      const originLine = originLines[i] || '';
-      const expectedLine = expectedLines[i] || '';
-  
-      if (originLine !== expectedLine) {
-        
-        diff += `- ${originLine}\n`;
-  
-        
-        let compareLine = '? ';
-  
-        
-        const minLength = Math.min(originLine.length, expectedLine.length);
-        for (let j = 0; j < minLength; j++) {
-          compareLine += originLine[j] !== expectedLine[j] ? '^' : ' ';
+        const originLine = originLines[i] || '';
+        const expectedLine = expectedLines[i] || '';
+
+        if (originLine !== expectedLine) {
+            // Only add the "-" line if originLine is not empty
+            if (originLine) {
+                diff += `- ${originLine}\n`;
+            }
+
+            let compareLine = '';
+            let isDifferenceMarked = false; // Indicator for any difference marked
+
+            // Calculate differences for "^" markings
+            const minLength = Math.min(originLine.length, expectedLine.length);
+            for (let j = 0; j < minLength; j++) {
+                if (originLine[j] !== expectedLine[j]) {
+                    compareLine += '^';
+                    isDifferenceMarked = true;
+                } else {
+                    compareLine += ' ';
+                }
+            }
+            if (originLine.length !== expectedLine.length) {
+                compareLine += '^'.repeat(Math.abs(originLine.length - expectedLine.length));
+                isDifferenceMarked = true;
+            }
+
+            // Only add the compare line if there are differences marked
+            // and both originLine and expectedLine are not empty
+            if (isDifferenceMarked && originLine && expectedLine) {
+                diff += `? ${compareLine}\n`;
+            }
+
+            // Only add the "+" line if expectedLine is not empty
+            if (expectedLine) {
+                diff += `+ ${expectedLine}\n`;
+            }
+        } else {
+            diff += `  ${originLine}\n`;
         }
-        if (originLine.length > expectedLine.length) {
-          compareLine += '^'.repeat(originLine.length - expectedLine.length);
-        }
-        diff += `${compareLine}\n`;
-        diff += `+ ${expectedLine}\n`;
-      } else {
-        diff += `  ${originLine}\n`;
-      }
     }
     this.diffBetweenStdouts = diff;
     this.displayText = this.diffBetweenStdouts;
     this.activeButton = 'diff';
   }
-  
+
+
+
 
   
 

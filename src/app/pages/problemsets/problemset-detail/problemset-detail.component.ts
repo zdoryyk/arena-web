@@ -5,7 +5,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { TestGroupComponent } from '../../../components/test-group/test-group.component';
 import { TestCaseComponent } from '../../../components/test-case/test-case.component';
 import { AuthService } from '../../../services/auth.service';
-import { UserData, UserProblemSetData } from '../../../interfaces/user';
+import { User, UserData, UserProblemSetData } from '../../../interfaces/user';
 import { ProblemsetsService } from '../../../services/problemsets.service';
 import { firstValueFrom } from 'rxjs';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -24,7 +24,6 @@ import { environment } from '../../../../environments/environment';
 export class ProblemsetDetailComponent implements OnInit {
 
   private _testCaseData = [];
-  user: UserData;
   submissionId: string; 
   submissionData: any;
   problemsetData: any;
@@ -34,6 +33,7 @@ export class ProblemsetDetailComponent implements OnInit {
   structureChecks: Submission[] = [];
   suites: Map<TaskData, TaskData[]> = new Map();
   suitesArray: any[] = [];
+  user: UserData;
 
   barData: any;
   barOptions: any;
@@ -51,7 +51,6 @@ export class ProblemsetDetailComponent implements OnInit {
   async ngOnInit() {
     this.submissionId = this.activeRoute.snapshot.paramMap.get('id');
     this.setCharts();
-    await this.loadUserData();
     await this.getSubmissionHeadData();
     await this.getSubmissionTasks();
     await this.getSubmissionsScoresBeforeAndReloadChart();
@@ -67,6 +66,7 @@ export class ProblemsetDetailComponent implements OnInit {
 
   convertMapToArray() {
     this.suites.forEach((submissions, taskData) => {
+      console.log(taskData.attributes.title,submissions);
       this.suitesArray.push({
         order: taskData.iterationNumber,
         title: taskData.attributes.title, 
@@ -92,7 +92,8 @@ export class ProblemsetDetailComponent implements OnInit {
         {
           label: '',
           data: this.submissionsBefore.map(submission => submission.attributes.score.toFixed(1)),
-          barPercentage: 0.6,
+          barPercentage: 0.5, 
+          categoryPercentage: 0.8, 
           backgroundColor: (color: any) => {
             const highestIndex = this.barData.datasets[0].data.indexOf(
               Math.max(...this.barData.datasets[0].data)
@@ -107,93 +108,99 @@ export class ProblemsetDetailComponent implements OnInit {
   private async getSubmissionHeadData(){
     let submissionData = await firstValueFrom(this.problemsetService.getSubmissionById(this.submissionId));
     this.submissionData = submissionData.data;
+    await this.loadUserData();
     let userProblemsetId = this.submissionData.relationships['user-problemset'].data.id;
     let problemsetData = await firstValueFrom(this.problemsetService.getProblemsetByUserProblemset(userProblemsetId));
     this.problemsetData = problemsetData.data;
-    this.problemsetData.attributes.title = this.problemsetService.trimTitleFromLastYearOrColon( this.problemsetData.attributes.title);
+    this.problemsetData.attributes.title = this.problemsetService.trimTitleFromLastYearOrColon(this.problemsetData.attributes.title);
   }    
+
+  private async loadUserData() {
+    let userProblemsetId = this.submissionData.relationships['user-problemset'].data.id; 
+    let userProblemsetData = await firstValueFrom(this.problemsetService.getConcreteUserProblemset(userProblemsetId));
+    let userId = userProblemsetData.data.relationships.user.data.id;
+    let userData = await firstValueFrom(this.problemsetService.getConcreteUser(userId));
+    this.user = userData.data;
+  }
 
   routeToSubmissionList() {
     const problemsetId = this.submissionData.relationships['user-problemset'].data.id;
     this.router.navigate(['/problemset-submissions', problemsetId]);
   }
 
-  
-    
-
-
   setCharts(){
-    this.barOptions = {
-      onClick: (event, elements, chart) => {
-        if (elements.length > 0) {
-          const firstElementIndex = elements[0].index;
-          const urls = this.routePaths;
-          const url = urls[firstElementIndex];
-          if (url) {
-            window.location.href = url;
-          }
+
+  const minYValue = 20;
+
+  this.barOptions = {
+    onClick: (event, elements, chart) => {
+      if (elements.length > 0) {
+        const firstElementIndex = elements[0].index;
+        const urls = this.routePaths;
+        const url = urls[firstElementIndex];
+        if (url) {
+          window.location.href = url;
         }
+      }
+    },
+    plugins: {
+      legend: {
+        display: false,
       },
-      plugins: {
-        legend: {
+      datalabels: {
+        anchor: 'end',
+        align: 'top',
+        labels: {
+          title: {
+            color: '#000',
+            font: {
+              weight: 'bold',
+              size: 18,
+            },
+          },
+        },
+      },
+      tooltip: {
+        enabled: false,
+      },
+    },
+    layout: {
+      padding: 30,
+    },
+    scales: {
+      y: {
+        min: 0,
+        ticks: {
+          callback: function () {
+            return '';
+          },
+        },
+        grid: {
+          display: false,
+          drawOnChartArea: false,
+        },
+        border: {
           display: false,
         },
-        datalabels: {
-          anchor: 'end',
-          align: 'top',
-          labels: {
-            title: {
-              color: '#000',
-              font: {
-                weight: 'bold',
-                size: 18,
-              },
-            },
+      },
+      x: {
+        ticks: {
+          callback: function () {
+            return '';
           },
         },
-        tooltip: {
-          enabled: false,
+        grid: {
+          display: false,
+          drawOnChartArea: false,
+        },
+        border: {
+          color: '#000',
         },
       },
-      layout: {
-        padding: 30,
-      },
-      scales: {
-        y: {
-          ticks: {
-            callback: function () {
-              return '';
-            },
-          },
-          grid: {
-            display: false,
-            drawOnChartArea: false,
-          },
-          border: {
-            display: false,
-          },
-        },
-        x: {
-          ticks: {
-            callback: function () {
-              return '';
-            },
-          },
-          grid: {
-            display: false,
-            drawOnChartArea: false,
-          },
-          border: {
-            color: '#000',
-          },
-        },
-      },
-    };
-    this.barPlugins = [ChartDataLabels];
+    },
+  };
+  this.barPlugins = [ChartDataLabels];
   }
 
-  private async loadUserData() {
-    this.user = await this.authService.checkIsUserInStorage();
-  }
 
 }

@@ -112,6 +112,14 @@
   margin-left: 15px;
 }
 
+.h1-bad{
+  font-size: 40px;
+  color: red;
+  text-align: start;
+  margin-top: 10px;
+  margin-left: 15px;
+}
+
 .testcase-description{
   border-bottom: 2px solid #000;
   padding-bottom: 10px;
@@ -159,6 +167,12 @@
   color: #c7254e;
   background-color: #f4789b;
   border-radius: 4px;
+}
+
+.custom-icon-size {
+  width: 25px; 
+  height: 25px;
+  margin-top: 5px;
 }
 
 @media (min-width: 768px) {

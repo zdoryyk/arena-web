@@ -8,10 +8,16 @@
 //   base_url: "http://localhost:4500"
 // };
 export const environment = {
-  production: false,
+  production: true,
   api_url: "https://arena.kpi.fei.tuke.sk/api/v1",
   base_url: "https://arena-seven.vercel.app"
 };
+
+// export const environment = {
+//   production: false,
+//   api_url: "http://localhost:8000/api/v1",
+//   base_url: "http://localhost:4500"
+// };
   
 /*1
  * For easier debugging in development mode, you can import the following file

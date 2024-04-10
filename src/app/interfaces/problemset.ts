@@ -40,6 +40,8 @@ export interface Problemset {
       links: {
         self: string;
       };
+      courseName?: string;
+      courseId: string;
   }
   
   export interface ProblemsetsResponse {

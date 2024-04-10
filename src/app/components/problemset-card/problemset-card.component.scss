@@ -7,7 +7,7 @@
   }
   
   .card-data {
-    padding: 30px 33px 0;
+    padding: 22px 33px 0;
   }
   
   .card-top {
@@ -92,28 +92,26 @@
     color: #fff;
   }
   
-  
-  
   .card-detail-container {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 0px 20px;
+    padding: 1px 20px;
     border-radius: 13px;
     background: #4D93FD;
     color: #fff;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 5px;
   }
   
   .custom-icon-size {
-    width: 24px; 
-    height: 24px;
+    margin-left: 15px;
+    width: 40px; 
+    height: 40px;
     vertical-align: middle;
   }
   
   .card-status {
-    margin: 0; 
+    margin: 0;
     display: flex;
     align-items: center;
     vertical-align: middle;
@@ -153,11 +151,11 @@
   
     .card-subtext,
     .card-subtext-groups {
-      font-size: 14px; 
+      font-size: 18px; 
     }
   
     .card-date {
-      font-size: 14px; 
+      font-size: 17px; 
     }
   
     .card-status.blue-bg {

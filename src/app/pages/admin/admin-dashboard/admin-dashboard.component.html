@@ -15,24 +15,9 @@
                     <div class="card-title">{{totalGroups}} Groups</div>
                 </div>
             </div>
-            <h1 class="title">Active Problemsets</h1>
-            <div class="problemsets">
-                <app-problemset-card
-                    [id]="123"
-                    [title]="'Hello'"
-                    [created]="da">
-                </app-problemset-card>
-               <!-- @for (problemset of problemsets; track $index) {
-                    <app-problemset-card
-                    [id]="problemset.id"
-                    [title]="problemset.attributes.title"
-                    [created]="problemset.attributes['date-start']">
-                </app-problemset-card> -->
-               <!-- } -->
-            </div>
             <h1 class="title">Active Courses</h1>
 
-            <div class="problemsets">
+            <div class="active-courses">
                 @for (course of courses; track $index) {
                 <app-course-card
                     [id]="course.id"
@@ -44,7 +29,18 @@
                 </app-course-card>
                 }
             </div>
-
+            <h1 class="title">Active Problemsets</h1>
+            <div class="active-courses">
+               @for (problemset of problemsets; track $index) {
+                    <app-problemset-card
+                    [id]="problemset.id"
+                    [title]="problemset.attributes.title"
+                    [courseTitle]="problemset.courseName"
+                    [courseId]="problemset.courseId"
+                    [created]="problemset.attributes['date-start']">
+                </app-problemset-card> 
+            }
+            </div>
         </div>
     </section>
 </main>

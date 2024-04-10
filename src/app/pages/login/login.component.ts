@@ -53,9 +53,6 @@ export class LoginComponent implements OnInit{
     this.platformId = platformId;
   }
 
-    
-
-
   async ngOnInit() {
     this.checkIsUserLoggedIn();
     this.route.queryParams.subscribe(params => {
@@ -78,7 +75,6 @@ export class LoginComponent implements OnInit{
     };
     this.tokenSubscription = this.loginService.getToken(casToken).subscribe(resultToken => {
       this.userSubscription = this.loginService.getUserMe(resultToken.token).subscribe(resultUser => {
-        console.log(resultUser)
         this.authService.setLoggedIn(true);
         if (resultUser.data.attributes['is-lecturer']) {
           if(isPlatformBrowser(this.platformId))

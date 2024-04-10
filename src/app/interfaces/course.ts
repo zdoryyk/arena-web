@@ -14,7 +14,7 @@ export interface Course {
       }>;
     };
     groups: {
-      data: any[]; // Adjust accordingly
+      data: any[];
     };
   };
   links: {

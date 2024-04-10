@@ -46,8 +46,10 @@
               <li class="war-error-str" >{{error}}</li>
             }
           }
-          @if( submission?.attributes?.document?.result == null || ((submission?.attributes?.document?.result?.response?.errors?.length ?? 0) == 0 && (this.submission.attributes.document.result.response.warnings?.length ?? 0) == 0)){
+          @if( submission?.attributes?.passed &&  (submission?.attributes?.document?.result == null || ((submission?.attributes?.document?.result?.response?.errors?.length ?? 0) == 0 && (this.submission.attributes.document.result.response.warnings?.length ?? 0) == 0))){
             <h1 class="h1-ok">OK</h1>
+          }@else if( !submission?.attributes?.passed &&  (submission?.attributes?.document?.result == null || ((submission?.attributes?.document?.result?.response?.errors?.length ?? 0) == 0 && (this.submission.attributes.document.result.response.warnings?.length ?? 0) == 0))){
+            <h1 class="h1-bad">STURUCTURE CHECK FAULT</h1>
           }
         }@else{
           @if(submission?.attributes?.document?.description){
@@ -59,12 +61,14 @@
             <div class="duration-row">
               @if(submission?.attributes?.document?.duration){
                 <div class="duration">
-                  <span style="color: #073051; font-weight: 700">Duration:</span> <span> {{ (submission.attributes.document.duration * 1000).toFixed(3) }} ms</span>
+                  <mat-icon class="custom-icon-size" svgIcon="timer"></mat-icon>
+                  <span style="color: #073051; font-weight: 700">   Duration:</span> <span> {{ (submission.attributes.document.duration * 1000).toFixed(3) }} ms</span>
                 </div>
               }
               @if(submission?.attributes?.document?.result?.['return-code'] !== undefined){
                 <div class="return-code">
-                  <span style="color: #073051; font-weight: 700;">Return code:</span><span> {{ submission.attributes.document.result['return-code'] }}</span> 
+                  <mat-icon class="custom-icon-size" svgIcon="return"></mat-icon>
+                  <span style="color: #073051; font-weight: 700;">   Return code:</span><span> {{ submission.attributes.document.result['return-code'] }}</span> 
                   @if(submission?.attributes?.document?.result?.['return-code'] !== 0){
                     <strong style="color: red;margin-left: 10px;" >EXPECTED 0</strong>
                   }
@@ -72,7 +76,7 @@
               }
             </div>
           }
-          @if(submission?.attributes?.document?.result?.stdout && submission.attributes.document.result.stdout.length > 0){
+          @if((submission?.attributes?.document?.result?.stdout && submission.attributes.document.result.stdout.length > 0) || (submission?.attributes?.document?.expected?.stdout && submission?.attributes?.document?.expected?.stdout.length > 0)){
               <app-stdout
               [originStdout]="submission.attributes.document.result.stdout"
               [expectedStdout]="submission?.attributes?.document?.expected?.stdout"

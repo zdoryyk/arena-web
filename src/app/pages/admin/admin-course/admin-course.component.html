@@ -2,17 +2,15 @@
     <section class="section">
         <div class="container">
             <header class="header-flex">
-                <div class="title left">Course: {{this.course.attributes.title}}</div>
-                @if (isLecturer) {
+                <div class="title left">Course: {{this.course?.attributes?.title}}</div>
                     <div class="buttons">
                         <button class="btn add" (click)="openNewProblemsetDialog()">ADD PROBLEMSET</button>
                         <button class="btn archive" (click)="openConfirmationDialog()">ARCHIVE</button>
                     </div>
-                }
             </header>
             <div class="content-wrapper">
                 <div class="table-container">
-                    @if (true) {
+                    @if (!loading) {
                         <div class="table">
                             <app-group-detail
                             [groups]="groups"
@@ -22,7 +20,7 @@
                         </div>
                     }
                 </div>
-                <div class="chart-container">
+                <!-- <div class="chart-container">
                     <div class="dashboard-chart">
                         <p-chart
                           class="line-chart"
@@ -33,7 +31,7 @@
                           height="100%"
                         ></p-chart>
                       </div>
-                </div>
+                </div> -->
             </div>
         </div>   
     </section>

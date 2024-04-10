@@ -10,8 +10,6 @@ import { Course } from '../../../interfaces/course';
 import { Problemset } from '../../../interfaces/problemset';
 import { CourseCardComponent } from '../../../components/course-card/course-card.component';
 import { ProblemsetCardComponent } from '../../../components/problemset-card/problemset-card.component';
-import { log } from 'console';
-import { ArcBorderRadius } from 'chart.js';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -57,17 +55,14 @@ export class AdminDashboardComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    if(this.transferState.hasKey(makeStateKey('activeCourses'))){
+    if(this.transferState.hasKey(makeStateKey('problemsets'))){
       this.courses = this.transferState.get(makeStateKey('activeCourses'),[]);
       this.archivedCourses =  this.transferState.get(makeStateKey('archievedCourses'),[]);
       this.totalGroups = this.transferState.get(makeStateKey('totalGroups'),0);
       this.totalSubmissions = this.transferState.get(makeStateKey('totalSubmissions'),0);
       this.problemsets = this.transferState.get<Problemset[]>(makeStateKey('problemsets'),[]);
-      console.log(this.problemsets);
     }else{
       this.initializeData();
-      // console.log(this.transferState.get(makeStateKey('activeCourses'),[]));
-      // console.log(this.transferState.get(makeStateKey('archievedCourses'),[]));  
     } 
   }
 
@@ -84,6 +79,9 @@ export class AdminDashboardComponent implements OnInit {
       } catch (error) {
         console.error('Error initializing data', error);
       } finally {
+        console.log(this.problemsets);
+        console.log(this.courses);
+        
         this.loading = false;
         this.transferState.set<Course[]>(makeStateKey('activeCourses'),this.courses);
         this.transferState.set<Course[]>(makeStateKey('archievedCourses'),this.archivedCourses);

@@ -68,7 +68,7 @@ export class AdminCoursesComponent implements OnInit {
   }
   
    ngOnInit(): void {
-    if(this.transferState.hasKey(makeStateKey('activeCourses'))){
+    if(this.transferState.hasKey(makeStateKey('problemsets'))){
       this.courses = this.transferState.get(makeStateKey('activeCourses'),[]);
       this.archivedCourses =  this.transferState.get(makeStateKey('archievedCourses'),[]);
       this.totalGroups = this.transferState.get(makeStateKey('totalGroups'),0);
@@ -77,8 +77,6 @@ export class AdminCoursesComponent implements OnInit {
 
     }else{
       this.initializeData();
-      // console.log(this.transferState.get(makeStateKey('activeCourses'),[]));
-      // console.log(this.transferState.get(makeStateKey('archievedCourses'),[]));  
     } 
   }
 
@@ -96,6 +94,8 @@ export class AdminCoursesComponent implements OnInit {
       } catch (error) {
         console.error('Error initializing data', error);
       } finally {
+        console.log(this.archivedCourses);
+        
         this.loading = false;
         this.transferState.set<any>(makeStateKey('activeCourses'),this.courses);
         this.transferState.set<any>(makeStateKey('archievedCourses'),this.archivedCourses);

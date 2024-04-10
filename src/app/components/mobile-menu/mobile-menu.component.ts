@@ -2,11 +2,13 @@ import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { isPlatformBrowser } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 
 @Component({
   selector: 'app-mobile-menu',
   standalone: true,  
-  imports: [RouterModule,],
+  imports: [RouterModule,MatIconModule],
   templateUrl: './mobile-menu.component.html',
   styleUrl: './mobile-menu.component.scss'
 })
@@ -19,8 +21,19 @@ export class MobileMenuComponent implements OnInit{
   isTeacher = false; 
   isLoggedIn = true;  
   fullName: string = 'none';
-  constructor(private router: Router, private authService: AuthService,@Inject(PLATFORM_ID) platformId: Object) {
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    @Inject(PLATFORM_ID) platformId: Object,
+    private sanitizer: DomSanitizer,
+    private matIconRegistery: MatIconRegistry,
+    ) {
     this.platformId = platformId;
+    this.matIconRegistery.addSvgIcon(
+      'bug',
+      this.sanitizer
+      .bypassSecurityTrustResourceUrl('../assets/icons/bug.svg'),
+    )
   }
 
   async ngOnInit() {

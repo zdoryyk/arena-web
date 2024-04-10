@@ -32,17 +32,19 @@
                     </app-course-card>
                 }
             </div> 
-            <div class="courses-button-container">
-                <h1 class="title">Archived  Courses</h1>
-            </div>   
-            <div class="archieved courses">
-                @for (course of archivedCourses; track $index) {
-                    <app-problemset-card
-                    [title]="course.attributes.title"
-                    [id]="course.id"
-                    ></app-problemset-card>
-                }
-            </div> 
+            @if (archivedCourses.length > 0) {
+                <div class="courses-button-container">
+                    <h1 class="title">Archived  Courses</h1>
+                </div>   
+                <div class="archieved courses">
+                    @for (course of archivedCourses; track $index) {
+                        <app-problemset-card
+                        [title]="course.attributes.title"
+                        [id]="course.id"
+                        ></app-problemset-card>
+                    }
+                </div> 
+            }
         </div>
     </section>
 </main>

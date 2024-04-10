@@ -26,7 +26,11 @@ export class CourseCardComponent implements OnInit  {
     private router: Router,
     private activatedRoute: ActivatedRoute,
   ){
-    
+    this.matIconRegistery.addSvgIcon(
+      'detail',
+      this.domSanitizer
+      .bypassSecurityTrustResourceUrl('../assets/icons/detail.svg'),
+    )    
   }
 
 

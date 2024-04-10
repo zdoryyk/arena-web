@@ -23,11 +23,8 @@ export class ProblemsetManagerService {
     let structureChecks: any[] = [];
     let suites: Map<TaskData, TaskData[]> = new Map();
     let data = await firstValueFrom(this.problemsetService.getSubmissionTasks(id));
-    let iterationNumber = 1; // Initialize iteration number
 
     for (const task of data.data) {
-      task.iterationNumber = iterationNumber; // Assign iteration number to task
-
       if (task.attributes.document.type === 'suite') {
         if (currentSuite != null) {
           suites.set(currentSuite, tempTasks);
@@ -42,14 +39,12 @@ export class ProblemsetManagerService {
           tempTasks.push(task);
         }
       }
-      iterationNumber++; // Increment iteration number for next task
     }
     if (currentSuite != null) {
       suites.set(currentSuite, tempTasks);
     }
-
     return { structureChecks, suites };
-}
+  }
 
 
   async getProblemsetLastSubmissionsByLimitById(limit: number, id:string){

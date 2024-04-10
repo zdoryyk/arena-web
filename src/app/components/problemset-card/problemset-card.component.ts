@@ -16,8 +16,8 @@ export class ProblemsetCardComponent {
 
   @Input() id: string;
   @Input() title: string;
-  @Input() groups: number;
-  @Input() problemsets?: number;
+  @Input() courseTitle: string;
+  @Input() courseId: string;
   @Input() created: Date;
 
   constructor(
@@ -26,11 +26,11 @@ export class ProblemsetCardComponent {
     private router: Router,
     private activatedRoute: ActivatedRoute,
   ){
-    // this.matIconRegistery.addSvgIcon(
-    //   'detail',
-    //   this.domSanitizer
-    //   .bypassSecurityTrustResourceUrl('../assets/icons/detail.svg'),
-    // )    
+    this.matIconRegistery.addSvgIcon(
+      'detail',
+      this.domSanitizer
+      .bypassSecurityTrustResourceUrl('../assets/icons/detail.svg'),
+    )    
   }
   
   ngOnInit(): void {
@@ -39,12 +39,12 @@ export class ProblemsetCardComponent {
 
   navigateToDetail(): void {
     console.log(this.id);
-    this.router.navigate(['/admin-course', this.id]);
+    this.router.navigate(['/admin-course', this.courseId]);
   }
 
   private trimTitleFromLastYearOrColon(title: string): string {
-    const lastYearMatch = title.match(/\d{4}(?!.*\d{4})/); // Ищем последний год
-    const lastYearIndex = lastYearMatch ? lastYearMatch.index + 4 : -1; // +4, чтобы перейти за год
+    const lastYearMatch = title.match(/\d{4}(?!.*\d{4})/);
+    const lastYearIndex = lastYearMatch ? lastYearMatch.index + 4 : -1;
   
     const lastColonIndex = title.lastIndexOf(":");
   

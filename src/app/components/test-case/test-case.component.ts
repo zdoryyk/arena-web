@@ -16,13 +16,13 @@ import { Submission } from '../../interfaces/submission';
 import { StdoutComponent } from '../test-case-components/stdout/stdout.component';
 import { StderrComponent } from '../test-case-components/stderr/stderr.component';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { subscribe } from 'diagnostics_channel';
+import {MatTooltip, MatTooltipModule} from '@angular/material/tooltip';
 
 
 @Component({
   selector: 'app-test-case',
   standalone: true,
-  imports: [CommonModule,MatIconModule,StdoutComponent,StderrComponent],
+  imports: [CommonModule,MatIconModule,StdoutComponent,StderrComponent,MatIconModule,MatTooltipModule],
   templateUrl: './test-case.component.html',
   styleUrl: './test-case.component.scss',
 })
@@ -55,7 +55,28 @@ export class TestCaseComponent implements OnInit {
   passed: boolean;
   strict: boolean;
   
-  constructor(private cdRef: ChangeDetectorRef,private sanitizer: DomSanitizer){}
+  constructor
+  (
+    private cdRef: ChangeDetectorRef,
+    private sanitizer: DomSanitizer,
+    private matIconRegistery: MatIconRegistry,
+   ){
+    this.matIconRegistery.addSvgIcon(
+      'timer',
+      this.sanitizer
+      .bypassSecurityTrustResourceUrl('../assets/icons/timer.svg'),
+    );
+    this.matIconRegistery.addSvgIcon(
+      'return',
+      this.sanitizer
+      .bypassSecurityTrustResourceUrl('../assets/icons/return-code.svg'),
+    );
+    this.matIconRegistery.addSvgIcon(
+      'info',
+      this.sanitizer
+      .bypassSecurityTrustResourceUrl('../assets/icons/info.svg'),
+    );
+   }
   
   ngOnInit(): void {
     if(!this.isRecursive){

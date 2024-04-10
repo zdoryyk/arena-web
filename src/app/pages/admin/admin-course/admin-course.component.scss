@@ -20,7 +20,7 @@
 }
 
 .btn.add, .btn.archive {
-    background-color: #8FBE48; /* По умолчанию для .add */
+    background-color: #8FBE48;
     color: white;
     padding: 10px 20px;
     font-size: 24px;
@@ -31,7 +31,7 @@
 }
 
 .btn.archive {
-    background-color: #797979; /* Специфика для .archive */
+    background-color: #797979; 
 }
 
 .content-wrapper {
@@ -43,15 +43,15 @@
     height: 700px;
 }
 
-.table-container {
-    width: 75%;
-    overflow-y: auto;
-    border: none !important;
-}
+// .table-container {
+//     width: 75%;
+//     overflow-y: auto;
+//     border: none !important;
+// }
 
-.chart-container {
-    width: 35%;
-}
+// .chart-container {
+//     width: 35%;
+// }
 
 @media (min-width: 1801px) {
 

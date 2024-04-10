@@ -160,7 +160,7 @@ export class ProfileComponent implements OnInit{
           spacing: -45,
         },
         {
-          data: [],
+          data: [100],
           backgroundColor: 'transparent',
           cutout: 115,
           borderWidth: 10,

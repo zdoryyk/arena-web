@@ -53,6 +53,7 @@ export class ProblemsetsService {
     });
   }
 
+
   getUserSubmissionByProblemset(id: string): Observable<any> {
     return this.http.get<any>(`${environment.api_url}/user-problemsets/${id}/submissions`, {
       headers: {
@@ -95,6 +96,24 @@ export class ProblemsetsService {
     });
   }
 
+  getConcreteUserProblemset(userProblemsetId: string): Observable<any> {
+    var routePath = environment.api_url + "/user-problemsets/" + userProblemsetId;
+    return this.http.get<any>(routePath, {
+      headers: {
+        "Authorization": 'token ' + localStorage.getItem("arena-token")
+      }
+    });
+  }
+
+  getConcreteUser(userId: string): Observable<any> {
+    var routePath = environment.api_url + "/users/" + userId;
+    return this.http.get<any>(routePath, {
+      headers: {
+        "Authorization": 'token ' + localStorage.getItem("arena-token")
+      }
+    });
+  }
+
   async getLimitedSubmissionsByUserProblemsetId(limit: number, problemsetId: string): Promise<any> {
     const submissionsData = await firstValueFrom(this.getUserSubmissionByProblemset(problemsetId));
     const actualLimit = Math.min(submissionsData.data.length, limit);
@@ -104,8 +123,8 @@ export class ProblemsetsService {
 }
 
   trimTitleFromLastYearOrColon(title: string): string {
-    const lastYearMatch = title.match(/\d{4}(?!.*\d{4})/); // Ищем последний год
-    const lastYearIndex = lastYearMatch ? lastYearMatch.index + 4 : -1; // +4, чтобы перейти за год
+    const lastYearMatch = title.match(/\d{4}(?!.*\d{4})/);
+    const lastYearIndex = lastYearMatch ? lastYearMatch.index + 4 : -1; 
   
     const lastColonIndex = title.lastIndexOf(":");
   
@@ -117,5 +136,13 @@ export class ProblemsetsService {
   
     return title.substring(startIndex).trim();
   }
+
+  trimGroupTitle(title: string): string {
+    const atIndex = title.indexOf('@');
+    if (atIndex !== -1) {
+        return title.substring(0, atIndex);
+    }
+    return title;
+}
 
 } 

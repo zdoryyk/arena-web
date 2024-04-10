@@ -2,7 +2,8 @@ import { Component, Inject, OnInit, PLATFORM_ID, TransferState, booleanAttribute
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { isPlatformBrowser } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,8 +19,19 @@ export class SidebarComponent implements OnInit {
   isTeacher = false; 
   isLoggedIn = true;  
   fullName: string = 'none';
-  constructor(private router: Router, private authService: AuthService,@Inject(PLATFORM_ID) platformId: Object) {
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    @Inject(PLATFORM_ID) platformId: Object,
+    private sanitizer: DomSanitizer,
+    private matIconRegistery: MatIconRegistry,
+    ) {
     this.platformId = platformId;
+    this.matIconRegistery.addSvgIcon(
+      'bug',
+      this.sanitizer
+      .bypassSecurityTrustResourceUrl('../assets/icons/bug.svg'),
+    );
   }
 
 

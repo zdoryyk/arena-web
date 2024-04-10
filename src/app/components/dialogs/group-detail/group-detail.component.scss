@@ -1,0 +1,50 @@
+:host ::ng-deep {
+    .p-progressbar {
+        height: .5rem;
+        background-color: #D8DADC;
+    
+        .p-progressbar-value {
+            background-color: #607D8B;
+        }
+    }
+}
+
+.card{
+    width: 50rem;
+    border-spacing: 10px 10px;
+}
+
+.flex{
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+}
+
+.p-button-outlined{
+    height: 30px;
+    width: 80px;
+    margin-top: 24px;
+    margin-left: 24px;
+    border-radius: 5px;
+}
+
+input{
+    height: 35px;
+    width: 250px;
+    border-radius: 8px;
+    border: 1px solid grey;
+    padding-left: 40px;
+    margin-top: 12px;
+    margin-right: 10px;
+}
+
+
+@media (min-width: 1720px) {
+
+    .card{
+        width: 60rem;
+    }
+
+
+}
+

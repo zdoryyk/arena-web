@@ -55,14 +55,14 @@
       margin-bottom: 90px;
     }
 
-  .archieved.courses {
-    padding-top: 20px;
-    display: flex;
-    gap: 40px;
-    flex-wrap: wrap;
-    width: 100%;
-    margin-bottom: 90px;
-  }
+    .archieved.courses {
+      padding-top: 20px;
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      width: 100%;
+      margin-bottom: 90px;
+    }
 
   .courses-button {
         background: none;
@@ -99,12 +99,20 @@
     /* For mobile devices */
     @media (max-width: 575px) {
       .cards {
-        flex-direction: column; 
+        align-items: center;
         gap: 20px; 
       }
       .card {
         width: 100%; 
        
+      }
+
+      .active.courses{
+        justify-content: center;
+      }
+
+      .archieved.courses{
+        justify-content: center;
       }
     }
     

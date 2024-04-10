@@ -18,6 +18,8 @@ import { CourseDetailService } from '../../../services/course-detail.service';
 import { Group, GroupResponse } from '../../../interfaces/group';
 import { ProblemsetData } from '../../../interfaces/problemset';
 import { CourseManagerService } from '../../../services/course-manager.service';
+import { AuthService } from '../../../services/auth.service';
+import { UserData } from '../../../interfaces/user';
 
 @Component({
   selector: 'app-admin-course',
@@ -44,11 +46,11 @@ export class AdminCourseComponent implements OnInit{
   private courseProblemsetsSubscription: Subscription = new Subscription;
   private userSubscription: Subscription = new Subscription;
   private problemsetStatSubscription: Subscription = new Subscription;
-  isLecturer: boolean = true;
+  user: UserData;
 
 
   constructor(
-    private courseDetailService: CourseDetailService,
+    private authService: AuthService,
     private courseMagenerService: CourseManagerService,
     private activeRoute: ActivatedRoute,
     private matIconRegistery: MatIconRegistry,
@@ -63,8 +65,9 @@ export class AdminCourseComponent implements OnInit{
   }
 
 
-  ngOnInit(): void {
-    console.log(window.innerWidth);
+  async ngOnInit() {
+    
+    await this.loadUserData();
     this.course = {
       type: '',
       id: '', 
@@ -91,9 +94,8 @@ export class AdminCourseComponent implements OnInit{
       next: ({ course, problemsets, groups }) => {
         this.course = course.data;
         this.problemsets = problemsets.data;
-        this.groups = groups.data;
-        this.loading = false; 
-        
+        this.groups = this.sortLecturesGroups(groups.data);
+        this.loading = false;  
       },
       error: (error) => {
         console.error('Error fetching course details with extras', error);
@@ -101,6 +103,17 @@ export class AdminCourseComponent implements OnInit{
       }
     });
   }
+
+
+
+  sortLecturesGroups(groups: Group[]): Group[] {
+    const lecturesGroupIds = this.user.relationships['lecturers-groups'].data.map(group => group.id);
+    let filteredGroups = groups.filter(group => lecturesGroupIds.includes(group.id));
+    let sortedGroups = filteredGroups.sort((a, b) => a.id.localeCompare(b.id));
+    return sortedGroups;
+  }
+  
+
 
   setChart(){
     this.lineData = {
@@ -139,44 +152,46 @@ export class AdminCourseComponent implements OnInit{
     };
   }
 
-    openNewProblemsetDialog() {
-      const dialogWidth = window.innerWidth < 768 ? '75%' : '55%'; // Responsive dialog width
-      var _popup = this.dialog.open(NewProblemsetComponent, {
-        enterAnimationDuration: '1000ms',
-        exitAnimationDuration: '500ms',
-        width: dialogWidth,
-        data: {
-          title: 'Title'
-        }
-      });
-    
-      _popup.afterClosed().subscribe(item => {
-        console.log(item);
-      });
-    }
-  
-
-    openConfirmationDialog() {
-    var _popup =  this.dialog.open(ConfirmDialogComponent,{
+  openNewProblemsetDialog() {
+    const dialogWidth = window.innerWidth < 768 ? '75%' : '55%'; 
+    var _popup = this.dialog.open(NewProblemsetComponent, {
       enterAnimationDuration: '1000ms',
-      exitAnimationDuration:'500ms',
-      width: '40%',
-     
+      exitAnimationDuration: '500ms',
+      width: dialogWidth,
       data: {
         title: 'Title'
       }
-     })
+    });
   
-     _popup.afterClosed().subscribe(item => {
+    _popup.afterClosed().subscribe(item => {
       console.log(item);
-     })
-    }
+    });
+  }
+  
 
-
-    ngOnDestroy(): void {
-      if (this.courseSubscription) {
-        this.courseSubscription.unsubscribe();
-      }
+  openConfirmationDialog() {
+  var _popup =  this.dialog.open(ConfirmDialogComponent,{
+    enterAnimationDuration: '1000ms',
+    exitAnimationDuration:'500ms',
+    width: '40%',
+    data: {
+      title: 'Title'
     }
+    })
+
+    _popup.afterClosed().subscribe(item => {
+    console.log(item);
+    })
+  }
+
+  private async loadUserData() {
+    this.user = await this.authService.checkIsUserInStorage();
+  }
+
+  ngOnDestroy(): void {
+    if (this.courseSubscription) {
+      this.courseSubscription.unsubscribe();
+    }
+  }
 
 }

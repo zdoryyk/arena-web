@@ -3,7 +3,7 @@ import { CoursesService } from './courses.service';
 import { ProblemsetsService } from './problemsets.service';
 import { Course } from '../interfaces/course';
 import { Problemset } from '../interfaces/problemset';
-import { Observable, catchError, forkJoin, map, of, switchMap } from 'rxjs';
+import { Observable, catchError, firstValueFrom, forkJoin, map, of, switchMap } from 'rxjs';
 import { CourseDetailService } from './course-detail.service';
 
 @Injectable({
@@ -38,7 +38,7 @@ export class CourseManagerService {
         return { courses: [], archivedCourses: [], isLecturer };
       }
 
-      const courses = await this.coursesService.getUserCourses(userId).toPromise();
+      const courses = await firstValueFrom(this.coursesService.getUserCourses(userId));
       const activeCourses = [];
       const archivedCourses = [];
       let totalSubmissions = 0;
@@ -88,16 +88,21 @@ export class CourseManagerService {
   async getAllProblemsets(courses: Course[]): Promise<Problemset[]> {
     let allProblemsets: Problemset[] = [];
     for (const course of courses) {
-        const courseProblemsets = await Promise.all(
-            course.relationships.problemsets.data.map(async (ps) => {
-                const problemsetDetail = await this.getProblemsetById(ps.id);
-                return problemsetDetail.data; 
-            })
-        );
-        allProblemsets = allProblemsets.concat(courseProblemsets);
+      const courseProblemsets = await Promise.all(
+        course.relationships.problemsets.data.map(async (ps) => {
+          const problemsetDetail = await this.getProblemsetById(ps.id);
+          return {
+            ...problemsetDetail.data,
+            courseName: course.attributes.title,
+            courseId: course.id,
+          };
+        })
+      );
+      allProblemsets = allProblemsets.concat(courseProblemsets);
     }
     return allProblemsets;
-}
+  }
+  
 
   async getProblemsetById(id: string): Promise<any> {
     try {

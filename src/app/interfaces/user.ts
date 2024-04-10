@@ -40,11 +40,10 @@ export interface UserAttributes {
       data: RoleData[];
     };
     "lecturers-groups": {
-      data: any[]; // Замените any на более конкретный тип, если он известен
+      data: any[];
     };
   }
   
-  // Определение интерфейса для самого пользователя
   export interface UserData {
     type: string;
     id: string;
