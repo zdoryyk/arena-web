@@ -46,7 +46,7 @@
             </div>
             <div class="case">
               @if (user && user.totalScore) {
-                <p class="case-value">{{user.totalScore}}</p>
+                <p class="case-value">{{user.totalScore.toFixed(1)}}</p>
                 <p class="case-label">Summary points</p>
               }@else {<p-skeleton width="5rem" height="1rem" styleClass="mb-2"></p-skeleton>}
             </div>

@@ -19,6 +19,7 @@ export class SidebarComponent implements OnInit {
   isTeacher = false; 
   isLoggedIn = true;  
   fullName: string = 'none';
+  tempName = '';
   constructor(
     private router: Router,
     private authService: AuthService,
@@ -41,6 +42,8 @@ export class SidebarComponent implements OnInit {
       const user = await this.authService.checkIsUserInStorage();
       if(user && user.attributes['first-name'] && user.attributes['last-name']) {
         this.fullName = `${user.attributes['first-name']} ${user.attributes['last-name']}`;
+        this.tempName = this.fullName;
+        this.fullName = '';
       }
       if(this.isTeacher){
         this.dynamicRouteDashboard =  '/admin-dashboard';
@@ -70,6 +73,8 @@ export class SidebarComponent implements OnInit {
         sidebarMain.style.display = 'block';
         sidebarSecondary.style.display = 'none';
         listItems.forEach(item => (item as HTMLElement).style.justifyContent = "start");
+        
+        this.fullName = this.tempName;
     } else {
         sidebar.style.left = '-200px';
         btn.style.transform = 'rotate(180deg)';
@@ -77,6 +82,7 @@ export class SidebarComponent implements OnInit {
         sidebarMain.style.display = 'none';
         sidebarSecondary.style.display = 'block';
         listItems.forEach(item => (item as HTMLElement).style.justifyContent = "end");
+        this.fullName = '';
     }
   }
 }

@@ -8,7 +8,8 @@
     </div>
 
     <div class="profile" style="padding-right: 5px;">
-        <span class="profile-person">{{fullName}}</span>
+        <span class="profile-person  {{fullName.length < 14 ? 'big': fullName.length < 17 ? 'small' : 'smallest'}}">{{fullName}}</span>
+        <!-- <span class="profile-person">{{fullName}}</span> -->
         <a><img src="assets/icons/logout.svg" class="img-fluid" alt="logo" (click)="onLogout()"></a>
     </div>
 

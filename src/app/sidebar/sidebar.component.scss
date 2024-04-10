@@ -35,8 +35,17 @@
 
 .profile-person {
   padding-top: 10px;
-  font-size: 25px;
   font-weight: 700;
+
+  &.smallest {
+    font-size: 22px;
+  }
+  &.small {
+    font-size: 24px; 
+  }
+  &.big {
+    font-size: 26px; 
+  }
 }
 
 .list-item {
