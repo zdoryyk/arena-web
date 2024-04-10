@@ -79,9 +79,6 @@ export class AdminDashboardComponent implements OnInit {
       } catch (error) {
         console.error('Error initializing data', error);
       } finally {
-        console.log(this.problemsets);
-        console.log(this.courses);
-        
         this.loading = false;
         this.transferState.set<Course[]>(makeStateKey('activeCourses'),this.courses);
         this.transferState.set<Course[]>(makeStateKey('archievedCourses'),this.archivedCourses);

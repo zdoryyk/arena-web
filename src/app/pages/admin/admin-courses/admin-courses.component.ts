@@ -94,7 +94,6 @@ export class AdminCoursesComponent implements OnInit {
       } catch (error) {
         console.error('Error initializing data', error);
       } finally {
-        console.log(this.archivedCourses);
         
         this.loading = false;
         this.transferState.set<any>(makeStateKey('activeCourses'),this.courses);
