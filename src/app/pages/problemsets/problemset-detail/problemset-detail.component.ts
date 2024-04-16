@@ -78,6 +78,7 @@ export class ProblemsetDetailComponent implements OnInit {
         submissions: submissions
       });
     });
+    console.log(this.suites);
   }
 
 

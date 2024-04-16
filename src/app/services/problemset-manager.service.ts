@@ -17,13 +17,13 @@ export class ProblemsetManagerService {
 
 
 
-  async getSortedTasksByTypeAndSuits(id: string): Promise<{ structureChecks: Submission[], suites: Map<TaskData, TaskData[]> }> {
+  async getSortedTasksByTypeAndSuits(id: string):Promise<{structureChecks: Submission[],suites: Map<TaskData, TaskData[]>}> {
     let currentSuite: TaskData = null;
     let tempTasks: Submission[] = [];
     let structureChecks: any[] = [];
     let suites: Map<TaskData, TaskData[]> = new Map();
     let data = await firstValueFrom(this.problemsetService.getSubmissionTasks(id));
-
+  
     for (const task of data.data) {
       if (task.attributes.document.type === 'suite') {
         if (currentSuite != null) {
@@ -33,16 +33,18 @@ export class ProblemsetManagerService {
         currentSuite = task;
         tempTasks = []; 
       } else {
-        if (currentSuite == null) {
-          structureChecks.push(task);
-        } else {
-          tempTasks.push(task);
+          if (currentSuite == null) {
+            structureChecks.push(task);
+          } else {
+            tempTasks.push(task);
+          }
         }
-      }
     }
     if (currentSuite != null) {
       suites.set(currentSuite, tempTasks);
     }
+    console.log('suites',suites);
+    
     return { structureChecks, suites };
   }
 

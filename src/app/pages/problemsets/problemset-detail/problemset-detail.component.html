@@ -41,7 +41,7 @@
               <p>Summary score</p>
               @if (submissionData && problemsetData) {
                 <span><b>{{submissionData.attributes.score.toFixed(1)}}</b> out of {{problemsetData.attributes['max-score']}} <b>
-                  ({{(submissionData.attributes.score.toFixed(1)/problemsetData.attributes['max-score']) * 100}}%)</b></span>
+                  ({{((submissionData.attributes.score.toFixed(1)/problemsetData.attributes['max-score']) * 100).toFixed(2)}}%)</b></span>
               }
             </li>
           </ul>

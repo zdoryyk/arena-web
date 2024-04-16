@@ -125,8 +125,14 @@ export class TestCaseComponent implements OnInit {
       }
     } else if(this.strict){
       if (isError) {
-        this.minusBtnVisible = true;
         this.bgColor = 'red';
+        if(this.score == null){
+          this.minusBtnVisible = true;
+          return;
+        }
+        this.isVisible = 'visible';
+        this.isCompletedVisible = 'visible';
+        this.closeBtnVisible = true;
         return;
       }
       else if(this.passed && this.score != null && this.maxScore != null){
@@ -164,7 +170,7 @@ export class TestCaseComponent implements OnInit {
     this.cdRef.detectChanges();
     setTimeout(() => {
       this.updateContentSize();
-    },400);
+    },380);
     
   }
 
@@ -183,10 +189,19 @@ export class TestCaseComponent implements OnInit {
   }
 
   checkIsError():boolean{
-    return this.strict
+    return (
+      this.strict
      && this.score == null
      && this.maxScore == null 
-     && !this.passed;
+     && !this.passed
+     ) 
+     || 
+     (
+      this.strict
+      && this.score == 0
+      && this.maxScore != null
+      && !this.passed
+    );
   }
 
 

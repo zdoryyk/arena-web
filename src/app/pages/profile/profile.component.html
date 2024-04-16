@@ -46,7 +46,7 @@
             </div>
             <div class="case">
               @if (user && user.totalScore) {
-                <p class="case-value">{{user.totalScore.toFixed(1)}}</p>
+                <p class="case-value">{{user.totalScore.toFixed(0)}}</p>
                 <p class="case-label">Summary points</p>
               }@else {<p-skeleton width="5rem" height="1rem" styleClass="mb-2"></p-skeleton>}
             </div>
@@ -70,7 +70,8 @@
             ></p-chart>
           </div>
           <div style="align-self: stretch; position: relative">
-            <h5 class="chart-label">Last 7 Submissions</h5>
+            <h5 class="chart-label"> Last {{ latestProblemsets.submissionDetails.length }} 
+              {{ latestProblemsets.submissionDetails.length > 1 ? 'Submissions' : 'Submission' }}</h5>
             <p-chart
               type="bar"
               class="bar"

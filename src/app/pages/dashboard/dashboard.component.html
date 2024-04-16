@@ -2,7 +2,7 @@
   <section class="section">
     <div class="container">
       @if(!areAllProblemsetsDisabled){
-        <h2 class="title">Current Problemsets</h2>
+        <h2 class="title">Current Problemset</h2>
       }@else {<h2 class="title">Your last Problemset</h2>}
       <div class="submissions">
         @if (isLoading) {
@@ -20,7 +20,7 @@
                   [isActive]="true"
                   >
                   </app-submission-card>
-        }@else {
+        }@else if(!areAllProblemsetsDisabled && !isLoading) {
           @for (problemset of problemsets; track $index) {
               @if (problemset.isActive) {
                   <app-submission-card 

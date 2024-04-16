@@ -7,7 +7,12 @@
         alt="arrow"
         [style.transform]="'rotate(' + rotationAngle + 'deg)'"
       />
-      <p class="test-text">{{ title }}</p>
+      <div>
+        <p class="test-text">{{ title }}</p>
+        @if (bgColor === 'red') {
+          <p class="strict-test-case" style="font-size: 18px;">This is a strict test case. Due to its failure, all following test cases in this suite were skipped.</p>
+        }
+      </div>
     </div>
     <div class="test-right">
       <div class="test-progress {{ isVisible }}">
@@ -36,7 +41,7 @@
       }@else{
         @if(submission.attributes.type === 'test:ws'){
           @if(submission?.attributes?.document?.result?.response?.warnings?.length){
-            <h1 class="warings-title" style="color: #F47C3C" >Warnings</h1>
+            <h1 class="warnings-title" style="color: #F47C3C" >Warnings</h1>
             @for (warning of this.submission.attributes.document.result.response.warnings; track $index) {
                 <li class="war-error-str" >{{warning}}</li>
             }

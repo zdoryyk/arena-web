@@ -101,7 +101,7 @@ export class ProfileComponent implements OnInit{
     let lastSubmissionEvaluationInPercents = (submissionDetails[0].score / maxScore) * 100;
     let remainingToReachFull = ((this.user.totalScore/this.user.maxTotalScore) * 100).toFixed(0);
     this.barData = {
-      labels: submissionDetails.map((_, index) => index + 1), // Используем индекс для меток
+      labels: submissionDetails.map((_, index) => index + 1),
       datasets: [
         {
           label: 'Score',
