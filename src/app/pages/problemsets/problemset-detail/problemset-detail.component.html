@@ -7,7 +7,7 @@
         }@else { <h2 class="main-title">Loading..</h2>}
         <div class="single-progress">
           @if (submissionData && problemsetData) {
-            <span class="single-progress-divide">{{submissionData.attributes.score.toFixed(1)}}/{{problemsetData.attributes['max-score']}}</span>
+            <span class="single-progress-divide">{{submissionData.attributes.score}}/{{problemsetData.attributes['max-score']}}</span>
           }@else {<span class="single-progress-divide">..</span>}
         </div>
       </div>
@@ -40,8 +40,8 @@
             <li class="detail-list-item">
               <p>Summary score</p>
               @if (submissionData && problemsetData) {
-                <span><b>{{submissionData.attributes.score.toFixed(1)}}</b> out of {{problemsetData.attributes['max-score']}} <b>
-                  ({{((submissionData.attributes.score.toFixed(1)/problemsetData.attributes['max-score']) * 100).toFixed(2)}}%)</b></span>
+                <span><b>{{submissionData.attributes.score}}</b> out of {{problemsetData.attributes['max-score']}} <b>
+                  ({{((submissionData.attributes.score/problemsetData.attributes['max-score']) * 100).toFixed(1)}}%)</b></span>
               }
             </li>
           </ul>

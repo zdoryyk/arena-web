@@ -108,6 +108,7 @@ export class ProblemsetDetailComponent implements OnInit {
   private async getSubmissionHeadData(){
     let submissionData = await firstValueFrom(this.problemsetService.getSubmissionById(this.submissionId));
     this.submissionData = submissionData.data;
+    this.submissionData.attributes.score = this.formatEvaluationScore(this.submissionData.attributes.score);
     await this.loadUserData();
     let userProblemsetId = this.submissionData.relationships['user-problemset'].data.id;
     let problemsetData = await firstValueFrom(this.problemsetService.getProblemsetByUserProblemset(userProblemsetId));
@@ -202,5 +203,9 @@ export class ProblemsetDetailComponent implements OnInit {
   this.barPlugins = [ChartDataLabels];
   }
 
+  formatEvaluationScore(score: number): string {
+    const roundedScore = score.toFixed(1);
+    return roundedScore.endsWith('.0') ? Math.floor(score).toString() : roundedScore;
+  }
 
 }
