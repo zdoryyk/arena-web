@@ -168,10 +168,19 @@ export class TestCaseComponent implements OnInit {
 
   handleDisplayTextChange() {
     this.cdRef.detectChanges();
+    this.waitForContentToRender();
+  }
+
+  waitForContentToRender() {
+    const initialHeight = this.contentDiv.nativeElement.offsetHeight;
     setTimeout(() => {
-      this.updateContentSize();
-    },380);
-    
+      const newHeight = this.contentDiv.nativeElement.offsetHeight;
+      if (initialHeight !== newHeight) {
+        this.waitForContentToRender();
+      } else {
+        this.updateContentSize(); 
+      }
+    }, 100); 
   }
 
   updateContentSize() {
