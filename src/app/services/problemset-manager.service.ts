@@ -43,8 +43,6 @@ export class ProblemsetManagerService {
     if (currentSuite != null) {
       suites.set(currentSuite, tempTasks);
     }
-    console.log('suites',suites);
-    
     return { structureChecks, suites };
   }
 
