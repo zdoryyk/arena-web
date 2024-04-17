@@ -46,19 +46,23 @@ export class DashboardComponent implements OnInit {
     await this.loadUserData();
     if(this.transferState.hasKey(makeStateKey('problemsetsCards'))){
       this.problemsets = this.transferState.get(makeStateKey('problemsetsCards'),null);
-      this.isLoading = false;
     }else{
       this.problemsets = await this.problemsetManager.loadUserProblemsets();
+    }
+    if(this.transferState.hasKey(makeStateKey('latestSubmissions'))){
+      this.latestSubmissions = this.transferState.get(makeStateKey('latestSubmissions'),null);
+      this.isLoading = false;
+    }else{
+      this.latestSubmissions = await this.profileManager.getSubmissionsByLimit(10);
+      this.transferState.set<any>(makeStateKey('latestSubmissions'),this.latestSubmissions);
     }
     await this.checkProblemsetsForActive();
     if(this.areAllProblemsetsDisabled){
       await this.getLastSubmissionsByDisabledProblemsets();
     }else{
-    await this.getLastSubmissionsByActiveProblemsets();
+      await this.getLastSubmissionsByActiveProblemsets();
     }
     this.setCharts();
-    this.latestSubmissions = await this.profileManager.getSubmissionsByLimit(10);
-    
     this.isLoading = false;
   }
 

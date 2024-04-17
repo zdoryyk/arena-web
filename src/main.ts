@@ -1,11 +1,32 @@
 /// <reference types="@angular/localize" />
 
-import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
+import { bootstrapApplication, provideClientHydration } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
-import { importProvidersFrom } from '@angular/core';
-import { HttpClientModule, provideHttpClient } from '@angular/common/http';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { InMemoryScrollingFeature, InMemoryScrollingOptions, provideRouter, withInMemoryScrolling } from '@angular/router';
+import { routes } from './app/app.routes';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { AuthInterceptor } from './app/interceptors/auth.interceptor';
 
 
-bootstrapApplication(AppComponent, appConfig)
-  .catch((err) => console.error(err));
+const scrollConfig: InMemoryScrollingOptions = {
+  scrollPositionRestoration: 'top',
+  anchorScrolling: 'enabled',
+};
+
+const inMemoryScrollingFeature: InMemoryScrollingFeature =
+  withInMemoryScrolling(scrollConfig);
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideRouter(routes, inMemoryScrollingFeature),
+    provideClientHydration(),
+    provideAnimationsAsync(),
+    provideAnimationsAsync(),
+    provideHttpClient(),
+    provideHttpClient(withInterceptors([AuthInterceptor])), provideAnimationsAsync()
+  ],
+});
+
+
+
