@@ -74,6 +74,7 @@
 
 .test-progress {
   display: none;
+  font-size: 28px; 
 }
 
 .test-progress.visible {
@@ -198,9 +199,7 @@
   font-size: 18px;
 }
 
-.test-progress {
-  font-size: 16px; 
-}
+
 
 
 @media (min-width: 768px) {
@@ -271,6 +270,7 @@
   .ordered-number{
     font-size: 15px;
   }
+
 }
 
 
