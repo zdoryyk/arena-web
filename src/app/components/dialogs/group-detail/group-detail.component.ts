@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Subscription, firstValueFrom, forkJoin } from 'rxjs';
 import { DialogModule } from 'primeng/dialog';
@@ -43,6 +43,7 @@ interface ExtendedUser {
 })
 export class GroupDetailComponent implements OnInit,OnDestroy {
 
+  isMobile = false;
   private isActive: boolean = true;
   @Input() groups: Group[];
   @Input() problemsets: ProblemsetData[];
@@ -50,6 +51,16 @@ export class GroupDetailComponent implements OnInit,OnDestroy {
   private subscription: Subscription = new Subscription();
   students: ExtendedUser[] = []; 
   s: ProblemsetData
+
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    if(window.innerWidth <= 600){
+      this.isMobile = true;
+    }else{
+      this.isMobile = false;
+    }
+  }
 
   constructor(
     private router: Router,
@@ -60,6 +71,9 @@ export class GroupDetailComponent implements OnInit,OnDestroy {
 
 
     ngOnInit() {
+      if(window.innerWidth <= 600){
+        this.isMobile = true;
+      }
       this.cd.markForCheck();
       this.loadGroupDetails(this.groups);
   }

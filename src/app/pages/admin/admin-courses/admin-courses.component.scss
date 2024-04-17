@@ -96,7 +96,6 @@
   }
   
   
-    /* For mobile devices */
     @media (max-width: 575px) {
       .cards {
         align-items: center;
@@ -104,7 +103,10 @@
       }
       .card {
         width: 100%; 
-       
+      }
+
+      .courses-button-container {
+        justify-content: center;
       }
 
       .active.courses{
@@ -116,14 +118,45 @@
       }
     }
     
-    /* For tablets and small desktops, you can keep the original flex-row layout or make any adjustments as needed */
     @media (min-width: 576px) and (max-width: 991px) {
-      /* Your styles for tablets and small desktops here */
+      .cards{
+        justify-content: center;
+      }
+
+      .courses-button-container {
+        justify-content: center;
+      }
+      
+      .archieved.courses{
+        justify-content: center;
+      }
+      
+      .active.courses{
+        justify-content: center;
+      }
+      .card{
+        width: 80%;
+      }
     }
     
     /* For larger desktops */
-    @media (min-width: 992px) {
-      /* Your styles for larger desktops here */
+    @media (min-width: 992px) and (max-width: 1399px) {
+      .cards{
+        justify-content: center;
+        flex-wrap: nowrap;
+      }
+
+      .courses-button-container {
+        justify-content: center;
+      }
+      
+      .archieved.courses{
+        justify-content: center;
+      }
+      
+      .active.courses{
+        justify-content: center;
+      }
     }
     
     @media (min-width: 1400px) {

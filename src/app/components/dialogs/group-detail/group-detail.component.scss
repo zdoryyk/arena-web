@@ -39,12 +39,41 @@ input{
 }
 
 
+.sort-column{
+    width:20%;
+    font-size: larger;
+    padding: 10px;
+}
+
+.sort-td{
+    padding: 10px;
+}
+
+
+@media (max-width: 600px) {
+
+    .card{
+        width: 25rem;
+    }
+
+    .sort-column{
+        width:0%;
+        font-size: 18px;
+        padding: 9px;
+    }
+
+    .sort-td{
+        padding: 10px;
+    }
+}
+
+
+
 @media (min-width: 1720px) {
 
     .card{
         width: 60rem;
     }
-
-
 }
+
 

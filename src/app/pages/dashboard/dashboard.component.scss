@@ -85,6 +85,9 @@
     margin-bottom: 30px;
   }
 
+  .dashboard-chart{
+    width: 300px;
+  }
 }
 
 
@@ -104,7 +107,7 @@
 
 @media (min-width: 992px) {
   .history {
-    min-height: 615px;
+    min-height: 315px;
   }
 
   .empty {
@@ -114,6 +117,25 @@
   .line-chart {
     height: 320px;
   }
+}
+
+@media (max-width: 1399px) {
+  .summary {
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .dashboard-chart {
+    width: 50%;
+  }
+
+  .submissions {
+    justify-content: center;
+  }
+  .title{
+    text-align: center;
+  }
+
 }
 
 @media (min-width: 1400px) {

@@ -53,6 +53,7 @@
 //     width: 35%;
 // }
 
+
 @media (min-width: 1801px) {
 
     .table-container{
@@ -96,12 +97,13 @@
 
     .buttons {
         padding-top: 20px;
+        gap: 30px;
     }
 
     .btn.add, .btn.archive {
         justify-content: center;
-        width: auto;
-        margin: 10px auto;
+        margin: 10px 0px 17px -13px;
+        font-size: 17px;
     }
 
     .content-wrapper {

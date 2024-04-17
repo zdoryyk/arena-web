@@ -71,7 +71,7 @@
           </div>
           <div style="align-self: stretch; position: relative">
             @if(latestProblemsets && latestProblemsets.submissionDetails){
-            <h5 class="chart-label"> Last {{ latestProblemsets.submissionDetails.length }} 
+            <h5 class="chart-label"> Last {{ latestProblemsets.submissionDetails.length > 1 ? latestProblemsets.submissionDetails.length : ''}} 
               {{ latestProblemsets.submissionDetails.length > 1 ? 'Submissions' : 'Submission' }}</h5>
             }
             <p-chart

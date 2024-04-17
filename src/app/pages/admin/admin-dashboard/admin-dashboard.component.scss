@@ -61,12 +61,52 @@
     justify-content: center;
     align-items: center;
   }
+  .title {
+    text-align: center;
+  }
 }
   
   @media (min-width: 576px) and (max-width: 991px) {
+    .cards{
+      justify-content: center;
+    }
+
+    .courses-button-container {
+      justify-content: center;
+    }
+
+    
+    .active-courses{
+      justify-content: center;
+    }
+    .card{
+      width: 80%;
+    }
+
+    .title {
+      text-align: center;
+    }
   }
   
-  @media (min-width: 992px) {
+  @media (min-width: 992px) and (max-width: 1399px) {
+
+    .title {
+      text-align: center;
+      font-size: 30px;
+      margin-bottom: 40px;
+    }
+    .cards{
+      justify-content: center;
+      flex-wrap: nowrap;
+    }
+
+    .courses-button-container {
+      justify-content: center;
+    }
+      
+    .active-courses{
+      justify-content: center;
+    }
   }
   
   @media (min-width: 1400px) {

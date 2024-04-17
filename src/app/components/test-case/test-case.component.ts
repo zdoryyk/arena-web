@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  HostListener,
   Input,
   OnDestroy,
   OnInit,
@@ -27,7 +28,7 @@ import {MatTooltip, MatTooltipModule} from '@angular/material/tooltip';
   styleUrl: './test-case.component.scss',
 })
 export class TestCaseComponent implements OnInit {
-
+  isMobile = false;
   safeHtml: SafeHtml;
   @ViewChild('contentDiv', { static: false }) contentDiv: ElementRef;
   @Input() orderedNumber: number;
@@ -55,6 +56,17 @@ export class TestCaseComponent implements OnInit {
   passed: boolean;
   strict: boolean;
   
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    if(window.innerWidth <= 568){
+      this.isMobile = true;
+    }else{
+      this.isMobile = false;
+    }
+  }
+
+
+
   constructor
   (
     private cdRef: ChangeDetectorRef,
@@ -79,6 +91,9 @@ export class TestCaseComponent implements OnInit {
    }
   
   ngOnInit(): void {
+    if(window.innerWidth <= 568){
+      this.isMobile = true;
+    }
     if(!this.isRecursive){
       this.sortSubmission();
       return;
