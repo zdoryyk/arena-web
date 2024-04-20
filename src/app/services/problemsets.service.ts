@@ -2,8 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Observable, firstValueFrom } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Submission } from '../interfaces/submission';
 
 
 @Injectable({
@@ -137,12 +135,13 @@ export class ProblemsetsService {
     return title.substring(startIndex).trim();
   }
 
+  
+
   trimGroupTitle(title: string): string {
     const atIndex = title.indexOf('@');
-    if (atIndex !== -1) {
-        return title.substring(0, atIndex);
-    }
-    return title;
-}
+    const trimmedTitle = atIndex !== -1 ? title.substring(0, atIndex) : title;
+    return trimmedTitle.length > 18 ? `${trimmedTitle.substring(0, 18)}..` : trimmedTitle;
+  }
+  
 
 } 

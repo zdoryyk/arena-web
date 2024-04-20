@@ -43,7 +43,7 @@
         }
 
         .p-icon{
-            margin-left: 9px;
+            margin-left: 1px;
         }
     }
 
@@ -54,22 +54,17 @@
         margin-left: 13px;
         margin-right: 3px;
         padding-left: 5px;
-        margin-top: 10px;
-        margin-bottom: 10px;
+        margin-top: 12px;
+        margin-bottom: 0px;
    }
 
     .p-multiselect-items .p-multiselect-item {
         font-size: 14px; 
-        padding: 10px 0px 5px 6px;
-    }
-
-    .p-multiselect-items .p-multiselect-item {
-        font-size: 14px; 
-        padding: 10px 0px 5px 6px;
+        padding: 7px 0px 3px 6px;
     }
 
     .p-multiselect-panel{
-        transform: translateX(-15%);
+        transform: translateX(-10%);
         padding-bottom: 15px;
     }
 
@@ -79,7 +74,7 @@
     }
 
     .p-icon {
-        margin-right: 9px;    
+        margin-right: 1px;    
     }
 
     .p-multiselect-item {
@@ -95,7 +90,7 @@
     }
 
     .ng-star-inserted{
-        margin-left: 10px;
+        margin-left: 2px;
     }
 
     .pi.pi-search{

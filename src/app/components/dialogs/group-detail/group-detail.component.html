@@ -8,22 +8,21 @@
     [globalFilterFields]="['groupName', 'data.attributes.username', 'fullName', 'problemSet.title']"
     >
 
-        <ng-template pTemplate="caption">
-            <div class="flex caption-container">
+    <ng-template pTemplate="caption">
+        <div class="flex caption-container">
             <div class="flex-item">
                 <p-multiSelect [maxSelectedLabels]="1"  [options]="groupOptions" [(ngModel)]="selectedGroups" optionLabel="name" placeholder="Select Groups" (onChange)="onGroupSelectionChange()"></p-multiSelect>
             </div>
             <div class="flex-item">
                 <p-multiSelect [maxSelectedLabels]="1"  [options]="problemsetOptions" [(ngModel)]="selectedProblemsets" optionLabel="title" placeholder="Select Problemsets" (onChange)="onProblemsetSelectionChange()"></p-multiSelect>
             </div>
+        
             <span class="search-container">
                 <i class="pi pi-search"></i>
                 <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
             </span>
-            </div>
-        </ng-template>
-    
-
+        </div>  
+    </ng-template>
         <ng-template pTemplate="header">
             <tr>
                 @if(!isMobile){
