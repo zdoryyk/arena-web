@@ -1,12 +1,108 @@
 :host ::ng-deep {
-    .p-progressbar {
-        height: .5rem;
-        background-color: #D8DADC;
-    
-        .p-progressbar-value {
-            background-color: #607D8B;
+    .caption-container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: calc(100% - 2rem);
+        margin: 0 1rem;
+        
+    }
+    .flex-item {
+        flex: 1;
+        max-width: 100%;
+        padding: 0 0.5rem;
+    }
+    .search-container {
+        flex: 1;
+        max-width: 100%;
+        position: relative; 
+        padding: 0 0.5rem;
+    }
+    .pi-search {
+        position: absolute;
+        left: 10px;
+        color: grey;
+    }
+    input {
+        width: 100%;
+        padding-left: 2rem; 
+    }
+    .p-multiselect .p-multiselect-label {
+        font-size: 16px;
+        padding: 8px 10px;
+    }
+    .p-multiselect {
+        min-height: 40px;
+        width: 100%;
+
+    }
+
+    .p-multiselect-header {
+        .p-checkbox {
+            top: 50%; 
+            left: 5px;
+        }
+
+        .p-icon{
+            margin-left: 9px;
         }
     }
+
+    .p-inputtext {
+        width: 189px;
+        height: 35px;
+        line-height: 35px;
+        margin-left: 13px;
+        margin-right: 3px;
+        padding-left: 5px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+   }
+
+    .p-multiselect-items .p-multiselect-item {
+        font-size: 14px; 
+        padding: 10px 0px 5px 6px;
+    }
+
+    .p-multiselect-items .p-multiselect-item {
+        font-size: 14px; 
+        padding: 10px 0px 5px 6px;
+    }
+
+    .p-multiselect-panel{
+        transform: translateX(-15%);
+        padding-bottom: 15px;
+    }
+
+    .p-multiselect .p-multiselect-label {
+        font-weight: bold;  
+        color: #333;
+    }
+
+    .p-icon {
+        margin-right: 9px;    
+    }
+
+    .p-multiselect-item {
+        padding: 12px 10px;
+    }
+
+    .p-checkbox .p-checkbox-label {
+        margin-left: 8px;
+    }
+
+    .p-icon.p-multiselect-filter-icon{
+        display: none;
+    }
+
+    .ng-star-inserted{
+        margin-left: 10px;
+    }
+
+    .pi.pi-search{
+        display: none;
+    }
+
 }
 
 .card{
@@ -16,7 +112,6 @@
 
 .flex{
     display: flex;
-    justify-content: space-between;
     height: 60px;
 }
 
@@ -29,12 +124,11 @@
 }
 
 input{
-    height: 35px;
+    height: 40px;
     width: 250px;
     border-radius: 8px;
     border: 1px solid grey;
     padding-left: 40px;
-    margin-top: 12px;
     margin-right: 10px;
 }
 
@@ -52,20 +146,69 @@ input{
 
 @media (max-width: 600px) {
 
-    .card{
-        width: 25rem;
+    .card {
+        width: 100%; /* Adjust width to fit mobile screens */
     }
 
-    .sort-column{
-        width:0%;
-        font-size: 18px;
-        padding: 9px;
+    .caption-container {
+        flex-direction: column;
+        align-items: stretch; /* Stretch children to fill the width */
+        padding: 0.5rem 0; /* Adjust padding for better spacing */
     }
 
-    .sort-td{
-        padding: 10px;
+    .p-datatable-header{
+        height: 100px;
+    }
+
+    .flex-item, .search-container {
+        width: 100%; 
+        padding: 0.25rem;
+    }
+
+    .p-multiselect {
+        width: auto; /* Ensure dropdowns take full width */
+    }
+
+    input {
+        width: calc(100% - 0px); /* Adjust input width to fit container */
+        padding-left: 1rem; /* Smaller padding */
+    }
+
+    .sort-column, .sort-td {
+        font-size: 14px; /* Smaller text in table headers and cells */
+        padding: 8px; /* Smaller padding */
+    }
+
+    .p-datatable .p-datatable-header {
+        height: 178px;
+    }
+
+    :host ::ng-deep {
+        
+        .p-datatable .p-datatable-header {
+            height: 178px;
+        }
+
+        .p-multiselect-panel{
+            transform: translateX(-7%);
+            padding-bottom: 10px;
+            width: 103%;
+        }
+
+        .p-inputtext {
+            width: 92%;
+            height: 35px;
+            line-height: 35px;
+            margin-left: 13px;
+            margin-right: 3px;
+            padding-left: 5px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+       }
+
     }
 }
+
 
 
 
@@ -75,5 +218,3 @@ input{
         width: 60rem;
     }
 }
-
-
