@@ -64,8 +64,6 @@ export class ProblemsetDetailComponent implements OnInit {
     let nestedTasks = this.problemsetManager.nestTasks(taskData.data);
     this.labelModules(nestedTasks);  
     this.tasks = nestedTasks;
-    console.log(this.tasks);
-    
   }
 
   convertMapToArray() {
