@@ -1,13 +1,12 @@
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
-import { MatExpansionModule } from '@angular/material/expansion';
+import { MatExpansionModule, MatExpansionPanel } from '@angular/material/expansion';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { StdoutComponent } from './test-case-components/stdout/stdout.component';
 import { StderrComponent } from './test-case-components/stderr/stderr.component';
 import { NestedTask } from '../../interfaces/submission';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-test-case-test',
@@ -18,7 +17,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
     MatExpansionModule,
     StdoutComponent,
     StderrComponent,
-    MatTooltipModule
+    MatTooltipModule,
   ],
   animations:[],
   templateUrl: './test-case.component.html',
@@ -88,7 +87,6 @@ export class TestCaseComponent implements OnInit {
   ngOnInit(): void {
 
     if(this.submission.children && this.submission.children.length != 0){
-      console.log(this.submission.attributes.title + ' ' + 'recursive');
       this.isRecursive = true;
     }
 
