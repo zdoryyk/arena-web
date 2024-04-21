@@ -46,8 +46,6 @@ export interface TaskData {
 }
 
 
-
-
 export interface Submission {
   iterationNumber?: number;
   type: string;
@@ -133,4 +131,26 @@ export interface SubmissionPreview {
   links: {
     self: string;
   },
+}
+
+
+export interface Task {
+  id: string;
+  attributes: Attributes,
+  relationships: {
+      parentTask: {
+          data: {
+              type: string;
+              id: string | null;
+          };
+      };
+      tasks: {
+          data: { type: string; id: string }[];
+      };
+  };
+}
+
+export interface NestedTask extends Task {
+  children?: NestedTask[];
+  isModule?: boolean; 
 }

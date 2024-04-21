@@ -92,17 +92,15 @@
   @media (max-width: 576px) {
     .submission {
       width: 350px;
+      height: 140px;
     }
-  
-  
+
     .submission-data {
       padding: 15px 10px 0;
     }
   
      .submission-heading {
         
-      padding-bottom: 48px;
-
       &.smallest {
         font-size: 15px;
       }
@@ -114,6 +112,10 @@
       &.big {
         font-size: 20px;
       }
+    }
+
+    .submission-status{
+      padding-top: 0px;
     }
   
     .submission-subtext {
@@ -127,6 +129,10 @@
     .submission-status {
       font-size: 16px;
       padding: 5px 15px;
+    }
+
+    .submission-top{
+      margin-bottom: -13px;
     }
   }
   

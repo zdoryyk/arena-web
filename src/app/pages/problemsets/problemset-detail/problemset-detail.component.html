@@ -81,50 +81,46 @@
         ></p-chart>
       </div>
       <h4 class="details-heading">TEST CASES</h4>
-      @if(structureChecks){  
-        @for (structure of structureChecks; track $index) {
-          <app-test-case
-          [orderedNumber]="$index"
-          [submission]="structure"
-          ></app-test-case>
+      <!-- @if(tasks){
+        <app-test-case-test
+        [orderedNumber]="1"
+        [submission]="tasks[7].children[0]"
+        ></app-test-case-test>
+      } -->
+      @if(tasks){
+        @for(task of tasks; track $index){
+          @if(task.isModule){
+            <ng-container>
+              <app-test-group
+                [title]="task.attributes.document.title"
+                [totalCompleted]="task.attributes.score"
+                [totalAssessment]="task.attributes['max-score']"
+                [description]="task.attributes.document.description">
+                <div ul-content>
+                  @for(child of task.children; track $index){
+                    <ng-container>
+                      <app-test-case-test
+                      [orderedNumber]="$index"
+                      [submission]="child"
+                    >
+                    </app-test-case-test>
+                    </ng-container>
+                  }
+              </div>
+              </app-test-group>
+            </ng-container>
+            
+          }@else if(!task.isModule){
+            <ng-container>
+              <app-test-case-test
+                [orderedNumber]="$index"
+                [submission]="task"
+                >
+              </app-test-case-test>
+            </ng-container>
+          }
         }
       }
-      @if(suitesArray){
-        <ng-container>
-          @for (group of suitesArray; track $index) {
-            @if(group.isParentExist){
-              <ng-container>
-                <app-test-case
-                  [orderedNumber]="$index"
-                  [submission]="group"
-                  [submissionList]="group.submissions"
-                  [isRecursive]="true"
-                ></app-test-case>
-              </ng-container>
-            }
-            @else {
-              <app-test-group
-              [title]="group.title"
-              [totalCompleted]="group.score"
-              [totalAssessment]="group.maxScore"
-              [description]="group.description"
-            >
-              <div ul-content>
-                @for (submission of group.submissions; track $index) {
-                  <ng-container>
-                    <app-test-case
-                      [orderedNumber]="$index"
-                      [submission]="submission"
-                    ></app-test-case>
-                  </ng-container>
-                }
-              </div>
-            </app-test-group>
-            }
-        }
-      </ng-container>
-    }
-       
       
     </div>
   </section>

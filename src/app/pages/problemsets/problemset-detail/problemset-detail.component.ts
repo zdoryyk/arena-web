@@ -10,7 +10,7 @@ import { ProblemsetsService } from '../../../services/problemsets.service';
 import { firstValueFrom } from 'rxjs';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ProblemsetManagerService } from '../../../services/problemset-manager.service';
-import { Submission, TaskData } from '../../../interfaces/submission';
+import { NestedTask, Submission, TaskData } from '../../../interfaces/submission';
 import { environment } from '../../../../environments/environment';
 
 
@@ -35,6 +35,8 @@ export class ProblemsetDetailComponent implements OnInit {
   suitesArray: any[] = [];
   user: UserData;
 
+  tasks: NestedTask[];
+
   barData: any;
   barOptions: any;
   barPlugins: any;
@@ -52,16 +54,18 @@ export class ProblemsetDetailComponent implements OnInit {
     this.submissionId = this.activeRoute.snapshot.paramMap.get('id');
     this.setCharts();
     await this.getSubmissionHeadData();
-    await this.getSubmissionTasks();
+    await this.getTasksWithModuleLabel(this.submissionId);
     await this.getSubmissionsScoresBeforeAndReloadChart();
   }
 
 
-  private async getSubmissionTasks(): Promise<void> {
-    const { structureChecks, suites } = await this.problemsetManager.getSortedTasksByTypeAndSuits(this.submissionId);
-    this.structureChecks = structureChecks;
-    this.suites = suites;
-    this.convertMapToArray();
+  async getTasksWithModuleLabel(id: string) {
+    let taskData = await firstValueFrom(this.problemsetService.getSubmissionTasks(id));
+    let nestedTasks = this.problemsetManager.nestTasks(taskData.data);
+    this.labelModules(nestedTasks);  
+    this.tasks = nestedTasks;
+    console.log(this.tasks);
+    
   }
 
   convertMapToArray() {
@@ -201,6 +205,43 @@ export class ProblemsetDetailComponent implements OnInit {
   };
   this.barPlugins = [ChartDataLabels];
   }
+
+  isModule(task: NestedTask): boolean {
+    if (task.attributes.document.type !== 'suite') {
+        return false;
+    }
+    if (task.children.length === 0) {
+        return true;
+    }
+    for (const child of task.children) {
+        if (!this.isModule(child)) {
+            return false;
+        }
+    }
+    return true;
+  }
+
+  labelModules(tasks: NestedTask[]): void {
+    tasks.forEach(task => {
+      if (task.children && task.children.length > 0) {
+        this.labelModules(task.children);
+      }
+      task.isModule = this.checkIfModule(task);
+    });
+  }
+  
+
+  checkIfModule(task: NestedTask): boolean {
+    // Check if the task is a suite and has no parent
+    const isSuite = task.attributes.document.type === 'suite';
+    const hasNoParent = task.relationships['parent-task'].data === null;
+  
+    // It must have at least one child
+    const hasChildren = task.children && task.children.length > 0;
+  
+    return isSuite && hasChildren && hasNoParent;
+  }
+  
 
   formatEvaluationScore(score: number): string {
     const roundedScore = score.toFixed(1);

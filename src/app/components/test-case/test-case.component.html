@@ -1,104 +1,104 @@
-<div class="test {{ bgColor }}" [ngStyle]="{'transform': 'scale(' +  scale + ')', 'transform-origin': 'top left'}" (click)="onToggle()">
-  <div class="test-header">
-    <div class="test-left">
-      <span class="ordered-number">#{{ orderedNumber + 1 }}</span>
-      <img
-        src="assets/icons/arrow.svg"
-        alt="arrow"
-        [style.transform]="'rotate(' + rotationAngle + 'deg)'"
-      />
-      <div>
-        <p class="test-text">{{ title }}</p>
-        @if (bgColor === 'red') {
-          <p class="strict-test-case">This is a strict test case. Due to its failure, all following test cases in this suite were skipped.</p>
-        }
-      </div>
-    </div>
-    <div class="test-right">
-      <div class="test-progress {{ isVisible }}">
-        <span class="{{ isCompletedVisible }}">{{ score }} / {{maxScore}} </span
-        ><span></span>
-      </div>
-      @if(!isMobile){
-        <button>
-          @if (checkBtnVisible){<img src="assets/icons/check.svg" alt="check"/>}
-          @if (closeBtnVisible){<img src="assets/icons/close.svg" alt="close"/>}
-          @if (minusBtnVisible){<img src="assets/icons/minus.svg" alt="minus"/>}
-        </button>
-      }
-    </div>
-  </div>
-  <div class="test-content" [style.height]="contentHeight" (click)="$event.stopPropagation()">
-    <div class="test-content-inner" #contentDiv>
-      @if(isRecursive){
-        @for (sub of submissionList; track $index) {
-          <app-test-case
-            [orderedNumber]="$index"
-            [scale]="nextScale()"
-            [submission]="sub"
-            [isRecursive]="false"
-            (contentHeightChanged)="handleDisplayTextChange()"
-          ></app-test-case>
-        }
-      }@else{
-        @if(submission.attributes.type === 'test:ws'){
-          @if(submission?.attributes?.document?.result?.response?.warnings?.length){
-            <h1 class="warnings-title" style="color: #F47C3C" >Warnings</h1>
-            @for (warning of this.submission.attributes.document.result.response.warnings; track $index) {
-                <li class="war-error-str" >{{warning}}</li>
-            }
-          }
-          @if (submission?.attributes?.document?.result?.response?.errors?.length) {
-            @for (error of this.submission.attributes.document.result.response.errors; track $index) {
-              <li class="war-error-str" >{{error}}</li>
-            }
-          }
-          @if( submission?.attributes?.passed &&  (submission?.attributes?.document?.result == null || ((submission?.attributes?.document?.result?.response?.errors?.length ?? 0) == 0 && (this.submission.attributes.document.result.response.warnings?.length ?? 0) == 0))){
-            <h1 class="h1-ok">OK</h1>
-          }@else if( !submission?.attributes?.passed &&  (submission?.attributes?.document?.result == null || ((submission?.attributes?.document?.result?.response?.errors?.length ?? 0) == 0 && (this.submission.attributes.document.result.response.warnings?.length ?? 0) == 0))){
-            <h1 class="h1-bad">STURUCTURE CHECK FAULT</h1>
-          }
-        }@else{
-          @if(submission?.attributes?.document?.description){
-            <div class="testcase-description">
-              <div class="description-str" [innerHTML]="safeHtml"></div>
-            </div>
-          }
-          @if(!!submission.attributes.document.duration || !!submission.attributes.document.result['return-code']){
-            <div class="duration-row">
-              @if(submission?.attributes?.document?.duration){
-                <div class="duration">
-                  <mat-icon class="custom-icon-size" svgIcon="timer"></mat-icon>
-                  <span class="duration-text">   Duration:</span> <span  class="duration-text"> {{ (submission.attributes.document.duration * 1000).toFixed(3) }} ms</span>
+<!-- [collapsedHeight]="isMobile ? '35px' : '40px'"  -->
+<mat-accordion>
+    <mat-expansion-panel class="test {{ bgColor }}" hideToggle="true">
+        <mat-expansion-panel-header  (click)="onToggle()">
+            <div class="test-header">
+                <div class="test-left">
+                  <span class="ordered-number">#{{ orderedNumber + 1 }}</span>
+                  <img
+                    src="assets/icons/arrow.svg"
+                    alt="arrow"
+                    [style.transform]="'rotate(' + rotationAngle + 'deg)'"
+                  />
+                  <div>
+                    <p class="test-text">{{ title }}</p>
+                    @if (bgColor === 'red' && !isMobile) {
+                      <p class="strict-test-case">This is a strict test case. Due to its failure, all following test cases in this suite were skipped.</p>
+                    }
+                  </div>
                 </div>
-              }
-              @if(submission?.attributes?.document?.result?.['return-code'] !== undefined){
-                <div class="return-code">
-                  <mat-icon class="custom-icon-size" svgIcon="return"></mat-icon>
-                  <span class="return-code-text"> Return code:</span><span class="return-code-text"> {{ submission.attributes.document.result['return-code'] }}</span> 
-                  @if(submission?.attributes?.document?.result?.['return-code'] !== 0){
-                    <span class="return-code-text red-text">EXPECTED 0</span>
+                <div class="test-right">
+                  <div class="test-progress {{ isVisible }}">
+                    <span class="{{ isCompletedVisible }}">{{ score }} / {{maxScore}} </span
+                    ><span></span>
+                  </div>
+                    <button> 
+                      @if (checkBtnVisible){<img src="assets/icons/check.svg" alt="check"/>}
+                      @if (closeBtnVisible){<img src="assets/icons/close.svg" alt="close"/>}
+                      @if (minusBtnVisible){<img src="assets/icons/minus.svg" alt="minus"/>}
+                    </button>
+                </div>
+              </div>
+        </mat-expansion-panel-header>
+        <div class="test-content">
+            <div class="test-content-inner">
+              @if(isRecursive){
+                @for (child of submission.children; track $index) {
+                  <app-test-case-test
+                    [orderedNumber]="$index"
+                    [scale]="nextScale()"
+                    [submission]="child"
+                  ></app-test-case-test>
+                }
+              }@else{
+                @if(submission.attributes.type === 'test:ws'){
+                  @if(submission?.attributes?.document?.result?.response?.warnings?.length){
+                    <h1 class="warnings-title" style="color: #F47C3C" >Warnings</h1>
+                    @for (warning of this.submission.attributes.document.result.response.warnings; track $index) {
+                        <li class="war-error-str" >{{warning}}</li>
+                    }
                   }
-                </div>
+                  @if (submission?.attributes?.document?.result?.response?.errors?.length) {
+                    @for (error of this.submission.attributes.document.result.response.errors; track $index) {
+                      <li class="war-error-str" >{{error}}</li>
+                    }
+                  }
+                  @if( submission?.attributes?.passed &&  (submission?.attributes?.document?.result == null || ((submission?.attributes?.document?.result?.response?.errors?.length ?? 0) == 0 && (this.submission.attributes.document.result.response.warnings?.length ?? 0) == 0))){
+                    <h1 class="h1-ok">OK</h1>
+                  }@else if( !submission?.attributes?.passed &&  (submission?.attributes?.document?.result == null || ((submission?.attributes?.document?.result?.response?.errors?.length ?? 0) == 0 && (this.submission.attributes.document.result.response.warnings?.length ?? 0) == 0))){
+                    <h1 class="h1-bad">STURUCTURE CHECK FAULT</h1>
+                  }
+                }@else{
+                  @if(submission?.attributes?.document?.description){
+                    <div class="testcase-description">
+                      <div class="description-str" [innerHTML]="safeHtml"></div>
+                    </div>
+                  }
+                  @if(!!submission.attributes.document.duration || !!submission.attributes.document.result['return-code']){
+                    <div class="duration-row">
+                      @if(submission?.attributes?.document?.duration){
+                        <div class="duration">
+                          <mat-icon class="custom-icon-size" svgIcon="timer"></mat-icon>
+                          <span class="duration-text">   Duration:</span> <span  class="duration-text"> {{ (submission.attributes.document.duration * 1000).toFixed(3) }} ms</span>
+                        </div>
+                      }
+                      @if(submission?.attributes?.document?.result['return-code'] !== undefined){
+                        <div class="return-code">
+                          <mat-icon class="custom-icon-size" svgIcon="return"></mat-icon>
+                          <span class="return-code-text"> Return code:</span><span class="return-code-text"> {{ submission?.attributes?.document?.result['return-code'] }}</span> 
+                          @if(submission?.attributes?.document?.result?.['return-code'] !== 0){
+                            <span class="return-code-text red-text">EXPECTED 0</span>
+                          }
+                        </div>
+                      }
+                    </div>
+                  }
+                  @if((submission?.attributes?.document?.result?.stdout && submission.attributes.document.result.stdout.length > 0) || (submission?.attributes?.document?.expected?.stdout && submission?.attributes?.document?.expected?.stdout.length > 0)){
+                      <app-stdout
+                      [originStdout]="submission.attributes.document.result.stdout"
+                      [expectedStdout]="submission?.attributes?.document?.expected?.stdout"
+                      >
+                      </app-stdout>
+                  }
+                  @if(submission?.attributes?.document?.result?.stderr && submission.attributes.document.result.stderr.length > 0){
+                    <app-stderr
+                    [originStderr]="submission?.attributes?.document?.result?.stderr"
+                    >
+                    </app-stderr>
+                  }
+                }
               }
             </div>
-          }
-          @if((submission?.attributes?.document?.result?.stdout && submission.attributes.document.result.stdout.length > 0) || (submission?.attributes?.document?.expected?.stdout && submission?.attributes?.document?.expected?.stdout.length > 0)){
-              <app-stdout
-              [originStdout]="submission.attributes.document.result.stdout"
-              [expectedStdout]="submission?.attributes?.document?.expected?.stdout"
-              (displayTextChanged)="handleDisplayTextChange()"
-              >
-              </app-stdout>
-          }
-          @if(submission?.attributes?.document?.result?.stderr && submission.attributes.document.result.stderr.length > 0){
-            <app-stderr
-            [originStderr]="submission?.attributes?.document?.result?.stderr"
-            >
-            </app-stderr>
-          }
-        }
-      }
-    </div>
-  </div>
-</div>
+          </div>
+    </mat-expansion-panel>
+</mat-accordion>

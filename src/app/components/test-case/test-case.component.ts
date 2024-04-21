@@ -1,44 +1,40 @@
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
-import { Submission } from '../../interfaces/submission';
-import { StdoutComponent } from '../test-case-components/stdout/stdout.component';
-import { StderrComponent } from '../test-case-components/stderr/stderr.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import {MatTooltip, MatTooltipModule} from '@angular/material/tooltip';
-
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { StdoutComponent } from './test-case-components/stdout/stdout.component';
+import { StderrComponent } from './test-case-components/stderr/stderr.component';
+import { NestedTask } from '../../interfaces/submission';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
-  selector: 'app-test-case',
+  selector: 'app-test-case-test',
   standalone: true,
-  imports: [CommonModule,MatIconModule,StdoutComponent,StderrComponent,MatIconModule,MatTooltipModule],
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatExpansionModule,
+    StdoutComponent,
+    StderrComponent,
+    MatTooltipModule
+  ],
+  animations:[],
   templateUrl: './test-case.component.html',
-  styleUrl: './test-case.component.scss',
+  styleUrl: './test-case.component.scss'
 })
 export class TestCaseComponent implements OnInit {
+
+
   isMobile = false;
   safeHtml: SafeHtml;
-  @ViewChild('contentDiv', { static: false }) contentDiv: ElementRef;
   @Input() orderedNumber: number;
-  @Input() submission: Submission | any;
-  @Input() submissionList: Submission[];
-  @Input() isRecursive: boolean;
+  @Input() submission: NestedTask;
   @Input() scale: number;
-  @Output() dataToParent = new EventEmitter<string>();
-  @Output() contentHeightChanged: EventEmitter<void> = new EventEmitter();
-
+  
+  
+  isRecursive: boolean;
   isExpanded: boolean = false;
   checkBtnVisible: boolean = false;
   closeBtnVisible: boolean = false;
@@ -66,7 +62,6 @@ export class TestCaseComponent implements OnInit {
   }
 
 
-
   constructor
   (
     private cdRef: ChangeDetectorRef,
@@ -91,6 +86,12 @@ export class TestCaseComponent implements OnInit {
    }
   
   ngOnInit(): void {
+
+    if(this.submission.children && this.submission.children.length != 0){
+      console.log(this.submission.attributes.title + ' ' + 'recursive');
+      this.isRecursive = true;
+    }
+
     if(window.innerWidth <= 568){
       this.isMobile = true;
     }
@@ -98,11 +99,11 @@ export class TestCaseComponent implements OnInit {
       this.sortSubmission();
       return;
     }
-    this.title = this.submission.title;
-    this.score = this.submission.score;
-    this.maxScore = this.submission.maxScore;
-    this.passed = this.submission.isPassed;
-    this.strict = this.submission.isStrict;
+    this.title = this.submission.attributes.title;
+    this.score = this.submission.attributes.document.score;
+    this.maxScore = this.submission.attributes.document['max-score'];
+    this.passed = this.submission.attributes.document.passed;
+    this.strict = this.submission.attributes.document.strict;
     const isError = this.checkIsError();
     this.setAttributes(isError);
   }
@@ -116,6 +117,7 @@ export class TestCaseComponent implements OnInit {
     this.maxScore = maxScore;
     this.passed = passed;
     this.strict = strict;
+    // console.log(` ${this.title} ${this.score}  ${this.maxScore} ${this.passed}  ${this.strict} ${this.submission.children.length}`);
     const isError = this.checkIsError();
     if (description) {
       this.parsedDescription = this.parseDescription(description);
@@ -170,37 +172,13 @@ export class TestCaseComponent implements OnInit {
   
 
   onToggle(): void {
-    this.contentHeight = this.contentDiv.nativeElement.offsetHeight + 'px';
     this.rotationAngle += 90;
     if (this.rotationAngle === 180) {
       this.rotationAngle = 0;
       this.contentHeight = '0px';
     }
-      this.contentHeightChanged.emit();
    }
 
-
-
-  handleDisplayTextChange() {
-    this.cdRef.detectChanges();
-    this.waitForContentToRender();
-  }
-
-  waitForContentToRender() {
-    const initialHeight = this.contentDiv.nativeElement.offsetHeight;
-    setTimeout(() => {
-      const newHeight = this.contentDiv.nativeElement.offsetHeight;
-      if (initialHeight !== newHeight) {
-        this.waitForContentToRender();
-      } else {
-        this.updateContentSize(); 
-      }
-    }, 100); 
-  }
-
-  updateContentSize() {
-    this.contentHeight = this.contentDiv.nativeElement.offsetHeight + 'px';
-  }
 
   parseDescription(description: string): string {
     description = description.replace(/`([^`]+)`/g, '<code>$1</code>')
@@ -233,6 +211,5 @@ export class TestCaseComponent implements OnInit {
     return this.scale == 0.2 ? 0.2 : this.scale - 0.2;
   }
 
+
 }
-
-

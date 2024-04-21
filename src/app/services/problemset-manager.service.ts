@@ -2,7 +2,7 @@ import { Injectable, TransferState, makeStateKey } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { ProblemsetsService } from './problemsets.service';
 import { ProblemsetExtra } from '../interfaces/problemset';
-import { Submission, TaskData } from '../interfaces/submission';
+import { NestedTask, Submission, Task, TaskData } from '../interfaces/submission';
 
 @Injectable({
   providedIn: 'root'
@@ -17,34 +17,37 @@ export class ProblemsetManagerService {
 
 
 
-  async getSortedTasksByTypeAndSuits(id: string):Promise<{structureChecks: Submission[],suites: Map<TaskData, TaskData[]>}> {
-    let currentSuite: TaskData = null;
-    let tempTasks: Submission[] = [];
-    let structureChecks: any[] = [];
-    let suites: Map<TaskData, TaskData[]> = new Map();
-    let data = await firstValueFrom(this.problemsetService.getSubmissionTasks(id));
-  
-    for (const task of data.data) {
-      if (task.attributes.document.type === 'suite') {
-        if (currentSuite != null) {
-          suites.set(currentSuite, tempTasks);
-          tempTasks = []; 
-        }
-        currentSuite = task;
-        tempTasks = []; 
-      } else {
-          if (currentSuite == null) {
-            structureChecks.push(task);
-          } else {
-            tempTasks.push(task);
-          }
-        }
-    }
-    if (currentSuite != null) {
-      suites.set(currentSuite, tempTasks);
-    }
-    return { structureChecks, suites };
+  async getSortedTasksByTypeAndSuits(id: string):Promise<NestedTask[]> {
+    let taskData = await firstValueFrom(this.problemsetService.getSubmissionTasks(id));
+    let nestedTasks = this.nestTasks(taskData.data);
+    console.log(nestedTasks);
+    
+    return nestedTasks;
   }
+
+
+  nestTasks(tasks: Task[]): NestedTask[] {
+    const taskMap: { [id: string]: NestedTask } = {};
+
+    tasks.forEach(task => {
+        taskMap[task.id] = { ...task, children: [] };
+    });
+
+    const rootTasks: NestedTask[] = [];
+    Object.values(taskMap).forEach(task => {
+        const parentId = task.relationships['parent-task'].data?.id;
+        if (parentId) {
+            if (taskMap[parentId]) {
+                taskMap[parentId].children.push(task);
+            }
+        } else {
+            rootTasks.push(task);
+        }
+    });
+
+    return rootTasks;
+  }
+
 
 
   async getProblemsetLastSubmissionsByLimitById(limit: number, id:string){

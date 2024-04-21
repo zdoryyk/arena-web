@@ -31,6 +31,8 @@ export class ProblemestsDetailComponent implements OnInit {
   ){}
 
   async ngOnInit(){
+    console.log(window.innerWidth);
+    
     await this.loadUserData();
     this.problemsetId = this.activeRoute.snapshot.paramMap.get('id');
     await this.loadPageData();
