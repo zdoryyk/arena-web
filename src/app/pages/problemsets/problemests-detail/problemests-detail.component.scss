@@ -105,7 +105,7 @@
     display: flex;
     gap: 40px;
     flex-wrap: wrap;
-    max-width: 1060px;
+    max-width: 1200px;
 }
 
 .title-skeleton{
@@ -147,15 +147,32 @@
     }
 }
 
-@media (min-width: 1200px) and (max-width: 1900px) {
+@media (min-width: 1201px) and (max-width: 1899px) {
     
     .head {
-        width: 66rem;
+        width: 65rem;
     }
-    
+
+    .submissions {
+        max-width: 1850px;
+    }
+
 }
 
-@media (min-width: 1904px) {
+@media (min-width: 1900px) {
+    
+    .head {
+        width: 99rem;
+    }
+
+
+    .submissions {
+        max-width: 1850px;
+    }
+}
+
+
+@media (min-width: 1901px) {
    
     .submissions {
         max-width: 1900px;
@@ -182,9 +199,22 @@
     }
   }
   
-  @media (min-width: 1701px) and (max-width: 1900px) {
+  @media (min-width: 1701px) and (max-width: 1800px) {
     .section {
       padding-left: 350px;
     }
   }
+
+  @media (min-width: 1801px) and (max-width: 1899px) {
+    .section {
+      padding-left: 400px;
+    }
+  }
+
+  @media (min-width: 1900px) and (max-width: 2150px) {
+    .section {
+      padding-left: 100px;
+    }
+  }
+
 

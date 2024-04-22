@@ -30,7 +30,6 @@ export class TestCaseComponent implements OnInit {
   safeHtml: SafeHtml;
   @Input() orderedNumber: number;
   @Input() submission: NestedTask;
-  @Input() scale: number;
   
   
   isRecursive: boolean;
@@ -203,11 +202,5 @@ export class TestCaseComponent implements OnInit {
       && !this.passed
     );
   }
-
-
-  nextScale(): any {
-    return this.scale == 0.2 ? 0.2 : this.scale - 0.2;
-  }
-
 
 }

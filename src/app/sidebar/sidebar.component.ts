@@ -58,7 +58,7 @@ export class SidebarComponent implements OnInit {
   onLogout() {
     this.authService.setLoggedIn(false);
     localStorage.clear();
-    this.router.navigate(['/login']);
+    window.location.reload();
   }
 
   onToggle() {

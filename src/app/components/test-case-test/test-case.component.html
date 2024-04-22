@@ -36,7 +36,6 @@
                 @for (child of submission.children; track $index) {
                   <app-test-case-test
                     [orderedNumber]="$index"
-                    [scale]="nextScale()"
                     [submission]="child"
                   ></app-test-case-test>
                 }

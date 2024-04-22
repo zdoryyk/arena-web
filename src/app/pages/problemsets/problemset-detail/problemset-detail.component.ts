@@ -23,7 +23,6 @@ import { TestCaseComponent } from '../../../components/test-case-test/test-case.
 })
 export class ProblemsetDetailComponent implements OnInit {
 
-  private _testCaseData = [];
   submissionId: string; 
   submissionData: any;
   problemsetData: any;
@@ -43,7 +42,6 @@ export class ProblemsetDetailComponent implements OnInit {
   constructor
   (
     private router: Router,
-    private authService: AuthService,
     private activeRoute: ActivatedRoute,
     private problemsetService: ProblemsetsService,
     private problemsetManager: ProblemsetManagerService,
@@ -230,11 +228,9 @@ export class ProblemsetDetailComponent implements OnInit {
   
 
   checkIfModule(task: NestedTask): boolean {
-    // Check if the task is a suite and has no parent
     const isSuite = task.attributes.document.type === 'suite';
     const hasNoParent = task.relationships['parent-task'].data === null;
   
-    // It must have at least one child
     const hasChildren = task.children && task.children.length > 0;
   
     return isSuite && hasChildren && hasNoParent;
