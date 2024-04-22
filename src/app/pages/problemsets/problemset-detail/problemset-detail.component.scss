@@ -51,7 +51,7 @@
   background: #4d93fd;
   color: #fff;
   font-family: Roboto;
-  font-size: 40px;
+  font-size: 28px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -260,5 +260,29 @@
 
   .details-case-main {
     width: 100%;
+  }
+}
+
+
+@media (min-width: 1640px) {
+  .section {
+    padding-left: 130px;
+  }
+
+  .mg-left {
+    margin-left: 0;
+  }
+}
+
+
+@media (min-width: 1700px) {
+  .container {
+    max-width: 1510px;
+  }
+}
+
+@media (min-width: 2100px) {
+  .container {
+    max-width: 1710px;
   }
 }

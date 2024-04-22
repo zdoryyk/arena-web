@@ -117,6 +117,7 @@
 
 
 
+
 @media (max-width: 576px) {
     .main-title {
         font-size: 24px;
@@ -160,4 +161,30 @@
         max-width: 1900px;
     }
 }
+
+
+
+@media (min-width: 1400px) and (max-width: 1450px) {
+    .section {
+      padding-left: 200px;
+    }
+  }
+  
+  @media (min-width: 1451px) and (max-width: 1500px) {
+    .section {
+      padding-left: 250px;
+    }
+  }
+  
+  @media (min-width: 1501px) and (max-width: 1700px) {
+    .section {
+      padding-left: 300px;
+    }
+  }
+  
+  @media (min-width: 1701px) and (max-width: 1900px) {
+    .section {
+      padding-left: 350px;
+    }
+  }
 
