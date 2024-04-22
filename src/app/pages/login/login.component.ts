@@ -1,19 +1,22 @@
 import { Component, Inject, OnInit, PLATFORM_ID, TransferState, makeStateKey } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { LoginService } from './login.service';
-import { Subscription } from 'rxjs';
+import { Subscription, firstValueFrom, take } from 'rxjs';
 import { Permission } from '../../interfaces/permissions';
 import { environment } from '../../../environments/environment';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [RouterModule,CommonModule],
-  providers:[],
+  imports: [RouterModule,CommonModule,ProgressSpinnerModule,ToastModule],
+  providers:[MessageService],
   animations: [
     trigger('slideInFromLeft', [
       transition(':enter', [
@@ -38,69 +41,109 @@ import { animate, style, transition, trigger } from '@angular/animations';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit{
-  
+  isLoading = false;
   platformId: Object;
-  private tokenSubscription: Subscription = new Subscription;
-  private userSubscription: Subscription = new Subscription;
-  constructor
-  (
+  private tokenSubscription: Subscription = new Subscription();
+  private userSubscription: Subscription = new Subscription();
+  constructor(
     private route: ActivatedRoute,
     private router: Router,
     private loginService: LoginService,
     private authService: AuthService,
+    private messageService: MessageService,
     @Inject(PLATFORM_ID) platformId: Object
-  ){
+  ) {
     this.platformId = platformId;
   }
 
   async ngOnInit() {
-    this.checkIsUserLoggedIn();
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe(async params => {
       if (params['cas_token']) {
-        this.handleThirdPartyLogin(params['cas_token']);
+        await this.handleThirdPartyLogin(params['cas_token']);
       }
     });
   }
 
-  async checkIsUserLoggedIn(){
+  async checkIsUserLoggedIn() {
     let user = await this.authService.checkIsUserInStorage();
-    if(user){
+    if (user) {
       this.router.navigate(['/dashboard']);
     }
   }
 
-  private handleThirdPartyLogin(casTokenValue: string){
-    var casToken = {
-      "cas_token": casTokenValue
-    };
-    this.tokenSubscription = this.loginService.getToken(casToken).subscribe(resultToken => {
-      this.userSubscription = this.loginService.getUserMe(resultToken.token).subscribe(resultUser => {
-        this.authService.setLoggedIn(true);
+  private async handleThirdPartyLogin(casTokenValue: string) {
+    const casToken = { "cas_token": casTokenValue };
+    this.clearParams();
+    this.isLoading = true;
+    try {
+      const resultToken = await firstValueFrom(this.loginService.getToken(casToken));
+      try {
+        const resultUser = await firstValueFrom(this.loginService.getUserMe(resultToken.token));
         if (resultUser.data.attributes['is-lecturer']) {
-          if(isPlatformBrowser(this.platformId))
-          localStorage.setItem('arena-permission', Permission.Teacher)
+          if (isPlatformBrowser(this.platformId)) {
+            localStorage.setItem('arena-permission', Permission.Teacher);
+          }
+        } else {
+          if (isPlatformBrowser(this.platformId)) {
+            localStorage.setItem('arena-permission', Permission.Student);
+          }
         }
-        else {
-          if(isPlatformBrowser(this.platformId))
-          localStorage.setItem('arena-permission', Permission.Student)
-        }
-        if(isPlatformBrowser(this.platformId)){
+  
+        if (isPlatformBrowser(this.platformId)) {
           localStorage.setItem("arena-token", resultToken.token);
           this.authService.checkIsUserInStorage();
         }
-          if(resultUser.data.attributes['is-lecturer']) {
-            this.router.navigate(['/admin-courses']);
-          }
-          else {
-            this.router.navigate(['/dashboard']);
-          }
-      });
-    });
+        await this.delay(2000);
+        if (resultUser.data.attributes['is-lecturer']) {
+          this.router.navigate(['/admin-courses']);
+        } else {
+          this.router.navigate(['/dashboard']);
+        }
+        this.authService.setLoggedIn(true);
+      } catch (error) {
+        this.handleApiError(error);
+      }
+    } catch (error) {
+      this.handleApiError(error);
+    } finally {
+      this.isLoading = false;
+    }
   }
-  
 
+  async delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
-  loginViaThirdPartyService(){
+  private handleApiError(error: any) {
+    const status = error.status;
+    switch(status) {
+      case 403:
+        this.show('error','Error',`Access is forbidden. Please check your permissions.`);
+        break;
+      case 429:
+        this.show('warn','Warning',`Too many requests. Please try again later.`);
+        break;
+      default:
+        this.show('info','Info',`An error occurred. Please try again.`);
+        break;
+    }
+  }
+
+  loginViaThirdPartyService() {
     window.open(environment.api_url + "/cas-token?callback=" + environment.base_url + "/login", "_self");
   }
+
+  show(severity: string, summary: string, detail: string) {
+    this.messageService.add({ severity: severity, summary: summary, detail: detail });
+  }
+
+  clearParams(){
+    this.router.navigate([], {
+      queryParams: {
+        'cas_token': null,
+      },
+      queryParamsHandling: 'merge'
+    })
+  }
+
 }

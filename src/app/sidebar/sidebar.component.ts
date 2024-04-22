@@ -17,7 +17,7 @@ export class SidebarComponent implements OnInit {
   dynamicRouteCoursesOrProblemsets: string | any[] = '/problemsets';
   platformId: Object;
   isTeacher = false; 
-  isLoggedIn = true;  
+  isLoggedIn = false;  
   fullName: string = 'none';
   tempName = '';
   constructor(
@@ -38,6 +38,9 @@ export class SidebarComponent implements OnInit {
 
   async ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
+      this.authService.isLoggedIn$.subscribe((loggedIn) => {
+        this.isLoggedIn = loggedIn;
+      });
       this.isTeacher = localStorage.getItem('arena-permission') === 'Teacher';
       const user = await this.authService.checkIsUserInStorage();
       if(user && user.attributes['first-name'] && user.attributes['last-name']) {

@@ -1,17 +1,28 @@
-<main>
-    <section class="section auth">
-        <div class="container">
-            <div class="d-flex justify-content-center align-items-center gap-5">
-              <div class="login">
-                <div class="login-img" @slideInFromLeft>
-                  <img src="assets/images/cube.png" class="img-fluid" alt="logo">
+  <main>
+      <section class="section auth">
+          <div class="container">
+            <p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}" ></p-toast>
+              <div class="d-flex justify-content-center align-items-center gap-5">
+                <div class="login">
+                  @if(isLoading){
+                    <div class="login-img">
+                      <img src="assets/images/cube.png" class="img-fluid" alt="logo">
+                    </div>
+                  }@else {
+                    <div class="login-img" @slideInFromLeft>
+                      <img src="assets/images/cube.png" class="img-fluid" alt="logo">
+                    </div>
+                  }
+                  <form class="form">
+                    <h2 class="form-title" @slideInFromTop></h2>
+                    @if(isLoading){
+                      <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s"></p-progressSpinner>
+                    }@else{
+                      <button type="button" class="btn btn-tuke" @slideInFromRight (click)="loginViaThirdPartyService()" @slideInFromRight>{{'LOGIN WITH TUKE' | uppercase}}</button>
+                    }
+                  </form>
                 </div>
-                <form class="form">
-                  <h2 class="form-title" @slideInFromTop>Login</h2>
-                  <button type="button" class="btn btn-tuke" @slideInFromRight (click)="loginViaThirdPartyService()" @slideInFromRight>{{'LOGIN VIA TUKE' | uppercase}}</button>
-                </form>
               </div>
-            </div>
-          </div>          
-    </section>
-</main>
+            </div>          
+      </section>
+  </main>

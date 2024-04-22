@@ -3,7 +3,6 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ChartModule } from 'primeng/chart';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { TestGroupComponent } from '../../../components/test-group/test-group.component';
-import { TestCaseComponent } from '../../../components/test-case/test-case.component';
 import { AuthService } from '../../../services/auth.service';
 import { User, UserData, UserProblemSetData } from '../../../interfaces/user';
 import { ProblemsetsService } from '../../../services/problemsets.service';
@@ -12,6 +11,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { ProblemsetManagerService } from '../../../services/problemset-manager.service';
 import { NestedTask, Submission, TaskData } from '../../../interfaces/submission';
 import { environment } from '../../../../environments/environment';
+import { TestCaseComponent } from '../../../components/test-case-test/test-case.component';
 
 
 @Component({

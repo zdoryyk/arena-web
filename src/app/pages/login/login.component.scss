@@ -1,3 +1,15 @@
+:host ::ng-deep {
+    .p-toast{
+        .p-icon{
+            height: 23px;
+            margin-top: 9px
+        }
+    }	
+
+
+}
+
+
 .login {
     display: flex;
     gap: 80px;
@@ -11,6 +23,7 @@
 
 .form {
     width: 550px;
+    
 }
 
 .form-title {
@@ -61,6 +74,15 @@
     background-color: #5a6268; 
 }
 
+.spinner, .p-progressSpinner {
+    display: flex; /* Using flexbox to center the spinner */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    width: 100%; /* Take full width to avoid any alignment issues */
+    height: 100%; /* Take full height to vertically center */
+}
+
+
 
 @media (max-width: 768px) {
     .login-img {
@@ -77,6 +99,17 @@
     .form-title{
         padding-top: 10px;
     }
+
+    .spinner, .p-progressSpinner {
+        height: 4rem; /* Adjust height as needed */
+        margin-top: 20px; /* Optional: add some space above the spinner */
+    }
+
+    .form{
+        display: flex;
+        justify-content: center;
+    }
+
 }
 
 @media (max-width: 992px) {
@@ -86,5 +119,9 @@
 
     .form {
         width: 100%;
+    }
+
+    .spinner, .p-progressSpinner {
+        height: 4rem; /* Ensure spinner height is adequate */
     }
 }
