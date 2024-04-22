@@ -1,17 +1,29 @@
 :host ::ng-deep {
   .mat-expansion-panel-body {
-    padding: 0px 0px 0px;
+    padding: 0;
   }
 
-  .mat-expansion-panel-header{
+  .mat-expansion-panel-header {
     margin-bottom: 20px;
+    transition: none;
+    &:hover {
+      background-color: transparent; 
+      color: inherit;
+    }
   }
-  
+
   .mat-accordion .mat-expansion-panel:last-of-type {
     border-radius: 15px;
     margin-top: 20px;
   }
+
+  .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled="true"]) {
+    &:hover {
+      background-color: transparent; 
+    }
+  }
 }
+
 
 .mat-expansion-panel{
   border-radius: 30px;

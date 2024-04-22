@@ -4,8 +4,8 @@ import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatExpansionModule, MatExpansionPanel } from '@angular/material/expansion';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { StdoutComponent } from '../test-case/test-case-components/stdout/stdout.component';
-import { StderrComponent } from '../test-case/test-case-components/stderr/stderr.component';
+import { StdoutComponent } from './test-case-components/stdout/stdout.component';
+import { StderrComponent } from './stderr/stderr.component';
 import { NestedTask } from '../../interfaces/submission';
 
 @Component({
