@@ -44,6 +44,10 @@ export class DashboardComponent implements OnInit {
   
   async ngOnInit() {
     await this.loadUserData();
+    if(this.user.attributes['is-lecturer']){
+      this.router.navigate(['/admin-dashboard']);
+      return;
+    }
     if(this.transferState.hasKey(makeStateKey('problemsetsCards'))){
       this.problemsets = this.transferState.get(makeStateKey('problemsetsCards'),null);
     }else{

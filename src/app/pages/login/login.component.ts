@@ -94,8 +94,9 @@ export class LoginComponent implements OnInit{
           this.authService.checkIsUserInStorage();
         }
         await this.delay(2000);
+        console.log(resultUser.data.attributes);
         if (resultUser.data.attributes['is-lecturer']) {
-          this.router.navigate(['/admin-courses']);
+          this.router.navigate(['/admin-dashboard']);
         } else {
           this.router.navigate(['/dashboard']);
         }
