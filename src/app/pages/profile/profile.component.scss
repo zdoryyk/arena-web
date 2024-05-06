@@ -1,3 +1,10 @@
+:host ::ng-deep {
+  .p-skeleton{
+    background: #cccdcd;
+  }
+}
+
+
 .profile {
   display: flex;
   gap: 150px;

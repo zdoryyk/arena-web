@@ -4,6 +4,7 @@ import { AuthService } from '../services/auth.service';
 import { isPlatformBrowser } from '@angular/common';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-sidebar',
@@ -33,6 +34,11 @@ export class SidebarComponent implements OnInit {
       this.sanitizer
       .bypassSecurityTrustResourceUrl('../assets/icons/bug.svg'),
     );
+    this.matIconRegistery.addSvgIcon(
+      'logout',
+      this.sanitizer
+      .bypassSecurityTrustResourceUrl('../assets/icons/logout.svg'),
+    );
   }
 
 
@@ -60,7 +66,7 @@ export class SidebarComponent implements OnInit {
     localStorage.clear();
     window.location.reload();
   }
-
+  
   onToggle() {
     const sidebar = document.getElementById('sidebar') as HTMLElement;
     const btn = document.getElementById('panel-show') as HTMLElement;

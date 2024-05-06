@@ -54,6 +54,8 @@ export class CourseManagerService {
           }
         }
       });
+      activeCourses.reverse();
+      archivedCourses.reverse();
       return { courses: activeCourses, archivedCourses, isLecturer,totalSubmissions,totalGroups};
     } catch (error) {
       console.error('Failed to initialize user data', error);
@@ -98,7 +100,7 @@ export class CourseManagerService {
           };
         })
       );
-      allProblemsets = allProblemsets.concat(courseProblemsets);
+      allProblemsets = allProblemsets.concat(courseProblemsets.reverse());
     }
     return allProblemsets;
   }

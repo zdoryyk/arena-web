@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit {
   chartData: Map<string, any[]> = new Map<string,any[]>
   disabledProblemset: ProblemsetExtra;
   cols = ['index','title','score','action']
-
+  loadedProblemsetsData: any = [];
   constructor
   (
     private router: Router,
@@ -47,7 +47,7 @@ export class DashboardComponent implements OnInit {
     if(this.transferState.hasKey(makeStateKey('problemsetsCards'))){
       this.problemsets = this.transferState.get(makeStateKey('problemsetsCards'),null);
     }else{
-      this.problemsets = await this.problemsetManager.loadUserProblemsets();
+      this.problemsets = await this.problemsetManager.loadProblemsets();
     }
     if(this.transferState.hasKey(makeStateKey('latestSubmissions'))){
       this.latestSubmissions = this.transferState.get(makeStateKey('latestSubmissions'),null);
@@ -63,7 +63,7 @@ export class DashboardComponent implements OnInit {
       await this.getLastSubmissionsByActiveProblemsets();
     }
     this.setCharts();
-    this.isLoading = false;
+    this.isLoading = false; 
   }
 
 

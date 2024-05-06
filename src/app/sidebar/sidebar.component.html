@@ -11,7 +11,8 @@
         <div class="profile" style="padding-right: 5px;">
             <span class="profile-person  {{fullName.length < 14 ? 'big': fullName.length < 17 ? 'small' : 'smallest'}}">{{fullName}}</span>
             <!-- <span class="profile-person">{{fullName}}</span> -->
-            <a><img src="assets/icons/logout.svg" class="img-fluid" alt="logo" (click)="onLogout()"></a>
+            <a><img src="assets/icons/logout.svg" class="img-fluid-logout" alt="logo" (click)="onLogout()"></a>
+            <!-- <mat-icon style="width: 35px; height: 35px;" svgIcon="logout"></mat-icon> -->
         </div>
 
         <div id="sidebar-main" style="display: none;">

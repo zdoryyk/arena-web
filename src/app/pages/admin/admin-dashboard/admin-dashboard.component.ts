@@ -10,12 +10,13 @@ import { Course } from '../../../interfaces/course';
 import { Problemset } from '../../../interfaces/problemset';
 import { CourseCardComponent } from '../../../components/course-card/course-card.component';
 import { ProblemsetCardComponent } from '../../../components/problemset-card/problemset-card.component';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
   providers:[HttpClient],
-  imports: [RouterModule, DatePipe, CommonModule,MatIconModule,HttpClientModule,CourseCardComponent,ProblemsetCardComponent],
+  imports: [RouterModule, DatePipe, CommonModule,MatIconModule,HttpClientModule,CourseCardComponent,ProblemsetCardComponent,SkeletonModule],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss'
 })
@@ -61,6 +62,7 @@ export class AdminDashboardComponent implements OnInit {
       this.totalGroups = this.transferState.get(makeStateKey('totalGroups'),0);
       this.totalSubmissions = this.transferState.get(makeStateKey('totalSubmissions'),0);
       this.problemsets = this.transferState.get<Problemset[]>(makeStateKey('problemsets'),[]);
+      this.loading = false;
     }else{
       this.initializeData();
     } 
@@ -79,12 +81,12 @@ export class AdminDashboardComponent implements OnInit {
       } catch (error) {
         console.error('Error initializing data', error);
       } finally {
-        this.loading = false;
         this.transferState.set<Course[]>(makeStateKey('activeCourses'),this.courses);
         this.transferState.set<Course[]>(makeStateKey('archievedCourses'),this.archivedCourses);
         this.transferState.set<number>(makeStateKey('totalSubmissions'),this.totalSubmissions);
         this.transferState.set<number>(makeStateKey('totalGroups'),this.totalGroups);
         this.transferState.set<Problemset[]>(makeStateKey('problemsets'),this.problemsets);
+        this.loading = false;
       }
     })();
   }

@@ -1,3 +1,10 @@
+:host ::ng-deep {
+    .p-skeleton{
+      background: #DBDBDB;
+    }
+}
+
+
 .submissions {
     display: flex;
     gap: 40px;
@@ -33,5 +40,11 @@
     }
     .title{
         text-align: center;
+    }
+}
+
+@media (max-width: 1903px) {
+    .skeleton:nth-child(3) {
+        display: none; 
     }
 }

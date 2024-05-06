@@ -6,7 +6,7 @@
       }@else {<h2 class="title">Your last Problemset</h2>}
       <div class="submissions">
         @if (isLoading) {
-          <div class="skeleton"><p-skeleton width="100%" height="100%" ></p-skeleton></div>
+            <div class="skeleton"><p-skeleton width="100%" height="100%" ></p-skeleton></div>
         }
         @if(areAllProblemsetsDisabled && !isLoading){
           <app-submission-card 

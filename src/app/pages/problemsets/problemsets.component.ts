@@ -20,6 +20,7 @@ export class ProblemsetsComponent implements OnInit{
   isLoading = true;
   user: UserData;
   problemsets: ProblemsetExtra[] = [];
+
   constructor
   (
     private authService: AuthService,
@@ -33,7 +34,7 @@ export class ProblemsetsComponent implements OnInit{
     if(this.transferState.hasKey(makeStateKey('problemsetsCards'))){
       this.problemsets = this.transferState.get(makeStateKey('problemsetsCards'),null);
     }else{
-      this.problemsets = await this.problemsetManager.loadUserProblemsets();
+      this.problemsets = await this.problemsetManager.loadProblemsets();
     }
     this.checkForAnyActiveProblemset();
     this.isLoading = false;

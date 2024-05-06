@@ -1,3 +1,10 @@
+:host ::ng-deep {
+  .p-skeleton{
+    background: #DBDBDB;
+  }
+}
+
+
 .cards {
   display: flex;
   gap: 40px;
@@ -5,11 +12,11 @@
 }
 
 .card {
-  border: 1px solid rgba(0, 0, 0, 0.852);
+  border: 1px solid rgb(206 206 206 / 85%);
   border-radius: 10px;
   padding: 20px;
   width: 400px;
-  height: 200px; 
+  height: 106px; 
   text-align: center;
   box-sizing: border-box;
   font-family: Arial, sans-serif;
@@ -44,6 +51,11 @@
     flex-wrap: wrap;
     width: 100%;
     margin-bottom: 90px;
+}
+
+.skeleton {
+  width: 500px;
+  height: 200px;
 }
 
 @media (max-width: 575px) {
@@ -110,5 +122,12 @@
   }
   
   @media (min-width: 1400px) {
+
+  }
+
+  @media (max-width: 575px) {
+    .cards {
+      display: none; /* Скрывает блок .cards на устройствах с шириной экрана до 575px */
+    }
   }
   

@@ -60,13 +60,13 @@ export class ProblemsetManagerService {
   }
 
 
-  async loadUserProblemsets() {
+  async loadProblemsets() {
     let problemsets = [];
-    let userProblemsets = await firstValueFrom(this.problemsetService.getUserProblemsets());
+    let userProblemsets = await firstValueFrom(this.problemsetService.getUserProblemsets())
     for(const userProblemset of userProblemsets.data.reverse()){
       let problemset = await firstValueFrom(this.problemsetService.getProblemsetDetailById(userProblemset.relationships.problemset.data.id));
       let submissions = await firstValueFrom(this.problemsetService.getUserSubmissionByProblemset(userProblemset.id));
-      let lastSubmission = submissions.data[0];      
+      let lastSubmission = submissions.data[0];
       
       const title = problemset.data.attributes.title;
       const isActive = new Date(problemset.data.attributes['date-finish']).getTime() > Date.now();

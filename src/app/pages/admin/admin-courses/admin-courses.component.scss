@@ -1,3 +1,13 @@
+:host ::ng-deep {
+  .p-skeleton{
+    background: #DBDBDB;
+  }
+}
+.skeleton {
+  width: 500px;
+  height: 200px;
+}
+
 .cards {
     display: flex;
     gap: 40px;
@@ -7,16 +17,16 @@
   .courses-button-container {
     display: flex;
     align-items: stretch; 
-    justify-content: start; /* Aligns items to the start of the container */
+    justify-content: start;
     gap: 10px; 
 }
   
   .card {
-    border: 1px solid rgba(0, 0, 0, 0.852);
+    border: 1px solid rgb(206 206 206 / 85%);
     border-radius: 10px;
     padding: 20px;
     width: 400px;
-    height: 200px; 
+    height: 106px; 
     text-align: center;
     box-sizing: border-box;
     font-family: Arial, sans-serif;
@@ -160,6 +170,13 @@
     }
     
     @media (min-width: 1400px) {
-      /* Your styles for very large screens here */
+
+    }
+
+    @media (max-width: 575px) {
+      .cards {
+        display: none; 
+      }
+
     }
     

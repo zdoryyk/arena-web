@@ -27,7 +27,9 @@ export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
      catchError((error: HttpErrorResponse) => {
        if (error.status === 403) {
         authService.setLoggedIn(false);
+        localStorage.clear();
         router.navigate(['login']);
+        window.location.reload();
        }
        return throwError(() => error);
      })

@@ -122,4 +122,13 @@ export class AuthService {
   async delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
+
+  logout(): Observable<any> {
+    return this.http.get<any>( environment.api_url + "/logout", {
+      headers: {
+          "Authorization": localStorage.getItem("token")
+      }
+    });
+  }
+
 }

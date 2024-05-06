@@ -1,3 +1,9 @@
+:host ::ng-deep {
+  .p-skeleton{
+    background: #DBDBDB;
+  }
+}
+
 .submissions {
     display: flex;
     gap: 40px;
@@ -43,6 +49,7 @@
   width: 500px;
   height: 200px;
 }
+
 
 .index, .row-title, .row-evaluation {
   text-align: center; 
@@ -146,6 +153,11 @@
 
   .dashboard-chart {
     width: 50%;
+  }
+
+  .skeleton {
+    width: 500px;
+    height: 200px;
   }
 }
 
