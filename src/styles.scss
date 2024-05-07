@@ -127,12 +127,14 @@
   --table-background-color: #f7f7f7;
   --btn-hover-bg-color: #5a6268;
   --btn-bg-color: #6c757d;
+  --student-data-hover: #f7f7f7;
 }
 
 body.dark-theme {
   --background-color: #212121;
   --btn-bg-color: #343a40;
   --btn-hover-bg-color: #23272b;
+  --student-data-hover: #23272b;
   --text-color: #f9f9f9;
   --link-color: #abd8ff;
   --progress-bar-color: #c76c34;
@@ -141,8 +143,8 @@ body.dark-theme {
   --details-bar-text: #e0e0e0;
   --details-tool-hover: #669ecb;
   --chart-bg: #303030;
-  --progress-color-green-test-case: #74A42D;
-  --progress-color-orange-test-case: #f57b3b;
+  --progress-color-green-test-case: #60852a;
+  --progress-color-orange-test-case: #e3631f;
   --progress-color-grey-test-case: #424242;
   --border-color: rgba(255, 255, 255, 0.25);
   --header-bg-color: #333333;

@@ -1,6 +1,6 @@
 :host ::ng-deep {
   .p-skeleton{
-    background: #DBDBDB;
+    background: var(--btn-hover-bg-color);
   }
 }
 

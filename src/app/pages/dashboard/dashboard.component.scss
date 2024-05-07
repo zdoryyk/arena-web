@@ -1,6 +1,6 @@
 :host ::ng-deep {
   .p-skeleton{
-    background: #DBDBDB;
+    background: var(--btn-hover-bg-color);
   }
   table th, table td {
     padding: 10px;

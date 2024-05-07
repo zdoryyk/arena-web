@@ -64,7 +64,7 @@
 
     .p-multiselect-panel{
         transform: translateX(-10%);
-        padding-bottom: 15px;
+        padding-bottom: 3px;
     }
 
     .p-multiselect .p-multiselect-label {
@@ -96,15 +96,88 @@
         display: none;
     }
 
-}
+    table th, table td {
+        color: var(--text-color);
+        background: var(--table-background-color);
 
-.table-header {
-    background-color: var(--table-header-bg);
-}
+      }
 
+    .p-sortable-column .p-sortable-column-icon {
+        color: var(--text-color);
+    }
 
-.table-row {
-    background-color: var(--table-row-bg);
+    .mat-basic {
+        background-color: var(--background-color);
+    }
+
+    .mat-mdc-button .mdc-button__label, .mat-mdc-unelevated-button .mdc-button__label, .mat-mdc-raised-button .mdc-button__label, .mat-mdc-outlined-button .mdc-button__label {
+        z-index: 1;
+        color: var(--text-color);
+    }
+
+    .p-datatable .p-datatable-thead > tr > th,
+    .p-datatable .p-datatable-tbody > tr > td,
+    .p-datatable.p-datatable-striped .p-datatable-tbody > tr.p-highlight {
+        background-color: var(--table-background-color);
+        color: var(--text-color);
+        border-color: var(--border-color);
+    }
+
+    .p-datatable .p-datatable-thead > tr > th {
+        background-color: var(--header-bg-color);
+    }
+
+    .p-datatable .p-datatable-tbody > tr > td {
+        background-color: var(--background-color);
+    }
+
+    .p-datatable .p-datatable-tbody > tr:hover > td {
+        background-color: var(--student-data-hover);
+    }
+
+    .p-datatable .p-datatable-tbody > tr.p-highlight {
+        background-color: var(--details-bar-bg);
+        color: var(--details-bar-text);
+    }
+
+    .p-datatable .p-datatable-tfoot > tr > td {
+        background-color: var(--footer-bg-color);
+    }
+
+    .p-inputtext {
+        background-color: var(--background-color);
+        color: var(--text-color);
+        border-color: var(--border-color);
+    }
+
+    .p-multiselect {
+        background-color: var(--background-color);
+        color: var(--text-color);
+        border-color: var(--border-color);
+    }
+
+    .p-multiselect .p-multiselect-label {
+        color: var(--text-color);
+    }
+
+    .p-multiselect .p-multiselect-panel .p-multiselect-items .p-multiselect-item {
+        background-color: var(--background-color);
+        color: var(--text-color);
+    }
+
+    .p-multiselect .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight {
+        background-color: var(--btn-hover-bg-color);
+        color: var(--details-bar-text);
+    }
+
+    .p-datatable .p-datatable-header {
+        background: var(--header-bg-color);
+    }
+
+    .p-multiselect-panel .p-multiselect-header{
+        background: var(--background-color);
+    }
+    
 }
 
 
@@ -131,7 +204,7 @@
 
 input{
     height: 40px;
-    width: 250px;
+    width: 220px;
     border-radius: 8px;
     border: 1px solid grey;
     padding-left: 40px;

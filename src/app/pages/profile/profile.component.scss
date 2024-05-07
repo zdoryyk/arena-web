@@ -1,6 +1,6 @@
 :host ::ng-deep {
   .p-skeleton{
-    background: #cccdcd;
+    background: var(--btn-hover-bg-color);
   }
 }
 
@@ -103,6 +103,7 @@
   padding: 45px;
   border-radius: 20px;
   border: 1px solid #b6b6b6;
+  box-shadow: 5px 5px 5px 5px rgba(190, 190, 190, 0.25);
 }
 
 .case-value {
