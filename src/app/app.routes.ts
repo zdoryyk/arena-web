@@ -10,19 +10,23 @@ import { AdminCourseComponent } from './pages/admin/admin-course/admin-course.co
 import { AuthGuard } from './guards/auth.guard';
 import { TeacherGuard } from './guards/teacher.guard';
 import { ProblemestsDetailComponent } from './pages/problemsets/problemests-detail/problemests-detail.component';
+import { EmptyPageComponent } from './pages/empty-page/empty-page.component';
 
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo:'dashboard'
+    redirectTo:'redirect'
   },
   {
     path: 'login',
     component: LoginComponent,
   },
-
+  {
+    path: 'redirect',
+    component: EmptyPageComponent,
+  },
   {
     path: 'dashboard',
     component: DashboardComponent,
@@ -65,6 +69,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/dashboard', pathMatch: 'full',
+    redirectTo: '/redirect', pathMatch: 'full',
   },
 ];

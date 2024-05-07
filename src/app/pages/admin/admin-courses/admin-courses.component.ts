@@ -1,4 +1,4 @@
-import { Component, OnInit, TransferState, makeStateKey } from '@angular/core';
+import { Component, OnInit, Renderer2, TransferState, makeStateKey } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import {  RouterModule } from '@angular/router';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
@@ -13,12 +13,14 @@ import { Problemset } from '../../../interfaces/problemset';
 import { CourseCardComponent } from '../../../components/course-card/course-card.component';
 import { ProblemsetCardComponent } from '../../../components/problemset-card/problemset-card.component';
 import { SkeletonModule } from 'primeng/skeleton';
+import { ThemeService } from '../../../services/theme.service';
+import { SummaryCardsComponent } from '../../../components/summary-cards/summary-cards.component';
 
 
 @Component({
   selector: 'app-admin-courses',
   standalone: true,
-  imports: [RouterModule, DatePipe, CommonModule,MatIconModule,HttpClientModule,CourseCardComponent,ProblemsetCardComponent,SkeletonModule],
+  imports: [RouterModule, DatePipe, CommonModule,MatIconModule,HttpClientModule,CourseCardComponent,ProblemsetCardComponent,SkeletonModule,SummaryCardsComponent],
   templateUrl: './admin-courses.component.html',
   styleUrl: './admin-courses.component.scss'
 })
@@ -40,35 +42,20 @@ export class AdminCoursesComponent implements OnInit {
   totalGroups = 0;
 
   constructor(
-    private matIconRegistery: MatIconRegistry,
-    private domSanitizer: DomSanitizer,
     public dialog: MatDialog,
     private transferState: TransferState,
     private coursesManagerService: CourseManagerService,
+    private themeService: ThemeService, 
+    private renderer: Renderer2
   ){
-    this.matIconRegistery.addSvgIcon(
-      'book',
-      this.domSanitizer
-      .bypassSecurityTrustResourceUrl('../assets/icons/search-book.svg'),
-    )
-    this.matIconRegistery.addSvgIcon(
-      'users',
-      this.domSanitizer
-      .bypassSecurityTrustResourceUrl('../assets/icons/groups.svg'),
-    )
-    this.matIconRegistery.addSvgIcon(
-      'hat',
-      this.domSanitizer
-      .bypassSecurityTrustResourceUrl('../assets/icons/graduation-hat.svg'),
-    )
-    this.matIconRegistery.addSvgIcon(
-      'button',
-      this.domSanitizer
-      .bypassSecurityTrustResourceUrl('../assets/icons/add-square.svg'),
-    )
   }
   
    ngOnInit(): void {
+    this.themeService.theme$.subscribe(theme => {
+      this.renderer.removeClass(document.body, 'light-theme');
+      this.renderer.removeClass(document.body, 'dark-theme');
+      this.renderer.addClass(document.body, theme);
+    });
     if(this.transferState.hasKey(makeStateKey('problemsets'))){
       this.courses = this.transferState.get(makeStateKey('activeCourses'),[]);
       this.archivedCourses =  this.transferState.get(makeStateKey('archievedCourses'),[]);
@@ -123,5 +110,7 @@ export class AdminCoursesComponent implements OnInit {
 
   
 
-
+  toggleTheme(){
+    this.themeService.toggleTheme()
+  }
 }

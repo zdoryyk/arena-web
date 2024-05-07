@@ -1,3 +1,28 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333;
+  --link-color: #4d93fd;
+  --border-color: rgba(0, 0, 0, 0.25);
+  --header-bg-color: #ffffff;
+  --footer-bg-color: #f8f9fa;
+  --test-bg-color: #aeaeae;
+  --test-header-bg-color: #ffffff;
+  --progress-color: #8fbe48;
+}
+
+.dark-theme {
+  --bg-color: #121212;
+  --text-color: #f9f9f9;
+  --link-color: #88C4E4;
+  --border-color: rgba(255, 255, 255, 0.25);
+  --header-bg-color: #333333;
+  --footer-bg-color: #222222;
+  --test-bg-color: #333333;
+  --test-header-bg-color: #424242;
+  --progress-color: #5eba7d;
+}
+
+
 :host ::ng-deep {
   .mat-expansion-panel-body {
     padding: 0;
@@ -22,6 +47,10 @@
       background-color: transparent; 
     }
   }
+
+  .mat-icon.mat-primary{
+    color: #fff;
+  }
 }
 
 
@@ -32,7 +61,7 @@
 .test {
   margin-bottom: 24px;
   margin-top: 24px;
-  background: #aeaeae;
+  background: var(--progress-color-grey-test-case);
   border-width: 2px;
   border-style: solid;
   border-color: #aeaeae;
@@ -89,13 +118,13 @@
   }
   
   .green {
-    background: #8fbe48;
-    border-color: #8fbe48;
+    background: var(--progress-color-green-test-case);
+    border-color: var(--progress-color-green-test-case);
   }
   
   .orange {
-    background: #f57b3b;
-    border-color: #f57b3b;
+    background: var(--progress-color-orange-test-case);
+    border-color: var(--progress-color-orange-test-case);
   }
   
   .red {
@@ -124,7 +153,7 @@
   }
   
   .warning-title{
-    color: #F47C3C;
+    color: var(--progress-color-orange-test-case);
     margin-left: 30px;
     margin-top: 20px;
     font-size: 30px;
@@ -138,6 +167,7 @@
   
   .test-content-inner {
     padding: 15px 15px 30px;
+    background-color: var(--background-color);
   }
   
   .h1-ok{
@@ -166,6 +196,7 @@
     font-size: 18px;
     margin-left: 20px;
     margin-top: 10px;
+    color: var(--text-color)
   }
   
   .duration-row{
@@ -182,7 +213,7 @@
   }
   
   .duration-text{
-    color: #073051;
+    color: var(--text-color);
     font-weight: 700;
   }
   
@@ -197,7 +228,7 @@
   }
   
   .return-code-text{
-    color: #073051;
+    color: var(--text-color);
     font-weight: 700;
   }
   
@@ -221,10 +252,12 @@
   }
   
   .custom-icon-size {
-    width: 25px; 
+    width: 35px; 
     height: 25px;
     margin-top: 5px;
+    color: var(--text-color);
   }
+
   
   .strict-test-case{
     font-size: 18px;
@@ -277,8 +310,8 @@
 
   
     .custom-icon-size {
-      width: 18px;
-      height: 18px;
+      width: 28px;
+      height: 23px;
       margin-top: 5px;
     }
   

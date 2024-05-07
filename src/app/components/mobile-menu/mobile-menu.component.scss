@@ -3,7 +3,7 @@
     right: 0;
     top: 62px;
     width: 100%;
-    background: #ffffff;
+    background: var(--sidebar-color);
     box-shadow: 0 3px 10px rgb(73, 73, 73);
     padding: 25px 20px;
     visibility: visible;
@@ -55,6 +55,13 @@
 .menu-auth span {
     font-weight: 700;
 }
+
+.logout-button{
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+}
+  
 
 @media (min-width: 768px) {
     .menu {

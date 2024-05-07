@@ -1,9 +1,11 @@
 .card {
     border-radius: 20px;
-    border: 1px solid rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--border-color); 
     width: 500px;
     height: 200px;
     cursor: pointer;
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
   }
   
   .card-data {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ChartModule } from 'primeng/chart';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -12,6 +12,8 @@ import { ProblemsetManagerService } from '../../../services/problemset-manager.s
 import { NestedTask, Submission, TaskData } from '../../../interfaces/submission';
 import { environment } from '../../../../environments/environment';
 import { TestCaseComponent } from '../../../components/test-case-test/test-case.component';
+import { ThemeService } from '../../../services/theme.service';
+import { plugins } from 'chart.js';
 
 
 @Component({
@@ -33,7 +35,6 @@ export class ProblemsetDetailComponent implements OnInit {
   suites: Map<TaskData, TaskData[]> = new Map();
   suitesArray: any[] = [];
   user: UserData;
-
   tasks: NestedTask[];
 
   barData: any;
@@ -45,15 +46,19 @@ export class ProblemsetDetailComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private problemsetService: ProblemsetsService,
     private problemsetManager: ProblemsetManagerService,
+    private themeService: ThemeService, 
   ) {
   }
 
   async ngOnInit() {
     this.submissionId = this.activeRoute.snapshot.paramMap.get('id');
-    this.setCharts();
     await this.getSubmissionHeadData();
     await this.getTasksWithModuleLabel(this.submissionId);
-    await this.getSubmissionsScoresBeforeAndReloadChart();
+    this.themeService.theme$.subscribe(async currentTheme => {
+      const textColor = currentTheme === 'dark-theme' ? '#ffffff' : '#000000';
+      this.setCharts(textColor);
+      await this.getSubmissionsScoresBeforeAndReloadChart();
+    });
   }
 
 
@@ -87,6 +92,7 @@ export class ProblemsetDetailComponent implements OnInit {
     this.routePaths = this.submissionsBefore.map(submission => `${environment.base_url}/submission/${submission.id}`);
     this.barData = {
       labels: this.submissionsBefore.map((_, index) => index + 1),
+      
       datasets: [
         {
           label: '',
@@ -102,6 +108,7 @@ export class ProblemsetDetailComponent implements OnInit {
         },
       ],
     };
+
   }
 
   private async getSubmissionHeadData(){
@@ -128,10 +135,8 @@ export class ProblemsetDetailComponent implements OnInit {
     this.router.navigate(['/problemset-submissions', problemsetId]);
   }
 
-  setCharts(){
-
+  setCharts(textColor: string){
   const minYValue = 20;
-
   this.barOptions = {
     onClick: (event, elements, chart) => {
       if (elements.length > 0) {
@@ -152,7 +157,7 @@ export class ProblemsetDetailComponent implements OnInit {
         align: 'top',
         labels: {
           title: {
-            color: '#000',
+            color: textColor,
             font: {
               weight: 'bold',
               size: 18,

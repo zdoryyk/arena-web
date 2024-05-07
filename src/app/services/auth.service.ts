@@ -26,6 +26,20 @@ export class AuthService {
     }
   }
 
+
+  async validateToken(): Promise<void> {
+    if (isPlatformBrowser(this.platformId)) {
+      const isLoggedIn = !!localStorage.getItem('arena-token');
+      this.isLoggedInSource.next(isLoggedIn);
+      // if (!isLoggedIn) {
+      //   await this.router.navigate(['/login']);
+      //   return Promise.resolve();
+      // }
+    }
+    return Promise.resolve();
+  }
+  
+
   setLoggedIn(isLoggedIn: boolean) {
     if(isLoggedIn == false){
       localStorage.clear();
@@ -37,7 +51,7 @@ export class AuthService {
     if(isPlatformBrowser(this.platformId) && !!localStorage.getItem('arena-token')){
        return true;
     }else{
-      this.router.navigate(['/login']);
+      // this.router.navigate(['/login']);
       return false;
     }
   }

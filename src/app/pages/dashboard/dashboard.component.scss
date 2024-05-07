@@ -2,6 +2,12 @@
   .p-skeleton{
     background: #DBDBDB;
   }
+  table th, table td {
+    padding: 10px;
+    font-size: larger;
+    color: var(--text-color);
+    background: var(--table-background-color);
+  }
 }
 
 .submissions {

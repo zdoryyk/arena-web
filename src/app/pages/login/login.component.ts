@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, PLATFORM_ID, TransferState, makeStateKey } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, Renderer2, TransferState, makeStateKey } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { LoginService } from './login.service';
 import { Subscription, firstValueFrom, take } from 'rxjs';
@@ -10,6 +10,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { ThemeService } from '../../services/theme.service';
 
 
 @Component({
@@ -51,12 +52,21 @@ export class LoginComponent implements OnInit{
     private loginService: LoginService,
     private authService: AuthService,
     private messageService: MessageService,
+    private themeService: ThemeService,
+    private renderer: Renderer2,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     this.platformId = platformId;
   }
 
   async ngOnInit() {
+    if(isPlatformBrowser(this.platformId)){
+      this.themeService.theme$.subscribe(theme => {
+        this.renderer.removeClass(document.body, 'light-theme');
+        this.renderer.removeClass(document.body, 'dark-theme');
+        this.renderer.addClass(document.body, theme);
+      });
+    }
     this.route.queryParams.subscribe(async params => {
       if (params['cas_token']) {
         await this.handleThirdPartyLogin(params['cas_token']);
@@ -91,10 +101,9 @@ export class LoginComponent implements OnInit{
   
         if (isPlatformBrowser(this.platformId)) {
           localStorage.setItem("arena-token", resultToken.token);
-          this.authService.checkIsUserInStorage();
+          await this.authService.checkIsUserInStorage();
         }
         await this.delay(2000);
-        console.log(resultUser.data.attributes);
         if (resultUser.data.attributes['is-lecturer']) {
           this.router.navigate(['/admin-dashboard']);
         } else {

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatExpansionModule, MatExpansionPanel } from '@angular/material/expansion';
@@ -7,6 +7,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { StdoutComponent } from './test-case-components/stdout/stdout.component';
 import { StderrComponent } from './stderr/stderr.component';
 import { NestedTask } from '../../interfaces/submission';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-test-case-test',
@@ -65,6 +66,8 @@ export class TestCaseComponent implements OnInit {
     private cdRef: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
     private matIconRegistery: MatIconRegistry,
+    private themeService: ThemeService, 
+    private renderer: Renderer2
    ){
     this.matIconRegistery.addSvgIcon(
       'timer',
@@ -84,7 +87,11 @@ export class TestCaseComponent implements OnInit {
    }
   
   ngOnInit(): void {
-
+    this.themeService.theme$.subscribe(theme => {
+      this.renderer.removeClass(document.body, 'light-theme');
+      this.renderer.removeClass(document.body, 'dark-theme');
+      this.renderer.addClass(document.body, theme);
+    });
     if(this.submission.children && this.submission.children.length != 0){
       this.isRecursive = true;
     }

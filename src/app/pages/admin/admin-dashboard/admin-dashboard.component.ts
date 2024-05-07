@@ -11,12 +11,13 @@ import { Problemset } from '../../../interfaces/problemset';
 import { CourseCardComponent } from '../../../components/course-card/course-card.component';
 import { ProblemsetCardComponent } from '../../../components/problemset-card/problemset-card.component';
 import { SkeletonModule } from 'primeng/skeleton';
+import { SummaryCardsComponent } from '../../../components/summary-cards/summary-cards.component';
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
   providers:[HttpClient],
-  imports: [RouterModule, DatePipe, CommonModule,MatIconModule,HttpClientModule,CourseCardComponent,ProblemsetCardComponent,SkeletonModule],
+  imports: [RouterModule, DatePipe, CommonModule,MatIconModule,HttpClientModule,CourseCardComponent,ProblemsetCardComponent,SkeletonModule,SummaryCardsComponent],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss'
 })

@@ -63,7 +63,7 @@
 }
 
 .details-heading {
-  color: #060606;
+  color: --text-color;
   font-family: Roboto;
   font-size: 50px;
   font-style: normal;
@@ -170,6 +170,34 @@
   display: block !important;
   height: 400px;
 }
+
+.details-head, .details-info {
+  background-color: var(--detail-bg);
+  border: 1px solid var(--border-color);
+}
+
+.main-title, .single-progress-divide, .detail-list-item span, .details-bar, .tools-item a:hover {
+  color: var(--link-color);
+}
+
+.single-progress-percent {
+  color: var(--progress-bar-color);
+}
+
+.details-bar {
+  background-color: var(--details-bar-bg);
+  color: var(--details-bar-text);
+}
+
+.tools-item a:hover {
+  color: var(--details-tool-hover);
+}
+
+.detail-chart {
+  background-color: var(--chart-bg);
+}
+
+
 
 @media (max-width: 576px) {
   .details-head {

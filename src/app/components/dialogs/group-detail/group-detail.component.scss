@@ -5,7 +5,6 @@
         justify-content: flex-start;
         width: calc(100% - 2rem);
         margin: 0 1rem;
-        
     }
     .flex-item {
         flex: 1;
@@ -99,9 +98,22 @@
 
 }
 
-.card{
+.table-header {
+    background-color: var(--table-header-bg);
+}
+
+
+.table-row {
+    background-color: var(--table-row-bg);
+}
+
+
+.card {
     width: 50rem;
     border-spacing: 10px 10px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border: 1px solid var(--table-border-color);
 }
 
 .flex{

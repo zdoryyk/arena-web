@@ -98,6 +98,83 @@
   background: #a3d985;
 }
 
+:root {
+  --background-color: #fff;
+  --text-color: #333;
+  --link-color: #4d93fd;
+  --progress-bar-color: #f87c3c;
+  --detail-bg: #fff;
+  --details-bar-bg: #4d93fd;
+  --details-bar-text: #fff;
+  --details-tool-hover: #3e77aa;
+  --chart-bg: #ffffff;
+  --progress-color-green-test-case: #8fbe48;
+  --progress-color-orange-test-case: #f57b3b;
+  --progress-color-grey-test-case: #aeaeae;
+  --border-color: rgba(0, 0, 0, 0.25);
+  --header-bg-color: #ffffff;
+  --footer-bg-color: #f8f9fa;
+  --test-bg-color: #aeaeae;
+  --button-border-color: #ccc;
+  --button-hover-bg: #e7e7e7;
+  --button-active-bg: #007bff;
+  --button-active-text-color: #fff;
+  --pre-background: #f0f0f0;
+  --pre-border-color: #ccc;
+  --icon-color: #292D32;
+  --sidebar-color: #fff;
+  --sidebar-border-color: #bbb;
+  --table-background-color: #f7f7f7;
+  --btn-hover-bg-color: #5a6268;
+  --btn-bg-color: #6c757d;
+}
+
+body.dark-theme {
+  --background-color: #212121;
+  --btn-bg-color: #343a40;
+  --btn-hover-bg-color: #23272b;
+  --text-color: #f9f9f9;
+  --link-color: #abd8ff;
+  --progress-bar-color: #c76c34;
+  --detail-bg: #424242;
+  --details-bar-bg: #375a7f;
+  --details-bar-text: #e0e0e0;
+  --details-tool-hover: #669ecb;
+  --chart-bg: #303030;
+  --progress-color-green-test-case: #74A42D;
+  --progress-color-orange-test-case: #f57b3b;
+  --progress-color-grey-test-case: #424242;
+  --border-color: rgba(255, 255, 255, 0.25);
+  --header-bg-color: #333333;
+  --footer-bg-color: #222222;
+  --test-bg-color: #333333;
+  --button-border-color: #555;
+  --button-hover-bg: #444;
+  --button-active-bg: #1a73e8;
+  --button-active-text-color: #fff;
+  --pre-background: #2b2b2b;
+  --pre-border-color: #555;
+  --icon-color: #ffffff;
+  --sidebar-color: #171717;
+  --sidebar-border-color: none;
+  --table-background-color: #333232;
+}
+
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.sidebar {
+  background: var(--sidebar-background);
+}
+
+a {
+  color: var(--link-color);
+}
+
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 

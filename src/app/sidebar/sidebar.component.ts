@@ -1,10 +1,11 @@
-import { Component, Inject, OnInit, PLATFORM_ID, TransferState, booleanAttribute, makeStateKey } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, Renderer2, TransferState, booleanAttribute, makeStateKey } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { isPlatformBrowser } from '@angular/common';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from '../../environments/environment';
+import { ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -21,12 +22,15 @@ export class SidebarComponent implements OnInit {
   isLoggedIn = false;  
   fullName: string = 'none';
   tempName = '';
+  isDarkTheme: boolean = false;
   constructor(
     private router: Router,
     private authService: AuthService,
     @Inject(PLATFORM_ID) platformId: Object,
     private sanitizer: DomSanitizer,
     private matIconRegistery: MatIconRegistry,
+    private themeService: ThemeService,
+    private renderer: Renderer2
     ) {
     this.platformId = platformId;
     this.matIconRegistery.addSvgIcon(
@@ -39,11 +43,21 @@ export class SidebarComponent implements OnInit {
       this.sanitizer
       .bypassSecurityTrustResourceUrl('../assets/icons/logout.svg'),
     );
+    this.matIconRegistery.addSvgIcon(
+      'theme_icon',
+      this.sanitizer.bypassSecurityTrustResourceUrl('../assets/icons/theme_icon.svg')
+    );
   }
 
 
   async ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
+      this.themeService.theme$.subscribe(theme => {
+        this.isDarkTheme = theme === 'dark-theme';
+        this.renderer.removeClass(document.body, 'light-theme');
+        this.renderer.removeClass(document.body, 'dark-theme');
+        this.renderer.addClass(document.body, theme);
+      });
       this.authService.isLoggedIn$.subscribe((loggedIn) => {
         this.isLoggedIn = loggedIn;
       });
@@ -64,7 +78,7 @@ export class SidebarComponent implements OnInit {
   onLogout() {
     this.authService.setLoggedIn(false);
     localStorage.clear();
-    window.location.reload();
+    this.router.navigate(['/login']);
   }
   
   onToggle() {
@@ -74,7 +88,7 @@ export class SidebarComponent implements OnInit {
     const sidebarMain = document.getElementById('sidebar-main') as HTMLElement;
     const sidebarSecondary = document.getElementById('sidebar-secondary') as HTMLElement;
     const listItems = document.querySelectorAll('.list-item');
-  
+    
     if (sidebar.style.left === '-200px') {
         sidebar.style.left = '0';
         btn.style.transform = 'rotate(360deg)';
@@ -93,5 +107,14 @@ export class SidebarComponent implements OnInit {
         listItems.forEach(item => (item as HTMLElement).style.justifyContent = "end");
         this.fullName = '';
     }
+  }
+
+  toggleTheme(){
+    this.isDarkTheme = !this.isDarkTheme;
+    this.themeService.toggleTheme();
+  }
+
+  getCurrentTheme(){
+    return this.themeService.currentTheme;
   }
 }

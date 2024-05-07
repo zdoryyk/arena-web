@@ -3,17 +3,17 @@
   transition: left 0.4s ease;
   position: fixed;
   width: 296px;
-  border-right: 1px solid #bbb;
+  border-right: 1px solid var(--sidebar-border-color);
   padding: 20px 25px;
   background: #fff;
   z-index: 100;
+  background-color: var(--sidebar-color);
+  color: var(--text-color);
 }
 
 #panel-show {
   width: 25px;
   height: 30px;
-  background: url("../../assets/icons/double_arrow.svg") center/contain
-    no-repeat;
   transform: rotate(-180deg);
   border: none;
   margin-bottom: 10px;
@@ -23,6 +23,7 @@
 
 .logo-name {
   font-size: 45px;
+  color: var(--button-active-bg);
 }
 
 .profile {
@@ -59,35 +60,7 @@
   transition: 0.3s;
 }
 
-.list-item.no-hover:hover {
-  color: #292d32;
-  background: #fff;
-}
 
-.list-item.no-hover:not(:nth-of-type(2)):hover path {
-  fill: #292d32;
-}
-
-.list-item.no-hover:nth-of-type(2):hover path {
-  stroke: #292d32;
-}
-
-.list-item:last-of-type {
-  margin-bottom: 0;
-}
-
-.list-item:hover {
-  color: white;
-  background: #292d32;
-}
-
-.list-item:not(:nth-of-type(2)):hover path {
-  fill: white;
-}
-
-.list-item:nth-of-type(2):hover path {
-  stroke: white;
-}
 
 .list-item a {
   display: flex;
@@ -104,11 +77,45 @@
   stroke: #3e91fa;
 }
 
-.img-fluid-logout{
+
+.logout-button{
   width: 35px;
   height: 35px;
   margin-right: 10px;
 }
+
+.toggle-theme-container {
+  padding: 10px 20px;
+}
+
+.toggle-theme-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  background-color: #f0f0f0;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #e0e0e0;
+  }
+
+  mat-icon {
+    margin-right: 8px;
+  }
+}
+
+.icon-display {
+  transform: scale(1.4);
+  color: black;
+}
+
+
 
 @media (min-width: 768px) {
   #sidebar {

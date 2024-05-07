@@ -1,21 +1,12 @@
 <main id="main" class="main">
     <section class="section">
         <div class="container">
-            <div class="cards">
-                <div class="card">
-                    <mat-icon class="custom-icon-size" svgIcon="hat"></mat-icon>
-                    <div class="card-title">{{courses.length}} Courses</div>
-                </div>
-                <div class="card">
-                    <mat-icon class="custom-icon-size" svgIcon="book"></mat-icon> 
-                    <div class="card-title">{{totalSubmissions}} Problemsets</div>
-                </div>
-                <div class="card">
-                    <mat-icon class="custom-icon-size" svgIcon="users"></mat-icon>
-                    <div class="card-title">{{totalGroups}} Groups</div>
-                </div>
-            </div>
-            <h1 class="title">Active Courses</h1>
+            <app-summary-cards
+             [coursesLength]="courses.length"
+             [totalSubmissions]="totalSubmissions"
+             [totalGroups]="totalGroups"
+              ></app-summary-cards>
+            <h1 class="title">Available Courses</h1>
             @if(loading){
                 <div class="skeleton"><p-skeleton width="100%" height="100%" ></p-skeleton></div>
             }@else {
@@ -32,7 +23,7 @@
                     }
                 </div>
             }
-            <h1 class="title">Active Problemsets</h1>
+            <h1 class="title">Available Problemsets</h1>
             @if(loading){
                 <div class="skeleton"><p-skeleton width="100%" height="100%" ></p-skeleton></div>
             }@else {

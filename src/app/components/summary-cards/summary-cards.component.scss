@@ -1,0 +1,45 @@
+.cards {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap; 
+  }
+
+  .courses-button-container {
+    display: flex;
+    align-items: stretch; 
+    justify-content: start;
+    gap: 10px; 
+}
+  
+  .card {
+    border: 1px solid rgb(206 206 206 / 85%);
+    border-radius: 10px;
+    padding: 20px;
+    width: 400px;
+    height: 106px; 
+    text-align: center;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--card-bg-color);
+    color: var(--text-color);
+  }
+    
+    .card-icon {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    
+    .custom-icon-size {
+      width: 50px; 
+      height: 50px;
+      font-size: 24px; 
+    }
+
+    .card-title {
+      font-size: 20px;
+      margin: 0;
+    }

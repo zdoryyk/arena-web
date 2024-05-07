@@ -1,56 +1,53 @@
-/* status-output.component.css */
 .status-header {
-    display: flex;
-    align-items: center;
-    background: #f8f8f8;
-    padding: 10px;
-    font-family: 'Courier New', monospace;
-  }
-  
-  .status-header .label {
-    font-weight: bold;
-    margin-right: 10px;
+  display: flex;
+  align-items: center;
+  background: var(--background-color);
+  padding: 10px;
+  font-family: 'Courier New', monospace;
+}
+
+.status-header .label {
+  font-weight: bold;
+  margin-right: 10px;
+  color: var(--text-color);
+}
+
+.label{
+  font-size: 25px;
+}
+
+.status-header .buttons button {
+  border: 1px solid var(--button-border-color);
+  background: none;
+  padding: 5px 10px;
+  margin-right: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.status-header .buttons button:hover {
+  background-color: var(--button-hover-bg);
+}
+
+.status-header .buttons .active {
+  color: var(--button-active-text-color);
+  background-color: var(--button-active-bg);
+}
+
+pre {
+  background: var(--pre-background);
+  border: 1px solid var(--pre-border-color);
+  padding: 10px;
+  font-size: 20px;
+  color: var(--text-color);
+}
+
+@media (max-width: 768px) {
+  pre{
+      font-size: 10px;
   }
 
   .label{
-    font-size: 25px;
+      font-size: 15px;
   }
-  
-  .status-header .buttons button {
-    border: 1px solid #ccc;
-    background: none;
-    padding: 5px 10px;
-    margin-right: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .status-header .buttons button:hover {
-    background-color: #e7e7e7;
-  }
-  
-  .status-header .buttons .active {
-    color: white;
-    background-color: #007bff;
-  }
-  
-  pre {
-    background: #f0f0f0;
-    border: 1px solid #ccc;
-    padding: 10px;
-    font-size: 20px;
-  }
-  
-
-  @media (max-width: 768px) {
-    pre{
-        font-size: 10px;
-    }
-
-    .label{
-        font-size: 15px;
-    }
-  }
-  
-
-  
+}

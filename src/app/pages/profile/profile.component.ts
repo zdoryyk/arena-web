@@ -7,6 +7,7 @@ import { LoginService } from '../login/login.service';
 import { AuthService } from '../../services/auth.service';
 import { ProfileMangerService } from '../../services/profile-manger.service';
 import { SkeletonModule } from 'primeng/skeleton';
+import { ThemeService } from '../../services/theme.service';
 
 
 
@@ -31,13 +32,17 @@ export class ProfileComponent implements OnInit{
   constructor(
     private transferState: TransferState,
     private authService: AuthService,
-    private profileManager: ProfileMangerService
+    private profileManager: ProfileMangerService,
+    private themeService: ThemeService, 
   ){}
   
 
   
   async ngOnInit() {
-    this.setCharts();
+    this.themeService.theme$.subscribe(async currentTheme => {
+      const textColor = currentTheme === 'dark-theme' ? '#ffffff' : '#000000';
+      this.setCharts(textColor);
+    });
     await this.loadData();  
     await this.updateChartData();
   }
@@ -172,7 +177,7 @@ export class ProfileComponent implements OnInit{
   }
    
 
-  setCharts(){
+  setCharts(textColor: string){
       this.leftDoughnutData = {
         id: 'leftDoughnut',
         labels: ['Last Submission'],
@@ -226,7 +231,7 @@ export class ProfileComponent implements OnInit{
               usePointStyle: true,
               boxWidth: 13,
               boxHeight: 13,
-              color: '#303030',
+              color: textColor,
               font: {
                 size: 25,
               },
