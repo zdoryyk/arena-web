@@ -1,9 +1,10 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, Renderer2 } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { isPlatformBrowser } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-mobile-menu',
@@ -21,12 +22,16 @@ export class MobileMenuComponent implements OnInit{
   isTeacher = false; 
   isLoggedIn = true;  
   fullName: string = 'none';
+  isDarkTheme: boolean = false;
+
   constructor(
     private router: Router,
     private authService: AuthService,
     @Inject(PLATFORM_ID) platformId: Object,
     private sanitizer: DomSanitizer,
     private matIconRegistery: MatIconRegistry,
+    private themeService: ThemeService,
+    private renderer: Renderer2
     ) {
     this.platformId = platformId;
     this.matIconRegistery.addSvgIcon(
@@ -38,6 +43,12 @@ export class MobileMenuComponent implements OnInit{
 
   async ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
+      this.themeService.theme$.subscribe(theme => {
+        this.isDarkTheme = theme === 'dark-theme';
+        this.renderer.removeClass(document.body, 'light-theme');
+        this.renderer.removeClass(document.body, 'dark-theme');
+        this.renderer.addClass(document.body, theme);
+      });
       this.isTeacher = localStorage.getItem('arena-permission') === 'Teacher';
       const user = await this.authService.checkIsUserInStorage();
       if(user && user.attributes['first-name'] && user.attributes['last-name']) {
@@ -65,4 +76,10 @@ export class MobileMenuComponent implements OnInit{
     btnMenu.forEach(btn => btn.classList.toggle('hidden'));
     menu.classList.toggle('menu-hidden');
   }
+
+  toggleTheme(){
+    this.isDarkTheme = !this.isDarkTheme;
+    this.themeService.toggleTheme();
+  }
+  
 }
