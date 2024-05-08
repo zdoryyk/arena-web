@@ -17,11 +17,12 @@ export class EmptyPageComponent implements OnInit {
   ){}
 
   async ngOnInit() {
-    let user = await this.authService.checkIsUserInStorage();
-    if(user == null){
+    let token = this.authService.getToken();
+    if(!token){
       this.router.navigate(['/login']);
       return;
     }
+    let user = await this.authService.checkIsUserInStorage();
     if(user.attributes['is-lecturer']){
       this.router.navigate(['/admin-dashboard']);
       return;

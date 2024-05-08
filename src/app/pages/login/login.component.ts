@@ -60,9 +60,8 @@ export class LoginComponent implements OnInit{
   }
 
   async ngOnInit() {
-    let user = await this.authService.checkIsUserInStorage();
-    const isAuthed = this.authService.isLoggedIn$;
-    if(user && isAuthed){
+    const token = this.authService.getToken();
+    if(token){
       this.router.navigate(['/redirect']);
       return;
     }
