@@ -60,8 +60,10 @@ export class LoginComponent implements OnInit{
   }
 
   async ngOnInit() {
-    if(this.authService.getUser() != null){
+    let user = await this.authService.checkIsUserInStorage();
+    if(user !== null){
       this.router.navigate(['/redirect']);
+      return;
     }
     if(isPlatformBrowser(this.platformId)){
       this.themeService.theme$.subscribe(theme => {
