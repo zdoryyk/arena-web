@@ -60,6 +60,9 @@ export class LoginComponent implements OnInit{
   }
 
   async ngOnInit() {
+    if(this.authService.getUser() != null){
+      this.router.navigate(['/redirect']);
+    }
     if(isPlatformBrowser(this.platformId)){
       this.themeService.theme$.subscribe(theme => {
         this.renderer.removeClass(document.body, 'light-theme');
