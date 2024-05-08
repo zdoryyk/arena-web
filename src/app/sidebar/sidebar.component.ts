@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, PLATFORM_ID, Renderer2, TransferState, booleanAttribute, makeStateKey } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit, PLATFORM_ID, Renderer2, TransferState, booleanAttribute, makeStateKey } from '@angular/core';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { isPlatformBrowser } from '@angular/common';
@@ -14,7 +14,7 @@ import { ThemeService } from '../services/theme.service';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit,AfterViewInit {
   dynamicRouteDashboard: string | any[] = '/dashboard';
   dynamicRouteCoursesOrProblemsets: string | any[] = '/problemsets';
   platformId: Object;
@@ -48,6 +48,9 @@ export class SidebarComponent implements OnInit {
       this.sanitizer.bypassSecurityTrustResourceUrl('../assets/icons/theme_icon.svg')
     );
   }
+  async ngAfterViewInit() {
+  
+  }
 
 
   async ngOnInit() {
@@ -61,16 +64,20 @@ export class SidebarComponent implements OnInit {
       this.authService.isLoggedIn$.subscribe((loggedIn) => {
         this.isLoggedIn = loggedIn;
         if (loggedIn) {
+          this.getUsername();
           this.isTeacher = localStorage.getItem('arena-permission') === 'Teacher';
           this.configureRoutes();
         }
       });
-      const user = await this.authService.checkIsUserInStorage();
-      if(user && user.attributes['first-name'] && user.attributes['last-name']) {
-        this.fullName = `${user.attributes['first-name']} ${user.attributes['last-name']}`;
-        this.tempName = this.fullName;
-        this.fullName = '';
-      }
+    }
+  }
+
+  async getUsername(){
+    let user = await this.authService.checkIsUserInStorage();
+    if(user && user.attributes['first-name'] && user.attributes['last-name']) {
+      this.fullName = `${user.attributes['first-name']} ${user.attributes['last-name']}`;
+      this.tempName = this.fullName;
+      this.fullName = '';
     }
   }
 

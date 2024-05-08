@@ -87,17 +87,12 @@ export class LoginComponent implements OnInit{
       const resultToken = await firstValueFrom(this.loginService.getToken(casToken));
       try {
         const resultUser = await firstValueFrom(this.loginService.getUserMe(resultToken.token));
-        if (resultUser.data.attributes['is-lecturer']) {
-          if (isPlatformBrowser(this.platformId)) {
+        if (isPlatformBrowser(this.platformId)) {
+          if(resultUser.data.attributes['is-lecturer']){
             localStorage.setItem('arena-permission', Permission.Teacher);
-          }
-        } else {
-          if (isPlatformBrowser(this.platformId)) {
+          }else{
             localStorage.setItem('arena-permission', Permission.Student);
           }
-        }
-  
-        if (isPlatformBrowser(this.platformId)) {
           localStorage.setItem("arena-token", resultToken.token);
           await this.authService.checkIsUserInStorage();
         }

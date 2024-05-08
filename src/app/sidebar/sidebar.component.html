@@ -15,7 +15,6 @@
 
         <div class="profile" style="padding-right: 5px;">
             <span class="profile-person  {{fullName.length < 14 ? 'big': fullName.length < 17 ? 'small' : 'smallest'}}">{{fullName}}</span>
-            <!-- <span class="profile-person">{{fullName}}</span> -->
             <a (click)="onLogout()" class="logout-button">
                 <svg width="35px" height="35px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                   <path fill="var(--text-color)" d="M3.651 16.989h17.326c0.553 0 1-0.448 1-1s-0.447-1-1-1h-17.264l3.617-3.617c0.391-0.39 0.391-1.024 0-1.414s-1.024-0.39-1.414 0l-5.907 6.062 5.907 6.063c0.196 0.195 0.451 0.293 0.707 0.293s0.511-0.098 0.707-0.293c0.391-0.39 0.391-1.023 0-1.414zM29.989 0h-17c-1.105 0-2 0.895-2 2v9h2.013v-7.78c0-0.668 0.542-1.21 1.21-1.21h14.523c0.669 0 1.21 0.542 1.21 1.21l0.032 25.572c0 0.668-0.541 1.21-1.21 1.21h-14.553c-0.668 0-1.21-0.542-1.21-1.21v-7.824l-2.013 0.003v9.03c0 1.105 0.895 2 2 2h16.999c1.105 0 2.001-0.895 2.001-2v-28c-0-1.105-0.896-2-2-2z"/>
@@ -110,8 +109,8 @@
         <div id="sidebar-secondary">
             <nav class="col-xlg-2 sidebar">
                 <ul>
-                    <li class="list-item no-hover">
-                        <a [routerLink]="dynamicRouteDashboard" routerLinkActive="active-link">
+                    <li class="list-item no-hover" [routerLink]="dynamicRouteDashboard" >
+                        <a routerLinkActive="active-link">
                             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
                                 <path
                                     d="M10.2082 15.6771H7.2915C3.76234 15.6771 1.82275 13.7375 1.82275 10.2084V7.29169C1.82275 3.76252 3.76234 1.82294 7.2915 1.82294H10.2082C13.7373 1.82294 15.6769 3.76252 15.6769 7.29169V10.2084C15.6769 13.7375 13.7373 15.6771 10.2082 15.6771ZM7.2915 4.01044C4.98734 4.01044 4.01025 4.98752 4.01025 7.29169V10.2084C4.01025 12.5125 4.98734 13.4896 7.2915 13.4896H10.2082C12.5123 13.4896 13.4894 12.5125 13.4894 10.2084V7.29169C13.4894 4.98752 12.5123 4.01044 10.2082 4.01044H7.2915Z"
@@ -129,8 +128,8 @@
                             </svg>
                         </a>
                     </li>
-                    <li class="list-item no-hover">
-                        <a  [routerLink]="dynamicRouteCoursesOrProblemsets"  routerLinkActive="active-link">
+                    <li class="list-item no-hover" [routerLink]="dynamicRouteCoursesOrProblemsets">
+                        <a routerLinkActive="active-link">
                             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35" fill="none">
                                 <path
                                     d="M13.125 18.9583C12.1625 19.4396 11.3605 20.1542 10.7625 21.0438C10.4271 21.5542 10.4271 22.1958 10.7625 22.7063C11.3605 23.5958 12.1625 24.3104 13.125 24.7917"
@@ -147,8 +146,8 @@
                         </a>
                     </li>
                     @if(!isTeacher){
-                        <li class="list-item no-hover">
-                            <a [routerLink]="['/profile']" routerLinkActive="active-link">
+                        <li class="list-item no-hover" [routerLink]="['/profile']">
+                            <a routerLinkActive="active-link">
                                 <svg [attr.fill]="isDarkTheme ? '#ffffff' : '#292D32'" width="35px" height="35px" viewBox="0 0 32 32"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -174,13 +173,13 @@
                         </a>
                     </li>
                     <!-- TODO DELETE THIS IN FUTURE -->
-                    <li class="list-item">
+                    <li class="list-item" (click)="toggleTheme()">
                         <a>
                             @if(isDarkTheme){
-                                <mat-icon style="margin-right: 6px;" (click)="toggleTheme()">brightness_2</mat-icon>
+                                <mat-icon style="margin-right: 6px;">brightness_2</mat-icon>
                                 }
                             @else {
-                                <mat-icon style="margin-right: 6px;" (click)="toggleTheme()">wb_sunny</mat-icon>
+                                <mat-icon style="margin-right: 6px;">wb_sunny</mat-icon>
                             }
                         </a>
                     </li>
