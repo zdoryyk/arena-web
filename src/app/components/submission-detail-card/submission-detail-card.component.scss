@@ -66,19 +66,19 @@
   }
   
   .success {
-    color: #a3d985;
+    color: var(--card-green-color);;
   }
   
   .success-bg {
-    background: #a3d985;
+    background: var(--card-green-color);;
   }
   
   .warning {
-    color: #f87c3c;
+    color: var(--card-orange-color);;
   }
   
   .warning-bg {
-    background: #f87c3c;
+    background: var(--card-orange-color);;
   }
   
   .danger {

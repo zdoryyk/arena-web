@@ -76,6 +76,7 @@
   
     @media (max-width: 575px) {
       .cards {
+        display: none;
         align-items: center;
         gap: 20px; 
       }

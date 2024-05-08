@@ -23,10 +23,11 @@
 
 @media (max-width: 575px) {
   .cards {
-    flex-direction: column;
-    gap: 20px;
+    display: none; 
   }
+
   .card {
+    display: none;
     width: 100%;
     justify-content: center;
     align-items: center;
@@ -86,11 +87,5 @@
   
   @media (min-width: 1400px) {
 
-  }
-
-  @media (max-width: 575px) {
-    .cards {
-      display: none; /* Скрывает блок .cards на устройствах с шириной экрана до 575px */
-    }
   }
   

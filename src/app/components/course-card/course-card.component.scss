@@ -131,11 +131,11 @@
   }
   
   .blue-bg {
-    background: #4D93FD;
+    background: var(--card-blue-color);
   }
   
   .green-bg {
-    background: #8FBE48;
+    background: var(--card-green-color);
   }
   
   .grey-bg {

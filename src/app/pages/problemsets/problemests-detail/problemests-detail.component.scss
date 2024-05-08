@@ -20,7 +20,7 @@
 }
 
 .main-title.success {
-    color: #a3d985; 
+    color: var(--card-green-color);; 
 }
 
 .main-title.danger {
@@ -28,7 +28,7 @@
 }
 
 .main-title.warning {
-    color: #f87c3c; 
+    color: var(--card-orange-color);; 
 }
 
 .main-title.info {
@@ -45,7 +45,7 @@
 }
 
 .single-progress-percent {
-    color: #F87C3C;
+    color: var(--card-orange-color);;
     font-family: Inter;
     font-size: 40px;
     font-weight: 500;
@@ -63,7 +63,7 @@
 }
 
 .single-progress-divide.success {
-    color: #a3d985;
+    color: var(--card-green-color);;
 }
 
 .single-progress-divide.danger {
@@ -71,7 +71,7 @@
 }
 
 .single-progress-divide.warning {
-    color: #f87c3c;
+    color: var(--card-orange-color);
 }
 
 .single-progress-divide.info {
@@ -90,7 +90,7 @@
 }
 
 .single-task-bar.success {
-    background:  #a3d985;;
+    background:  var(--card-green-color);
 }
 
 .single-task-bar.danger {
@@ -98,7 +98,7 @@
 }
 
 .single-task-bar.warning {
-    background: #f87c3c;
+    background: var(--card-orange-color);
 }
 
 .single-task-bar.info {

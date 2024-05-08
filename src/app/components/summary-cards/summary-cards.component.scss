@@ -43,3 +43,10 @@
       font-size: 20px;
       margin: 0;
     }
+
+
+@media (max-width: 575px) {
+  .cards {
+    display: none; 
+  }
+}

@@ -115,6 +115,28 @@
   color: black;
 }
 
+.list-item:hover {
+  background-color: #f0f0f0; /* светло-серый цвет фона при наведении */
+  color: #333; /* темно-серый текст */
+}
+
+/* Стиль для темной темы */
+.list-item:hover {
+  background-color: #2c2c2c; /* темно-серый цвет фона для темной темы при наведении */
+  color: #ddd; /* светлый текст для темной темы */
+}
+
+/* Адаптация стилей в зависимости от темы */
+:host-context(.dark-theme) .list-item:hover {
+  background-color: #2c2c2c; /* темный фон при наведении для темной темы */
+  color: #ddd; /* светлый текст для темной темы */
+}
+
+:host-context(.light-theme) .list-item:hover {
+  background-color: #f0f0f0; /* светлый фон при наведении для светлой темы */
+  color: #333; /* темный текст для светлой темы */
+}
+
 
 
 @media (min-width: 768px) {

@@ -60,18 +60,27 @@ export class SidebarComponent implements OnInit {
       });
       this.authService.isLoggedIn$.subscribe((loggedIn) => {
         this.isLoggedIn = loggedIn;
+        if (loggedIn) {
+          this.isTeacher = localStorage.getItem('arena-permission') === 'Teacher';
+          this.configureRoutes();
+        }
       });
-      this.isTeacher = localStorage.getItem('arena-permission') === 'Teacher';
       const user = await this.authService.checkIsUserInStorage();
       if(user && user.attributes['first-name'] && user.attributes['last-name']) {
         this.fullName = `${user.attributes['first-name']} ${user.attributes['last-name']}`;
         this.tempName = this.fullName;
         this.fullName = '';
       }
-      if(this.isTeacher){
-        this.dynamicRouteDashboard =  '/admin-dashboard';
-        this.dynamicRouteCoursesOrProblemsets = '/admin-courses';
-      }
+    }
+  }
+
+  configureRoutes() {
+    if(this.isTeacher){
+      this.dynamicRouteDashboard = '/admin-dashboard';
+      this.dynamicRouteCoursesOrProblemsets = '/admin-courses';
+    } else {
+      this.dynamicRouteDashboard = '/dashboard';
+      this.dynamicRouteCoursesOrProblemsets = '/problemsets';
     }
   }
 
