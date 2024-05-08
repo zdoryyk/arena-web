@@ -104,12 +104,12 @@ export class LoginComponent implements OnInit{
           await this.authService.checkIsUserInStorage();
         }
         await this.delay(2000);
+        this.authService.setLoggedIn(true);
         if (resultUser.data.attributes['is-lecturer']) {
           this.router.navigate(['/admin-dashboard']);
         } else {
           this.router.navigate(['/dashboard']);
         }
-        this.authService.setLoggedIn(true);
       } catch (error) {
         this.handleApiError(error);
       }

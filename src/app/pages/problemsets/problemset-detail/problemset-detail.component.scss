@@ -176,8 +176,12 @@
   border: 1px solid var(--border-color);
 }
 
-.main-title, .single-progress-divide, .detail-list-item span, .details-bar, .tools-item a:hover {
+.main-title, .single-progress-divide, .details-bar, .tools-item a:hover {
   color: var(--link-color);
+}
+
+.detail-list-item span{
+  color: var(--text-color);
 }
 
 .single-progress-percent {
