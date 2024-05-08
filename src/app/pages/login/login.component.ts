@@ -61,7 +61,8 @@ export class LoginComponent implements OnInit{
 
   async ngOnInit() {
     let user = await this.authService.checkIsUserInStorage();
-    if(user !== null){
+    const isAuthed = this.authService.isLoggedIn$;
+    if(user && isAuthed){
       this.router.navigate(['/redirect']);
       return;
     }
@@ -77,13 +78,6 @@ export class LoginComponent implements OnInit{
         await this.handleThirdPartyLogin(params['cas_token']);
       }
     });
-  }
-
-  async checkIsUserLoggedIn() {
-    let user = await this.authService.checkIsUserInStorage();
-    if (user) {
-      this.router.navigate(['/dashboard']);
-    }
   }
 
   private async handleThirdPartyLogin(casTokenValue: string) {

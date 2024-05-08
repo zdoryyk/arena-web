@@ -41,7 +41,7 @@ export class AuthService {
   
 
   setLoggedIn(isLoggedIn: boolean) {
-    if(isLoggedIn == false){
+    if(!isLoggedIn){
       localStorage.clear();
     }
     this.isLoggedInSource.next(isLoggedIn);
