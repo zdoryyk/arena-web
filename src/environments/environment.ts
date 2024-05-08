@@ -7,6 +7,7 @@
 //   api_url: "https://arena.kpi.fei.tuke.sk/api/v1",
 //   base_url: "http://localhost:4500"
 // };
+
 export const environment = {
   production: true,
   api_url: "https://arena.kpi.fei.tuke.sk/api/v1",

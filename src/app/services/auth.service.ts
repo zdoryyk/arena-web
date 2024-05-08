@@ -51,7 +51,6 @@ export class AuthService {
     if(isPlatformBrowser(this.platformId) && !!localStorage.getItem('arena-token')){
        return true;
     }else{
-      // this.router.navigate(['/login']);
       return false;
     }
   }
@@ -59,7 +58,7 @@ export class AuthService {
   isTeacher(): boolean{
     const isTeacher = this.getPermission() === Permission.Teacher;
     if(!isTeacher){
-      this.router.navigate['dashboard'];
+      this.router.navigate['/redirect'];
       return false;
     }
     return true;

@@ -11,7 +11,7 @@ import { NewProblemsetComponent } from '../../../components/dialogs/new-problems
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { ConfirmDialogComponent } from '../../../components/dialogs/confirm-dialog/confirm-dialog.component';
 import { ChartModule } from 'primeng/chart';
-import { GroupDetailComponent } from '../../../components/dialogs/group-detail/group-detail.component';
+import { GroupDetailComponent } from '../../../components/group-detail/group-detail.component';
 import { Course } from '../../../interfaces/course';
 import { Subscription } from 'rxjs';
 import { CourseDetailService } from '../../../services/course-detail.service';
