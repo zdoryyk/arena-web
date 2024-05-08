@@ -21,6 +21,7 @@
   background: none;
   padding: 5px 10px;
   margin-right: 5px;
+  color: var(--text-color);
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -30,7 +31,7 @@
 }
 
 .status-header .buttons .active {
-  color: var(--button-active-text-color);
+  color: var(--text-color);
   background-color: var(--button-active-bg);
 }
 
