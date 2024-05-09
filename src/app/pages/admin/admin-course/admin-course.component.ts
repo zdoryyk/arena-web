@@ -95,7 +95,8 @@ export class AdminCourseComponent implements OnInit{
       next: ({ course, problemsets, groups }) => {
         this.course = course.data;
         this.problemsets = problemsets.data;
-        this.groups = this.sortLecturesGroups(groups.data);
+        // this.groups = this.sortLecturesGroups(groups.data);
+        this.groups = groups.data;
         this.loading = false;  
         this.cd.detectChanges();
       },
@@ -111,8 +112,8 @@ export class AdminCourseComponent implements OnInit{
 
   sortLecturesGroups(groups: Group[]): Group[] {
     const lecturesGroupIds = this.user.relationships['lecturers-groups'].data.map(group => group.id);
-    let filteredGroups = groups.filter(group => lecturesGroupIds.includes(group.id));
-    let sortedGroups = filteredGroups.sort((a, b) => a.id.localeCompare(b.id));
+    // let filteredGroups = groups.filter(group => lecturesGroupIds.includes(group.id));
+    let sortedGroups = lecturesGroupIds.sort((a, b) => a.id.localeCompare(b.id));
     return sortedGroups;
   }
   
