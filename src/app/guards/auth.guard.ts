@@ -6,10 +6,5 @@ export const AuthGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ) => {
-  const isAuthed = inject(AuthService).isAuthed();
-  const router = inject(Router);
-  // if(!isAuthed){
-  //   router.navigate(['/redirect']);
-  // }
   return inject(AuthService).isAuthed();
 };

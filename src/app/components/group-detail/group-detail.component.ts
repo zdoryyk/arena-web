@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, HostListener, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Subscription, firstValueFrom, forkJoin } from 'rxjs';
+import { Subscription, delay, firstValueFrom, forkJoin } from 'rxjs';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { Table, TableModule } from 'primeng/table';
@@ -75,6 +75,7 @@ export class GroupDetailComponent implements OnInit,OnDestroy {
   private loadingSubscription: Subscription = new Subscription(); 
   private subscription: Subscription = new Subscription();
   students: ExtendedUser[] = []; 
+  selectedGroupsControl = new FormControl();
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -156,7 +157,7 @@ export class GroupDetailComponent implements OnInit,OnDestroy {
           forkJoin({
             userData: this.courseService.getUserById(student.id),
             problemsetsResponse: this.problemsetService.getUserProblemsetsByUserId(student.id)
-          }).subscribe(async ({userData, problemsetsResponse}) => {
+          }).pipe(delay(300)).subscribe(async ({userData, problemsetsResponse}) => {
             const sorted = await this.sortUsersProblemsets(problemsetsResponse.data);
             sorted.forEach(async userProblemset => {
               if (!this.isActive) {
@@ -180,10 +181,12 @@ export class GroupDetailComponent implements OnInit,OnDestroy {
                   data: userData.data
                 };
                 if (this.selectedGroups.some(g => g.name === trimmedGroupName)) {
-                  if(this.selectedProblemsets.length == 0 || this.selectedProblemsets.some(prob => prob.title === problemsetPreview.title)){
-                    this.students.push(studentNew);
-                  }
-                  this.studentsCopy.push(studentNew);
+                  setTimeout(() => {
+                    if(this.selectedProblemsets.length == 0 || this.selectedProblemsets.some(prob => prob.title === problemsetPreview.title)){
+                      this.students.push(studentNew);
+                    }
+                    this.studentsCopy.push(studentNew);
+                  },300)
                 }
               });
             });

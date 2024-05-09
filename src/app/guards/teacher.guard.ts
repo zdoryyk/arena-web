@@ -11,6 +11,6 @@ export const TeacherGuard: CanActivateFn = (route, state) => {
     if(!isTeacher){
       router.navigate(['/redirect']);
     }
-      return obs.next(isTeacher);
+    return obs.next(isTeacher);
     });
 };
