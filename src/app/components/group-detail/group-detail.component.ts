@@ -93,20 +93,21 @@ export class GroupDetailComponent implements OnInit,OnDestroy {
   ) {}
 
 
-    async ngOnInit() {
-      this.groupOptions = this.groups.map(group => ({
-        name: this.problemsetService.trimGroupTitle(group.attributes.name),
-        data: group,
-        isUsed: false,
-      }));
-      this.problemsetOptions = this.problemsets.map(problemset => ({
-        data: problemset,
-        title: this.problemsetService.trimTitleFromLastYearOrColon(problemset.attributes.title)
-      }));
-      if(window.innerWidth <= 600){
-        this.isMobile = true;
-      }
-      this.cd.markForCheck();
+  async ngOnInit() {
+    this.groupOptions = this.groups.map(group => ({
+      name: this.problemsetService.trimGroupTitle(group.attributes.name),
+      data: group,
+      isUsed: false,
+    }));
+    this.problemsetOptions = this.problemsets.map(problemset => ({
+      data: problemset,
+      title: this.problemsetService.trimTitleFromLastYearOrColon(problemset.attributes.title)
+    }));
+    if(window.innerWidth <= 600){
+      this.isMobile = true;
+    }
+    // this.cd.markForCheck();
+    this.cd.detectChanges();
 
   }
 
@@ -188,6 +189,7 @@ export class GroupDetailComponent implements OnInit,OnDestroy {
                     this.studentsCopy.push(studentNew);
                   },300)
                 }
+                this.cd.detectChanges();
               });
             });
           })

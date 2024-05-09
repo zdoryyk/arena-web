@@ -66,7 +66,6 @@ export class AdminCourseComponent implements OnInit{
 
 
   async ngOnInit() {
-    
     await this.loadUserData();
     this.course = {
       type: '',
@@ -90,6 +89,7 @@ export class AdminCourseComponent implements OnInit{
     };
     this.setChart();
     this.course.id = this.activeRoute.snapshot.paramMap.get('id');
+    this.loading = true; 
     this.courseSubscription = this.courseMagenerService.getCourseDetailsWithExtras(this.course.id).subscribe({
       next: ({ course, problemsets, groups }) => {
         this.course = course.data;
@@ -99,10 +99,11 @@ export class AdminCourseComponent implements OnInit{
       },
       error: (error) => {
         console.error('Error fetching course details with extras', error);
-        this.loading = false; 
+        this.loading = false;
       }
     });
-  }
+}
+
 
 
 
@@ -112,6 +113,7 @@ export class AdminCourseComponent implements OnInit{
     let sortedGroups = filteredGroups.sort((a, b) => a.id.localeCompare(b.id));
     return sortedGroups;
   }
+  
   
 
 

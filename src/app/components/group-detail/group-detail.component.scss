@@ -124,7 +124,7 @@
     }
 
     .p-datatable .p-datatable-thead > tr > th {
-        background-color: var(--header-bg-color);
+        background-color: var(--table-background-color);
     }
 
     .p-datatable .p-datatable-tbody > tr > td {
@@ -132,7 +132,7 @@
     }
 
     .p-datatable .p-datatable-tbody > tr:hover > td {
-        background-color: var(--student-data-hover);
+        background-color: var(--table-background-color);
     }
 
     .p-datatable .p-datatable-tbody > tr.p-highlight {
