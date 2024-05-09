@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
@@ -56,6 +56,7 @@ export class AdminCourseComponent implements OnInit{
     private matIconRegistery: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     public dialog: MatDialog,
+    private cd: ChangeDetectorRef
   ){
     this.matIconRegistery.addSvgIcon(
       'add_problemset',
@@ -66,6 +67,7 @@ export class AdminCourseComponent implements OnInit{
 
 
   async ngOnInit() {
+    
     await this.loadUserData();
     this.course = {
       type: '',
@@ -89,21 +91,21 @@ export class AdminCourseComponent implements OnInit{
     };
     this.setChart();
     this.course.id = this.activeRoute.snapshot.paramMap.get('id');
-    this.loading = true; 
     this.courseSubscription = this.courseMagenerService.getCourseDetailsWithExtras(this.course.id).subscribe({
       next: ({ course, problemsets, groups }) => {
         this.course = course.data;
         this.problemsets = problemsets.data;
         this.groups = this.sortLecturesGroups(groups.data);
         this.loading = false;  
+        this.cd.detectChanges();
       },
       error: (error) => {
         console.error('Error fetching course details with extras', error);
-        this.loading = false;
+        this.loading = false; 
       }
     });
-}
-
+    this.cd.detectChanges();
+  }
 
 
 
@@ -113,7 +115,6 @@ export class AdminCourseComponent implements OnInit{
     let sortedGroups = filteredGroups.sort((a, b) => a.id.localeCompare(b.id));
     return sortedGroups;
   }
-  
   
 
 

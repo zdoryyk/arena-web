@@ -132,6 +132,7 @@ export class GroupDetailComponent implements OnInit,OnDestroy {
         this.students = [];
         this.loadingSubscription.unsubscribe();
     }
+    this.cd.detectChanges();
   }
 
   filterCurrentStudents() {
@@ -173,7 +174,6 @@ export class GroupDetailComponent implements OnInit,OnDestroy {
                   score: this.formatEvaluationScore(latestSubmissionData.data.attributes.score),
                   id: latestSubmissionData.data.id,
                 };
-                
                 let trimmedGroupName = this.problemsetService.trimGroupTitle(group.attributes.name);
                 let studentNew: ExtendedUser = {
                   groupName: trimmedGroupName,
