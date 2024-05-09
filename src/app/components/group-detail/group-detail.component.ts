@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, HostListener, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Subscription, delay, firstValueFrom, forkJoin } from 'rxjs';
+import { Subscription, concatMap, delay, firstValueFrom, forkJoin, from } from 'rxjs';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { Table, TableModule } from 'primeng/table';
@@ -116,27 +116,26 @@ export class GroupDetailComponent implements OnInit,OnDestroy {
 
   async onGroupSelectionChange() {
     this.groupOptions.forEach(group => {
-      if (!this.selectedGroups.some(selectedGroup => selectedGroup.data.id === group.data.id)) {
-        group.isUsed = false;
-      }
+        group.isUsed = this.selectedGroups.some(selectedGroup => selectedGroup.data.id === group.data.id);
     });
     this.filterCurrentStudents();
+
     if (this.selectedGroups.length > 0) {
-      this.loadingSubscription.unsubscribe();
-      this.loadingSubscription = new Subscription();
-        this.selectedGroups.forEach(async groupOption => {
-            const group = this.groupOptions.find(g => g.data.id === groupOption.data.id);
-            if (group && !group.isUsed) {
-                await this.loadGroupDetails(group.data);
-                group.isUsed = true;
+        // this.loadingSubscription.unsubscribe();
+        this.loadingSubscription = new Subscription();
+
+        const loadGroups$ = from(this.selectedGroups)
+            .pipe(concatMap(groupOption => this.loadGroupDetails(groupOption.data)));
+
+        this.loadingSubscription.add(loadGroups$.subscribe({
+            complete: () => {
+                this.cd.detectChanges(); 
             }
-        });
+        }));
     } else {
         this.students = [];
-        this.loadingSubscription.unsubscribe();
     }
-    this.cd.detectChanges();
-  }
+}
 
   filterCurrentStudents() {
     const selectedGroupNames = new Set(this.selectedGroups.map(group => this.problemsetService.trimGroupTitle(group.data.attributes.name)));
@@ -156,49 +155,61 @@ export class GroupDetailComponent implements OnInit,OnDestroy {
 
 
   async loadGroupDetails(group: Group) {
-      let students = group.relationships.students.data;
-      for (const student of students) {
+    let students = group.relationships.students.data;
+    for (const student of students) {
         this.loadingSubscription.add(
-          forkJoin({
-            userData: this.courseService.getUserById(student.id),
-            problemsetsResponse: this.problemsetService.getUserProblemsetsByUserId(student.id)
-          }).pipe(delay(300)).subscribe(async ({userData, problemsetsResponse}) => {
-            const sorted = await this.sortUsersProblemsets(problemsetsResponse.data);
-            sorted.forEach(async userProblemset => {
-              if (!this.isActive) {
-                return;
-              }
-              forkJoin({
-                problemsetData: this.problemsetService.getProblemsetDetailById(userProblemset.relationships.problemset.data.id),
-                latestSubmissionData: this.courseService.getLatestSubmissionById(userProblemset.relationships['latest-submission'].data.id)
-              }).subscribe(({problemsetData, latestSubmissionData}) => {
-                const problemsetPreview: ProblemsetPreview = {
-                  title: this.problemsetService.trimTitleFromLastYearOrColon(`${problemsetData.data.attributes.title}`),
-                  score: this.formatEvaluationScore(latestSubmissionData.data.attributes.score),
-                  id: latestSubmissionData.data.id,
-                };
-                let trimmedGroupName = this.problemsetService.trimGroupTitle(group.attributes.name);
-                let studentNew: ExtendedUser = {
-                  groupName: trimmedGroupName,
-                  fullName: `${userData.data.attributes['first-name']} ${userData.data.attributes['last-name']}`,
-                  problemSet: problemsetPreview,
-                  data: userData.data
-                };
-                if (this.selectedGroups.some(g => g.name === trimmedGroupName)) {
-                  setTimeout(() => {
-                    if(this.selectedProblemsets.length == 0 || this.selectedProblemsets.some(prob => prob.title === problemsetPreview.title)){
-                      this.students.push(studentNew);
+            forkJoin({
+                userData: this.courseService.getUserById(student.id),
+                problemsetsResponse: this.problemsetService.getUserProblemsetsByUserId(student.id)
+            }).pipe(delay(300)).subscribe(async ({userData, problemsetsResponse}) => {
+                const sorted = await this.sortUsersProblemsets(problemsetsResponse.data);
+                sorted.forEach(async userProblemset => {
+                    if (!this.isActive) {
+                        return;
                     }
-                    this.studentsCopy.push(studentNew);
-                  },300)
-                }
-                this.cd.detectChanges();
-              });
-            });
-          })
+                    forkJoin({
+                        problemsetData: this.problemsetService.getProblemsetDetailById(userProblemset.relationships.problemset.data.id),
+                        latestSubmissionData: this.courseService.getLatestSubmissionById(userProblemset.relationships['latest-submission'].data.id)
+                    }).subscribe(({problemsetData, latestSubmissionData}) => {
+                        const problemsetPreview: ProblemsetPreview = {
+                            title: this.problemsetService.trimTitleFromLastYearOrColon(`${problemsetData.data.attributes.title}`),
+                            score: this.formatEvaluationScore(latestSubmissionData.data.attributes.score),
+                            id: latestSubmissionData.data.id,
+                        };
+                        let trimmedGroupName = this.problemsetService.trimGroupTitle(group.attributes.name);
+                        let studentNew: ExtendedUser = {
+                            groupName: trimmedGroupName,
+                            fullName: `${userData.data.attributes['first-name']} ${userData.data.attributes['last-name']}`,
+                            problemSet: problemsetPreview,
+                            data: userData.data
+                        };
+                        // Check for duplicates before adding the student
+                        if (!this.studentAlreadyAdded(studentNew)) {
+                            if (this.selectedGroups.some(g => g.name === trimmedGroupName)) {
+                                setTimeout(() => {
+                                    if(this.selectedProblemsets.length == 0 || this.selectedProblemsets.some(prob => prob.title === problemsetPreview.title)){
+                                        this.students.push(studentNew);
+                                    }
+                                    this.studentsCopy.push(studentNew);
+                                },300)
+                            }
+                        }
+                        this.cd.detectChanges();
+                    });
+                });
+            })
         );
     }
-  }
+}
+
+// Helper function to check if a student has already been added
+studentAlreadyAdded(newStudent: ExtendedUser): boolean {
+    return this.students.some(student =>
+        student.data.id === newStudent.data.id &&
+        student.problemSet.id === newStudent.problemSet.id
+    );
+}
+
   
 
   async sortUsersProblemsets(userProblemsets: any[]) {
