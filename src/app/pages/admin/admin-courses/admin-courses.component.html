@@ -10,7 +10,7 @@
                 @if(loading || courses.length <= 0){
                     <h1 class="title">No Available Courses</h1>
                 }
-                @if(courses.length > 0){
+                @if(!loading && courses.length > 0){
                     <h1 class="title">Available Courses</h1>
                 }
                 <button class="courses-button" (click)="openNewCourseDialog()">

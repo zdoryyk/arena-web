@@ -9,7 +9,7 @@
             @if(loading || courses.length <= 0){
                 <h1 class="title">No Available Courses</h1>
             }
-            @if(courses.length > 0){
+            @if(!loading && courses.length > 0){
                 <h1 class="title">Available Courses</h1>
             }
             @if(loading){
@@ -31,7 +31,7 @@
             @if(loading || problemsets.length <= 0){
                 <h1 class="title">No Available Problemsets</h1>
             }
-            @if(problemsets.length > 0){
+            @if(!loading && problemsets.length > 0){
                 <h1 class="title">Available Problemsets</h1>
             }
             @if(loading){
