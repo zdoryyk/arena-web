@@ -95,8 +95,8 @@ export class AdminCourseComponent implements OnInit{
       next: ({ course, problemsets, groups }) => {
         this.course = course.data;
         this.problemsets = problemsets.data;
-        // this.groups = this.sortLecturesGroups(groups.data);
-        this.groups = groups.data;
+        this.groups = this.sortLecturesGroups(groups.data);
+        // this.groups = groups.data;
         this.loading = false;  
         this.cd.detectChanges();
       },
@@ -108,14 +108,35 @@ export class AdminCourseComponent implements OnInit{
     this.cd.detectChanges();
   }
 
-
-
+  //TODO -> NOW ITS ONLY SORT ON THE TOP TEACHER'S GROUPS
   sortLecturesGroups(groups: Group[]): Group[] {
     const lecturesGroupIds = this.user.relationships['lecturers-groups'].data.map(group => group.id);
-    // let filteredGroups = groups.filter(group => lecturesGroupIds.includes(group.id));
-    let sortedGroups = lecturesGroupIds.sort((a, b) => a.id.localeCompare(b.id));
+    let sortedGroups = groups.sort((a, b) => {
+        const aIsLecturerGroup = lecturesGroupIds.includes(a.id);
+        const bIsLecturerGroup = lecturesGroupIds.includes(b.id);
+
+        if (aIsLecturerGroup && !bIsLecturerGroup) {
+            return -1; 
+        } else if (!aIsLecturerGroup && bIsLecturerGroup) {
+            return 1; 
+        } else if (!aIsLecturerGroup && !bIsLecturerGroup) {
+            return a.attributes.name.localeCompare(b.attributes.name);
+        } else {
+            return a.id.localeCompare(b.id);
+        }
+    });
     return sortedGroups;
   }
+
+
+
+  // TODO IF WILL ISLECTURER AND ISTEACHER APPEARS 
+  // sortLecturesGroups(groups: Group[]): Group[] {
+  //   const lecturesGroupIds = this.user.relationships['lecturers-groups'].data.map(group => group.id);
+  //   let filteredGroups = groups.filter(group => lecturesGroupIds.includes(group.id));
+  //   let sortedGroups = filteredGroups.sort((a, b) => a.id.localeCompare(b.id));
+  //   return sortedGroups;
+  // }
   
 
 

@@ -14,6 +14,7 @@ import { MatButton } from '@angular/material/button';
 import { Router, RouterModule } from '@angular/router';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { log } from 'console';
+import { Skeleton, SkeletonModule } from 'primeng/skeleton';
 
 
 interface ProblemsetPreview {
@@ -55,6 +56,7 @@ interface ProblemsetOption {
     RouterModule,
     MultiSelectModule,
     FormsModule,
+    SkeletonModule,
   ],
   templateUrl: './group-detail.component.html',
   styleUrl: './group-detail.component.scss'
@@ -76,6 +78,7 @@ export class GroupDetailComponent implements OnInit,OnDestroy {
   private subscription: Subscription = new Subscription();
   students: ExtendedUser[] = []; 
   selectedGroupsControl = new FormControl();
+  skeletons: string[] = ['1','2','3','4','5','6','7','8','9','0'];
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {

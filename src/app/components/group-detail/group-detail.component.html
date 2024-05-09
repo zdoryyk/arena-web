@@ -1,13 +1,13 @@
 
-<div class="card">
-    <p-table 
+<div class="card">   
+    @if(students.length > 0){
+        <p-table 
     #dt1
     [value]="students"
     [scrollable]="true"
     [scrollHeight]="isMobile ? '400px' : '700px'"
     [globalFilterFields]="['groupName', 'data.attributes.username', 'fullName', 'problemSet.title']"
     >
-
     <ng-template pTemplate="caption">
         <div class="flex caption-container">
             <div class="flex-item">
@@ -16,7 +16,6 @@
             <div class="flex-item">
                 <p-multiSelect [maxSelectedLabels]="1"  [options]="problemsetOptions" [(ngModel)]="selectedProblemsets" optionLabel="title" placeholder="Select Problemsets" (onChange)="onProblemsetSelectionChange()"></p-multiSelect>
             </div>
-        
             <span class="search-container">
                 <i class="pi pi-search"></i>
                 <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
@@ -32,8 +31,8 @@
                 <th pSortableColumn="fullName"                 class="sort-column">Full name <p-sortIcon field="fullName"></p-sortIcon></th>
                 <th pSortableColumn="problemSet.title"         class="sort-column">Problemset <p-sortIcon field="problemSet.title"></p-sortIcon></th>
                 <th pSortableColumn="problemSet.score"         class="sort-column">Score <p-sortIcon field="problemSet.score"></p-sortIcon></th>
-                <th style="width: 5rem"></th></tr>
-
+                <th style="width: 5rem"></th>
+            </tr>
         </ng-template>
         <ng-template pTemplate="body" let-student>
             <tr>
@@ -46,8 +45,65 @@
                 <td class="sort-td">{{student.problemSet.score}}</td>
                 <td>
                     <button  mat-stroked-button color="basic" [routerLink]="['/submission/',student.problemSet.id]">Check</button>
-                </td>
-             </tr>
+                </td>   
+            </tr>
         </ng-template>
     </p-table>
+    }
+    
+
+    @if(students.length == 0){
+        <p-table 
+    #dt1
+    [value]="skeletons"
+    [scrollable]="true"
+    [scrollHeight]="isMobile ? '400px' : '700px'"
+    [globalFilterFields]="['groupName', 'data.attributes.username', 'fullName', 'problemSet.title']"
+    >
+    <ng-template pTemplate="caption">
+        <div class="flex caption-container">
+            <div class="flex-item">
+                <p-multiSelect [maxSelectedLabels]="1"  [options]="groupOptions" [(ngModel)]="selectedGroups" optionLabel="name" placeholder="Select Groups" (onChange)="onGroupSelectionChange()"></p-multiSelect>
+            </div>
+            <div class="flex-item">
+                <p-multiSelect [maxSelectedLabels]="1"  [options]="problemsetOptions" [(ngModel)]="selectedProblemsets" optionLabel="title" placeholder="Select Problemsets" (onChange)="onProblemsetSelectionChange()"></p-multiSelect>
+            </div>
+            <span class="search-container">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+            </span>
+        </div>  
+    </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                @if(!isMobile){
+                    <th pSortableColumn="" class="sort-column" >Group <p-sortIcon field=""></p-sortIcon></th>
+                }
+                <th pSortableColumn="" class="sort-column">Username <p-sortIcon  field=""></p-sortIcon></th>
+                <th pSortableColumn="" class="sort-column">Full name <p-sortIcon field=""></p-sortIcon></th>
+                <th pSortableColumn="" class="sort-column">Problemset <p-sortIcon field=""></p-sortIcon></th>
+                <th pSortableColumn="" class="sort-column">Score <p-sortIcon field=""></p-sortIcon></th>
+                <th style="width: 5rem"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-skeletons>
+            <tr>
+                @if(!isMobile){
+                    <td class="sort-td"><p-skeleton></p-skeleton></td>
+                }
+                <td class="sort-td"><p-skeleton></p-skeleton></td>
+                <td class="sort-td"><p-skeleton></p-skeleton></td>
+                <td class="sort-td"><p-skeleton></p-skeleton></td>
+                <td class="sort-td"><p-skeleton></p-skeleton></td>
+                <td class="sort-td"><p-skeleton></p-skeleton></td>
+            </tr>
+        </ng-template>
+        
+    </p-table>
+    }
 </div>
+
+
+
+
+
