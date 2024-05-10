@@ -93,6 +93,7 @@ export class SidebarComponent implements OnInit,AfterViewInit {
 
   async onLogout() {
     this.authService.setLoggedIn(false);
+    this.authService.logout();
     localStorage.clear(); 
     this.router.navigate(['/login']);
   }

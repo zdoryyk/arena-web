@@ -183,7 +183,6 @@ export class GroupDetailComponent implements OnInit,OnDestroy {
                             problemSet: problemsetPreview,
                             data: userData.data
                         };
-                        // Check for duplicates before adding the student
                         if (!this.studentAlreadyAdded(studentNew)) {
                             if (this.selectedGroups.some(g => g.name === trimmedGroupName)) {
                                 setTimeout(() => {
@@ -202,7 +201,6 @@ export class GroupDetailComponent implements OnInit,OnDestroy {
     }
 }
 
-// Helper function to check if a student has already been added
 studentAlreadyAdded(newStudent: ExtendedUser): boolean {
     return this.students.some(student =>
         student.data.id === newStudent.data.id &&

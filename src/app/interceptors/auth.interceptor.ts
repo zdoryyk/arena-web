@@ -9,6 +9,7 @@ import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { Permission } from '../interfaces/permissions';
 
 export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
@@ -24,12 +25,12 @@ export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
        }
        return event;
      }),
-     catchError((error: HttpErrorResponse) => {
-       if (error.status === 403) {
+     catchError( (error: HttpErrorResponse) => {
+       const isTeacher = authService.getPermission() === Permission.Teacher;
+       if (error.status === 403 && !isTeacher) {
         authService.setLoggedIn(false);
         localStorage.clear();
         router.navigate(['login']);
-        window.location.reload();
        }
        return throwError(() => error);
      })

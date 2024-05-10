@@ -132,6 +132,18 @@ export class AuthService {
     });
   }
 
+  checkToken(): Observable<any> {
+    var body = {
+      user_token: localStorage.getItem("token")
+    };
+    return this.http.post( environment.api_url + "/checktoken", body, {
+      headers: {
+        "Authorization": "servicetoken " + localStorage.getItem("token")
+      }
+    });
+  }
+
+
   async delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }

@@ -56,7 +56,7 @@ export class AdminCourseComponent implements OnInit{
     private matIconRegistery: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     public dialog: MatDialog,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
   ){
     this.matIconRegistery.addSvgIcon(
       'add_problemset',
