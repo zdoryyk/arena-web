@@ -26,8 +26,8 @@ export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
        return event;
      }),
      catchError( (error: HttpErrorResponse) => {
-       const isTeacher = authService.getPermission() === Permission.Teacher;
-       if (error.status === 403 && !isTeacher) {
+      //  const isTeacher = authService.getPermission() === Permission.Teacher;
+       if (error.status === 403) {
         authService.setLoggedIn(false);
         localStorage.clear();
         router.navigate(['login']);

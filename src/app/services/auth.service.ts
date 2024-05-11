@@ -138,7 +138,7 @@ export class AuthService {
     };
     return this.http.post( environment.api_url + "/checktoken", body, {
       headers: {
-        "Authorization": "servicetoken " + localStorage.getItem("token")
+        "Authorization": "servicetoken " + localStorage.getItem("arena-token")
       }
     });
   }

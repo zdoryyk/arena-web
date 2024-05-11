@@ -15,6 +15,7 @@ import { ProblemsetCardComponent } from '../../../components/problemset-card/pro
 import { SkeletonModule } from 'primeng/skeleton';
 import { ThemeService } from '../../../services/theme.service';
 import { SummaryCardsComponent } from '../../../components/summary-cards/summary-cards.component';
+import { AuthService } from '../../../services/auth.service';
 
 
 @Component({
@@ -42,6 +43,7 @@ export class AdminCoursesComponent implements OnInit {
   totalGroups = 0;
 
   constructor(
+    private authService: AuthService,
     public dialog: MatDialog,
     private transferState: TransferState,
     private coursesManagerService: CourseManagerService,
@@ -106,6 +108,19 @@ export class AdminCoursesComponent implements OnInit {
         this.courses.push(result.data);
       }
     });
+  }
+
+  checkToken() {
+    this.authService.checkToken().subscribe(
+      response => {
+        console.log('Token is valid:', response);
+        // Handle response here
+      },
+      error => {
+        console.error('Error checking token:', error);
+        // Handle error here
+      }
+    );
   }
 
   
