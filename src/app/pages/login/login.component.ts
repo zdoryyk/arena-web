@@ -74,7 +74,10 @@ export class LoginComponent implements OnInit{
       });
     }
     this.route.queryParams.subscribe(async params => {
-      if (params['cas_token']) {
+      if (params['err']) {
+        
+      } 
+      else if (params['cas_token']) {
         await this.handleThirdPartyLogin(params['cas_token']);
       } 
       else {
@@ -89,7 +92,6 @@ export class LoginComponent implements OnInit{
     this.isVisible = true;
     this.isLoading = true;
     const casToken = { "cas_token": casTokenValue };
-    this.clearParams();
     try {
       const resultToken = await firstValueFrom(this.loginService.getToken(casToken));
       try {
