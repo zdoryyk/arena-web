@@ -1,7 +1,8 @@
+@if(isVisible){
   <main>
       <section class="section auth">
           <div class="container">
-            <p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}" ></p-toast>
+              <p-toast [breakpoints]="{'920px': {width: '100%', right: '0', left: '0'}}" ></p-toast>
               <div class="d-flex justify-content-center align-items-center gap-5">
                 <div class="login">
                   @if(isLoading){
@@ -23,6 +24,7 @@
                   </form>
                 </div>
               </div>
-            </div>          
+          </div>          
       </section>
   </main>
+}

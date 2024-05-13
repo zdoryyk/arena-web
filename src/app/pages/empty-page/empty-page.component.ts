@@ -17,17 +17,26 @@ export class EmptyPageComponent implements OnInit {
   ){}
 
   async ngOnInit() {
-    let token = this.authService.getToken();
-    if(!token){
-      this.router.navigate(['/login']);
-      return;
+    try {
+      // let token = this.authService.getToken();
+      // console.log(123);
+      // if (!token) {
+      //   this.router.navigate(['/login']);
+      //   return;
+      // }
+      let user = await this.authService.checkIsUserInStorage();
+      if (user && user.attributes['is-lecturer']) {
+        this.router.navigate(['/admin-dashboard']);
+      } else if(user) {
+        this.router.navigate(['/dashboard']);
+      }else{
+        this.router.navigate(['/login']);
+      }
+    } catch (error) {
+      console.error('Error during initialization:', error);
+      this.router.navigate(['/login']); 
     }
-    let user = await this.authService.checkIsUserInStorage();
-    if(user.attributes['is-lecturer']){
-      this.router.navigate(['/admin-dashboard']);
-      return;
-    }
-    this.router.navigate(['/dashboard']);
   }
+  
   
 }

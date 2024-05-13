@@ -92,10 +92,23 @@ export class SidebarComponent implements OnInit,AfterViewInit {
   }
 
   async onLogout() {
-    this.authService.setLoggedIn(false);
-    this.authService.logout();
-    localStorage.clear(); 
-    this.router.navigate(['/login']);
+    this.authService.logout().subscribe({
+      next: () => {
+        localStorage.clear();
+      },
+      error: () => {
+        localStorage.clear();
+        const url =
+          `${environment.logout_url}/cas-logout?next=api/v1/cas-token?callback=${environment.base_url}/login`;
+        window.open(url, "_self");
+      },
+      complete: () => {
+        const url =
+          `${environment.logout_url}/cas-logout?next=api/v1/cas-token?callback=${environment.base_url}/login`;
+         window.open(url, "_self");
+      }
+    });
+    // this.router.navigate(['/login']);
   }
   
   onToggle() {

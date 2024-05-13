@@ -42,6 +42,7 @@ import { ThemeService } from '../../services/theme.service';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit{
+  isVisible = false;
   isLoading = false;
   platformId: Object;
   private tokenSubscription: Subscription = new Subscription();
@@ -75,14 +76,20 @@ export class LoginComponent implements OnInit{
     this.route.queryParams.subscribe(async params => {
       if (params['cas_token']) {
         await this.handleThirdPartyLogin(params['cas_token']);
+      } 
+      else {
+        if(isPlatformBrowser(this.platformId)){
+          window.open(environment.api_url +"/cas-token?callback=" + environment.base_url + "/login", "_self");
+        }
       }
     });
   }
 
   private async handleThirdPartyLogin(casTokenValue: string) {
+    this.isVisible = true;
+    this.isLoading = true;
     const casToken = { "cas_token": casTokenValue };
     this.clearParams();
-    this.isLoading = true;
     try {
       const resultToken = await firstValueFrom(this.loginService.getToken(casToken));
       try {

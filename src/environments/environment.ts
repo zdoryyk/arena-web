@@ -5,19 +5,22 @@
 // export const environment = {
 //   production: false,
 //   api_url: "https://arena.kpi.fei.tuke.sk/api/v1",
-//   base_url: "http://localhost:4500"
+//   base_url: "http://localhost:4500",
+//   logout_url: "https://arena.kpi.fei.tuke.sk"
 // };
 
 export const environment = {
   production: true,
   api_url: "https://arena.kpi.fei.tuke.sk/api/v1",
-  base_url: "https://arena-seven.vercel.app"
+  base_url: "https://arena-seven.vercel.app",
+  logout_url: "https://arena.kpi.fei.tuke.sk"
 };
 
 // export const environment = {
 //   production: false,
 //   api_url: "http://localhost:8000/api/v1",
 //   base_url: "http://localhost:4500"
+//   logout_url: "https://arena.kpi.fei.tuke.sk"
 // };
   
 /*1

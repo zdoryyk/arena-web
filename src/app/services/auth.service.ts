@@ -41,9 +41,9 @@ export class AuthService {
   
 
   setLoggedIn(isLoggedIn: boolean) {
-    if(!isLoggedIn){
-      localStorage.clear();
-    }
+    // if(!isLoggedIn){
+    //   localStorage.clear();
+    // }
     this.isLoggedInSource.next(isLoggedIn);
   }
   
@@ -94,14 +94,7 @@ export class AuthService {
     if(!isPlatformBrowser(this.platformId)){
       return;
     }
-      const data = localStorage.getItem('arena-token');
-      if (data) {
-        return data;
-
-      } else {
-        return null;
-      }
-    
+    return localStorage.getItem('arena-token');
   }
 
   public getPermission(): Permission {
@@ -149,9 +142,17 @@ export class AuthService {
   }
 
   logout(): Observable<any> {
-    return this.http.get<any>( environment.api_url + "/logout", {
+    const token = localStorage.getItem("arena-token");
+    this.setLoggedIn(false);
+    this.http.get<any>( environment.api_url + "/logout", {
       headers: {
-          "Authorization": localStorage.getItem("token")
+          "Authorization": token
+      }
+    });
+    
+    return this.http.get<any>( '/cas-logout?next=api/v1/cas-token?callback=/login', {
+      headers: {
+        "Authorization": token
       }
     });
   }

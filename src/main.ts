@@ -28,7 +28,8 @@ const scrollConfig: InMemoryScrollingOptions = {
 };
 
 const inMemoryScrollingFeature: InMemoryScrollingFeature =
-  withInMemoryScrolling(scrollConfig);
+   withInMemoryScrolling(scrollConfig);
+
 bootstrapApplication(AppComponent, {
   providers: [
     {
