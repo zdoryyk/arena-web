@@ -42,6 +42,7 @@ export class ProfileComponent implements OnInit{
     this.themeService.theme$.subscribe(async currentTheme => {
       const textColor = currentTheme === 'dark-theme' ? '#ffffff' : '#000000';
       this.setCharts(textColor);
+      await this.updateChartData();
     });
     await this.loadData();  
     await this.updateChartData();
