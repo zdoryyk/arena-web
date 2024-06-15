@@ -1,19 +1,20 @@
-import { Component, OnInit, TransferState } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
 import { UserData } from '../../../interfaces/user';
-import { SubmissionCardComponent } from '../../../components/submission-card/submission-card.component';
-import { ProblemsetsService } from '../../../services/problemsets.service';
+import { ProblemsetsService } from '../problemsets.service';
 import { firstValueFrom } from 'rxjs';
 import { SubmissionPreview } from '../../../interfaces/submission';
 import { Problemset } from '../../../interfaces/problemset';
 import { SubmissionDetailCardComponent } from '../../../components/submission-detail-card/submission-detail-card.component';
 import { SkeletonModule } from 'primeng/skeleton';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LanguageService } from '../../../core-services/language.service';
+import { AuthService } from '../../login/auth.service';
 
 @Component({
   selector: 'app-problemests-detail',
   standalone: true,
-  imports: [RouterModule,SubmissionDetailCardComponent,SkeletonModule],
+  imports: [RouterModule,SubmissionDetailCardComponent,SkeletonModule,TranslateModule],
   templateUrl: './problemests-detail.component.html',
   styleUrl: './problemests-detail.component.scss'
 })
@@ -28,9 +29,14 @@ export class ProblemestsDetailComponent implements OnInit {
     private authService: AuthService,
     private problemsetService: ProblemsetsService,
     private activeRoute: ActivatedRoute,
+    private translate: TranslateService,
+    private languageService: LanguageService,
   ){}
 
   async ngOnInit(){
+    this.languageService.lang$.subscribe(lang => {
+      this.translate.use(lang);
+    });
     await this.loadUserData();
     this.problemsetId = this.activeRoute.snapshot.paramMap.get('id');
     await this.loadPageData();
@@ -40,7 +46,7 @@ export class ProblemestsDetailComponent implements OnInit {
   private async loadPageData(){
     await this.getProblemsetData();
     await this.getSubmissions();
-  
+
     this.submissions.forEach(sub => {
       let completeStatus =new Map<string, string>([
         ['warning','Task Incompleted'],
@@ -58,7 +64,7 @@ export class ProblemestsDetailComponent implements OnInit {
     let problemsetData = await firstValueFrom(this.problemsetService.getProblemsetByUserProblemset(this.problemsetId));
     this.problemset = problemsetData.data;
     this.problemset.attributes.title = this.problemsetService.trimTitleFromLastYearOrColon(this.problemset.attributes.title);
-    
+
   }
 
   private async getSubmissions(){

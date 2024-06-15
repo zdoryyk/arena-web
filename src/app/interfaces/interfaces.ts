@@ -6,20 +6,6 @@ export interface Submission {
   completeStatus: Map<String, String>;
 }
 
-export interface AdminCourseCard{
-  title: String;
-  groups: number;
-  problemsets?: number,
-  created?: Date;
-}
-
-export interface AdminProblemsetCard{
-  title: String;
-  groups: number;
-  course: String;
-  created?: Date;
-}
-
 export interface CourseModel {
   data: {
       type: string,
@@ -30,34 +16,7 @@ export interface CourseModel {
   }
 }
 
-export interface CourseModelGet {
-  id: string,
-  name: string,
-  archived: boolean,
-  description: string,
-  groups: any[],
-  problemsets: any[],
-}
-
-export interface GroupPaginationModel {
-  name: string,
-  submissions: number,
-}
-
 export interface ConfirmDialogData {
   title: string;
   message : string;
-}
-
-
-export interface UserSubmission {
-  user: string;
-  group: string;
-  submissions: SubmissionChart[];
-}
-
-export interface SubmissionChart {
-  id: string;
-  score: number;
-  "date-evaluated": any;
 }

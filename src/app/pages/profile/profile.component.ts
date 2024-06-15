@@ -1,20 +1,22 @@
-import { Component, OnChanges, OnInit, TransferState, makeStateKey } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, TransferState, makeStateKey } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import {  ExtendedUserProfile, UserData } from '../../interfaces/user';
-import { LoginService } from '../login/login.service';
-import { AuthService } from '../../services/auth.service';
-import { ProfileMangerService } from '../../services/profile-manger.service';
+import { ProfileMangerService } from './profile-manger.service';
 import { SkeletonModule } from 'primeng/skeleton';
-import { ThemeService } from '../../services/theme.service';
+import { ThemeService } from '../../core-services/theme.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { isPlatformBrowser } from '@angular/common';
+import { LanguageService } from '../../core-services/language.service';
+import { AuthService } from '../login/auth.service';
 
 
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [AvatarModule, AvatarGroupModule, ChartModule,SkeletonModule],
+  imports: [AvatarModule, AvatarGroupModule, ChartModule,SkeletonModule,TranslateModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })
@@ -29,22 +31,33 @@ export class ProfileComponent implements OnInit{
   userData: UserData;
   user: ExtendedUserProfile;
   latestProblemsets: any;
+  platformId: Object;
   constructor(
+    @Inject(PLATFORM_ID) platformId: Object,
     private transferState: TransferState,
     private authService: AuthService,
     private profileManager: ProfileMangerService,
-    private themeService: ThemeService, 
-  ){}
-  
+    private languageService: LanguageService,
+    private translate: TranslateService,
+    private themeService: ThemeService,
+  ){
+    this.platformId = platformId;
+  }
 
-  
+
+
   async ngOnInit() {
+    if(isPlatformBrowser(this.platformId)){
+      this.languageService.lang$.subscribe(lang => {
+        this.translate.use(lang);
+      });
+    }
     this.themeService.theme$.subscribe(async currentTheme => {
       const textColor = currentTheme === 'dark-theme' ? '#ffffff' : '#000000';
       this.setCharts(textColor);
       await this.updateChartData();
     });
-    await this.loadData();  
+    await this.loadData();
     await this.updateChartData();
   }
 
@@ -64,7 +77,7 @@ export class ProfileComponent implements OnInit{
       await this.fetchAndStoreLatestProblemsets();
     }
   }
-  
+
   private async fetchAndStoreLatestProblemsets() {
     this.latestProblemsets = await this.profileManager.getSubmissionsByLimit(7);
     if (!this.transferState.hasKey(makeStateKey('latestProblemsets'))) {
@@ -80,12 +93,12 @@ export class ProfileComponent implements OnInit{
   private async loadUserData() {
     this.userData = await this.authService.checkIsUserInStorage();
     let { totalsubmissions, totalScores, maxTotalScores, rate } = await this.profileManager.getSubmissionsAndScores();
-    
+
     this.user = {
         fullName: `${this.userData.attributes['first-name']} ${this.userData.attributes['last-name']}`,
         problemsetsLength: this.userData.relationships['user-problemsets'].data.length,
         submissionsLength: totalsubmissions,
-        totalScore: totalScores, 
+        totalScore: totalScores,
         maxTotalScore: maxTotalScores,
         latestProblemsets: this.latestProblemsets,
         rate: rate,
@@ -126,7 +139,7 @@ export class ProfileComponent implements OnInit{
         },
       ],
     };
-    
+
     this.leftDoughnutData = {
       id: 'leftDoughnut',
       labels: ['Last Submission'],
@@ -176,7 +189,7 @@ export class ProfileComponent implements OnInit{
       ],
     };
   }
-   
+
 
   setCharts(textColor: string){
       this.leftDoughnutData = {

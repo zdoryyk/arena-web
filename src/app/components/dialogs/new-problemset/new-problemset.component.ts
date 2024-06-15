@@ -6,15 +6,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { MatInputModule } from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { CalendarModule } from 'primeng/calendar';
-
-
-function dateRangeValidator(group: FormGroup): { [key: string]: any } | null {
-  const start = group.get('start')?.value;
-  const end = group.get('end')?.value;
-  return start && end && start < end ? null : { dateRangeInvalid: true };
-}
 
 @Component({
   selector: 'app-new-problemset',
@@ -36,8 +28,6 @@ function dateRangeValidator(group: FormGroup): { [key: string]: any } | null {
 export class NewProblemsetComponent {
   form: FormGroup;
   date: FormControl;
-  // startTime: FormControl;
-  // endTime: FormControl;
 
   constructor(
     private fb: FormBuilder,
@@ -80,7 +70,6 @@ export class NewProblemsetComponent {
       }
     } else {
       console.log("Form is invalid");
-      // Здесь можно добавить логику для отображения сообщений об ошибке пользователю
     }
   }
   

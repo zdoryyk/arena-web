@@ -7,10 +7,10 @@
              [totalGroups]="totalGroups"
               ></app-summary-cards>
             @if(loading || courses.length <= 0){
-                <h1 class="title">No Available Courses</h1>
+                <h1 class="title">{{'No Available Courses' | translate}}</h1>
             }
             @if(!loading && courses.length > 0){
-                <h1 class="title">Available Courses</h1>
+                <h1 class="title">{{'Available Courses' | translate}}</h1>
             }
             @if(loading){
                 <div class="skeleton"><p-skeleton width="100%" height="100%" ></p-skeleton></div>
@@ -29,10 +29,10 @@
                 </div>
             }
             @if(loading || problemsets.length <= 0){
-                <h1 class="title">No Available Problemsets</h1>
+                <h1 class="title">{{'No Available Problemsets ' | translate}}</h1>
             }
             @if(!loading && problemsets.length > 0){
-                <h1 class="title">Available Problemsets</h1>
+                <h1 class="title">{{'Available Problemsets' | translate}}</h1>
             }
             @if(loading){
                 <div class="skeleton"><p-skeleton width="100%" height="100%" ></p-skeleton></div>

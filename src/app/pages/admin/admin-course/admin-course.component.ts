@@ -6,25 +6,24 @@ import { HttpClientModule } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { PaginatorModule } from 'primeng/paginator';
-import { GroupPaginationModel, UserSubmission } from '../../../interfaces/interfaces';
 import { NewProblemsetComponent } from '../../../components/dialogs/new-problemset/new-problemset.component';
-import { ConfirmDialog } from 'primeng/confirmdialog';
 import { ConfirmDialogComponent } from '../../../components/dialogs/confirm-dialog/confirm-dialog.component';
 import { ChartModule } from 'primeng/chart';
 import { GroupDetailComponent } from '../../../components/group-detail/group-detail.component';
 import { Course } from '../../../interfaces/course';
 import { Subscription } from 'rxjs';
-import { CourseDetailService } from '../../../services/course-detail.service';
-import { Group, GroupResponse } from '../../../interfaces/group';
+import { Group } from '../../../interfaces/group';
 import { ProblemsetData } from '../../../interfaces/problemset';
-import { CourseManagerService } from '../../../services/course-manager.service';
-import { AuthService } from '../../../services/auth.service';
+import { CourseManagerService } from '../course-manager.service';
 import { UserData } from '../../../interfaces/user';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LanguageService } from '../../../core-services/language.service';
+import { AuthService } from '../../login/auth.service';
 
 @Component({
   selector: 'app-admin-course',
   standalone: true,
-  imports: [RouterModule, DatePipe, CommonModule,MatIconModule,HttpClientModule,PaginatorModule, ChartModule, GroupDetailComponent],
+  imports: [RouterModule, DatePipe, CommonModule,MatIconModule,HttpClientModule,PaginatorModule, ChartModule, GroupDetailComponent,TranslateModule],
   providers:[],
   templateUrl: './admin-course.component.html',
   styleUrl: './admin-course.component.scss'
@@ -40,12 +39,7 @@ export class AdminCourseComponent implements OnInit{
   lineData: any;
   lineOptions: any;
   linePlugins: any;
-  private routeSub: Subscription = new Subscription;
   private courseSubscription: Subscription = new Subscription;
-  private courseGroupsSubscription: Subscription = new Subscription;
-  private courseProblemsetsSubscription: Subscription = new Subscription;
-  private userSubscription: Subscription = new Subscription;
-  private problemsetStatSubscription: Subscription = new Subscription;
   user: UserData;
 
 
@@ -57,6 +51,9 @@ export class AdminCourseComponent implements OnInit{
     private domSanitizer: DomSanitizer,
     public dialog: MatDialog,
     private cd: ChangeDetectorRef,
+    private translate: TranslateService,
+    private languageService: LanguageService,
+
   ){
     this.matIconRegistery.addSvgIcon(
       'add_problemset',
@@ -67,11 +64,13 @@ export class AdminCourseComponent implements OnInit{
 
 
   async ngOnInit() {
-    
+    this.languageService.lang$.subscribe(lang => {
+      this.translate.use(lang);
+    });
     await this.loadUserData();
     this.course = {
       type: '',
-      id: '', 
+      id: '',
       attributes: {
         title: '',
         description: '',
@@ -79,14 +78,14 @@ export class AdminCourseComponent implements OnInit{
       },
       relationships: {
         problemsets: {
-          data: [], 
+          data: [],
         },
         groups: {
-          data: [], 
+          data: [],
         },
       },
       links: {
-        self: '', 
+        self: '',
       },
     };
     this.setChart();
@@ -97,12 +96,12 @@ export class AdminCourseComponent implements OnInit{
         this.problemsets = problemsets.data;
         this.groups = this.sortLecturesGroups(groups.data);
         // this.groups = groups.data;
-        this.loading = false;  
+        this.loading = false;
         this.cd.detectChanges();
       },
       error: (error) => {
         console.error('Error fetching course details with extras', error);
-        this.loading = false; 
+        this.loading = false;
       }
     });
     this.cd.detectChanges();
@@ -116,9 +115,9 @@ export class AdminCourseComponent implements OnInit{
         const bIsLecturerGroup = lecturesGroupIds.includes(b.id);
 
         if (aIsLecturerGroup && !bIsLecturerGroup) {
-            return -1; 
+            return -1;
         } else if (!aIsLecturerGroup && bIsLecturerGroup) {
-            return 1; 
+            return 1;
         } else if (!aIsLecturerGroup && !bIsLecturerGroup) {
             return a.attributes.name.localeCompare(b.attributes.name);
         } else {
@@ -130,14 +129,14 @@ export class AdminCourseComponent implements OnInit{
 
 
 
-  // TODO IF WILL ISLECTURER AND ISTEACHER APPEARS 
+  // TODO IF WILL ISLECTURER AND ISTEACHER APPEARS
   // sortLecturesGroups(groups: Group[]): Group[] {
   //   const lecturesGroupIds = this.user.relationships['lecturers-groups'].data.map(group => group.id);
   //   let filteredGroups = groups.filter(group => lecturesGroupIds.includes(group.id));
   //   let sortedGroups = filteredGroups.sort((a, b) => a.id.localeCompare(b.id));
   //   return sortedGroups;
   // }
-  
+
 
 
   setChart(){
@@ -178,7 +177,7 @@ export class AdminCourseComponent implements OnInit{
   }
 
   openNewProblemsetDialog() {
-    const dialogWidth = window.innerWidth < 768 ? '75%' : '55%'; 
+    const dialogWidth = window.innerWidth < 768 ? '75%' : '55%';
     var _popup = this.dialog.open(NewProblemsetComponent, {
       enterAnimationDuration: '1000ms',
       exitAnimationDuration: '500ms',
@@ -187,12 +186,12 @@ export class AdminCourseComponent implements OnInit{
         title: 'Title'
       }
     });
-  
+
     _popup.afterClosed().subscribe(item => {
       console.log(item);
     });
   }
-  
+
 
   openConfirmationDialog() {
   var _popup =  this.dialog.open(ConfirmDialogComponent,{

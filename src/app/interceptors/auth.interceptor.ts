@@ -8,13 +8,13 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { inject } from '@angular/core';
-import { AuthService } from '../services/auth.service';
 import { Permission } from '../interfaces/permissions';
+import { AuthService } from '../pages/login/auth.service';
 
 export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const authService = inject(AuthService);
-  return next(req).pipe( 
+  return next(req).pipe(
      map((event: HttpEvent<any>) => {
        if (event instanceof HttpResponse) {
          if (event.url?.includes('cas-token')) {

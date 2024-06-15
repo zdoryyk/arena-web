@@ -1,23 +1,24 @@
-import { Component, Input, OnInit, TransferState, makeStateKey } from '@angular/core';
-import { AdminCourseCard, AdminProblemsetCard } from '../../../interfaces/interfaces';
+import { Component, OnInit, TransferState, makeStateKey } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
-import { HttpClient, HttpClientModule, HttpContext, HttpParamsOptions } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {MatIconModule, MatIconRegistry} from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-import { CourseManagerService } from '../../../services/course-manager.service';
+import { CourseManagerService } from '../course-manager.service';
 import { Course } from '../../../interfaces/course';
 import { Problemset } from '../../../interfaces/problemset';
 import { CourseCardComponent } from '../../../components/course-card/course-card.component';
 import { ProblemsetCardComponent } from '../../../components/problemset-card/problemset-card.component';
 import { SkeletonModule } from 'primeng/skeleton';
 import { SummaryCardsComponent } from '../../../components/summary-cards/summary-cards.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LanguageService } from '../../../core-services/language.service';
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
   providers:[HttpClient],
-  imports: [RouterModule, DatePipe, CommonModule,MatIconModule,HttpClientModule,CourseCardComponent,ProblemsetCardComponent,SkeletonModule,SummaryCardsComponent],
+  imports: [RouterModule, DatePipe, CommonModule,MatIconModule,HttpClientModule,CourseCardComponent,ProblemsetCardComponent,SkeletonModule,SummaryCardsComponent,TranslateModule],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.scss'
 })
@@ -38,7 +39,11 @@ export class AdminDashboardComponent implements OnInit {
     private domSanitizer: DomSanitizer,
     private coursesManagerService: CourseManagerService,
     private transferState: TransferState,
+    private translate: TranslateService,
+    private languageService: LanguageService,
   ){
+    this.translate.addLangs(['en', 'sk', 'ua','ru']);
+    this.translate.setDefaultLang('sk');
     this.matIconRegistery.addSvgIcon(
       'book',
       this.domSanitizer
@@ -55,8 +60,11 @@ export class AdminDashboardComponent implements OnInit {
       .bypassSecurityTrustResourceUrl('../assets/icons/graduation-hat.svg'),
     )
   }
-  
+
   ngOnInit(): void {
+    this.languageService.lang$.subscribe(lang => {
+      this.translate.use(lang);
+    });
     if(this.transferState.hasKey(makeStateKey('problemsets'))){
       this.courses = this.transferState.get(makeStateKey('activeCourses'),[]);
       this.archivedCourses =  this.transferState.get(makeStateKey('archievedCourses'),[]);
@@ -66,7 +74,7 @@ export class AdminDashboardComponent implements OnInit {
       this.loading = false;
     }else{
       this.initializeData();
-    } 
+    }
   }
 
   async initializeData(){

@@ -8,12 +8,13 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideClientHydration(),
     provideAnimationsAsync(),
-    provideAnimationsAsync(),
-    provideHttpClient(),
-    provideHttpClient(withInterceptors([AuthInterceptor])), provideAnimationsAsync()]
+    provideHttpClient(withInterceptors([AuthInterceptor])),
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
+  ]
 };

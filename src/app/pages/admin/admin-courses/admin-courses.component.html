@@ -8,10 +8,10 @@
               ></app-summary-cards>
             <div class="courses-button-container">
                 @if(loading || courses.length <= 0){
-                    <h1 class="title">No Available Courses</h1>
+                    <h1 class="title">{{'No Available Courses' | translate}}</h1>
                 }
                 @if(!loading && courses.length > 0){
-                    <h1 class="title">Available Courses</h1>
+                    <h1 class="title">{{'Available Courses' | translate}}</h1>
                 }
                 <button class="courses-button" (click)="openNewCourseDialog()">
                   <mat-icon class="button-icon">add_circle_outline</mat-icon>
@@ -34,7 +34,7 @@
             </div> 
             @if (archivedCourses.length > 0) {
                 <div class="courses-button-container">
-                    <h1 class="title">Archived  Courses</h1>
+                    <h1 class="title">{{'Archived  Courses' | translate}}</h1>
                 </div>   
                 <div class="archieved courses">
                     @for (course of archivedCourses; track $index) {

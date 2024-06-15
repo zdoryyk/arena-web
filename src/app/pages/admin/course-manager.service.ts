@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CoursesService } from './courses.service';
-import { ProblemsetsService } from './problemsets.service';
-import { Course } from '../interfaces/course';
-import { Problemset } from '../interfaces/problemset';
+import { ProblemsetsService } from '../problemsets/problemsets.service';
+import { Course } from '../../interfaces/course';
+import { Problemset } from '../../interfaces/problemset';
 import { Observable, catchError, firstValueFrom, forkJoin, map, of, switchMap } from 'rxjs';
 import { CourseDetailService } from './course-detail.service';
 
@@ -59,7 +59,7 @@ export class CourseManagerService {
       return { courses: activeCourses, archivedCourses, isLecturer,totalSubmissions,totalGroups};
     } catch (error) {
       console.error('Failed to initialize user data', error);
-      throw error; 
+      throw error;
     }
   }
 
@@ -83,10 +83,10 @@ export class CourseManagerService {
       })
     );
   }
-  
-  
-  
-  
+
+
+
+
   async getAllProblemsets(courses: Course[]): Promise<Problemset[]> {
     let allProblemsets: Problemset[] = [];
     for (const course of courses) {
@@ -104,7 +104,7 @@ export class CourseManagerService {
     }
     return allProblemsets;
   }
-  
+
 
   async getProblemsetById(id: string): Promise<any> {
     try {
@@ -115,7 +115,7 @@ export class CourseManagerService {
       throw error;
     }
   }
-    
+
 }
 
 

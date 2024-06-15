@@ -2,16 +2,18 @@ import { Component, HostListener, OnInit, TransferState, makeStateKey } from '@a
 
 import { RouterModule } from '@angular/router';
 import { SubmissionCardComponent } from '../../components/submission-card/submission-card.component';
-import { AuthService } from '../../services/auth.service';
 import { UserData } from '../../interfaces/user';
 import { ProblemsetExtra } from '../../interfaces/problemset';
-import { ProblemsetManagerService } from '../../services/problemset-manager.service';
+import { ProblemsetManagerService } from './problemset-manager.service';
 import { SkeletonModule } from 'primeng/skeleton';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LanguageService } from '../../core-services/language.service';
+import { AuthService } from '../login/auth.service';
 
 @Component({
   selector: 'app-problemsets',
   standalone: true,
-  imports: [RouterModule,SubmissionCardComponent,SkeletonModule],
+  imports: [RouterModule,SubmissionCardComponent,SkeletonModule,TranslateModule],
   templateUrl: './problemsets.component.html',
   styleUrl: './problemsets.component.scss'
 })
@@ -20,8 +22,8 @@ export class ProblemsetsComponent implements OnInit{
   isLoading = true;
   user: UserData;
   problemsets: ProblemsetExtra[] = [];
-  public skeletonCount: number = 6; 
-  
+  public skeletonCount: number = 6;
+
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.adjustSkeletonCount();
@@ -32,10 +34,15 @@ export class ProblemsetsComponent implements OnInit{
     private authService: AuthService,
     private problemsetManager: ProblemsetManagerService,
     private transferState: TransferState,
+    private translate: TranslateService,
+    private languageService: LanguageService,
   ){}
 
 
   async ngOnInit() {
+    this.languageService.lang$.subscribe(lang => {
+      this.translate.use(lang);
+    });
     this.adjustSkeletonCount();
     await this.loadUserData();
     if(this.transferState.hasKey(makeStateKey('problemsetsCards'))){
@@ -58,7 +65,7 @@ export class ProblemsetsComponent implements OnInit{
   private async loadUserData() {
     this.user = await this.authService.checkIsUserInStorage();
   }
-  
+
   private checkForAnyActiveProblemset(){
     for(const problemset of this.problemsets){
       if(problemset.isActive){

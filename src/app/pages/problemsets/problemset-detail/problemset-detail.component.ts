@@ -1,19 +1,17 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ChartModule } from 'primeng/chart';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { TestGroupComponent } from '../../../components/test-group/test-group.component';
-import { AuthService } from '../../../services/auth.service';
-import { User, UserData, UserProblemSetData } from '../../../interfaces/user';
-import { ProblemsetsService } from '../../../services/problemsets.service';
+import { UserData } from '../../../interfaces/user';
+import { ProblemsetsService } from '../problemsets.service';
 import { firstValueFrom } from 'rxjs';
 import { CommonModule, DatePipe } from '@angular/common';
-import { ProblemsetManagerService } from '../../../services/problemset-manager.service';
+import { ProblemsetManagerService } from '../problemset-manager.service';
 import { NestedTask, Submission, TaskData } from '../../../interfaces/submission';
 import { environment } from '../../../../environments/environment';
 import { TestCaseComponent } from '../../../components/test-case-test/test-case.component';
-import { ThemeService } from '../../../services/theme.service';
-import { plugins } from 'chart.js';
+import { ThemeService } from '../../../core-services/theme.service';
 
 
 @Component({
@@ -25,7 +23,7 @@ import { plugins } from 'chart.js';
 })
 export class ProblemsetDetailComponent implements OnInit {
 
-  submissionId: string; 
+  submissionId: string;
   submissionData: any;
   problemsetData: any;
   submissionTasks: Submission[] = [];
@@ -46,7 +44,7 @@ export class ProblemsetDetailComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private problemsetService: ProblemsetsService,
     private problemsetManager: ProblemsetManagerService,
-    private themeService: ThemeService, 
+    private themeService: ThemeService,
   ) {
   }
 
@@ -65,7 +63,7 @@ export class ProblemsetDetailComponent implements OnInit {
   async getTasksWithModuleLabel(id: string) {
     let taskData = await firstValueFrom(this.problemsetService.getSubmissionTasks(id));
     let nestedTasks = this.problemsetManager.nestTasks(taskData.data);
-    this.labelModules(nestedTasks);  
+    this.labelModules(nestedTasks);
     this.tasks = nestedTasks;
   }
 
@@ -73,7 +71,7 @@ export class ProblemsetDetailComponent implements OnInit {
     this.suites.forEach((submissions, taskData) => {
       this.suitesArray.push({
         order: taskData.iterationNumber,
-        title: taskData.attributes.title, 
+        title: taskData.attributes.title,
         score: taskData.attributes.score,
         description: taskData.attributes.document.description,
         maxScore: taskData.attributes['max-score'],
@@ -92,13 +90,13 @@ export class ProblemsetDetailComponent implements OnInit {
     this.routePaths = this.submissionsBefore.map(submission => `${environment.base_url}/submission/${submission.id}`);
     this.barData = {
       labels: this.submissionsBefore.map((_, index) => index + 1),
-      
+
       datasets: [
         {
           label: '',
           data: this.submissionsBefore.map(submission => submission.attributes.score.toFixed(1)),
-          barPercentage: 0.5, 
-          categoryPercentage: 0.8, 
+          barPercentage: 0.5,
+          categoryPercentage: 0.8,
           backgroundColor: (color: any) => {
             const highestIndex = this.barData.datasets[0].data.indexOf(
               Math.max(...this.barData.datasets[0].data)
@@ -120,10 +118,10 @@ export class ProblemsetDetailComponent implements OnInit {
     let problemsetData = await firstValueFrom(this.problemsetService.getProblemsetByUserProblemset(userProblemsetId));
     this.problemsetData = problemsetData.data;
     this.problemsetData.attributes.title = this.problemsetService.trimTitleFromLastYearOrColon(this.problemsetData.attributes.title);
-  }    
+  }
 
   private async loadUserData() {
-    let userProblemsetId = this.submissionData.relationships['user-problemset'].data.id; 
+    let userProblemsetId = this.submissionData.relationships['user-problemset'].data.id;
     let userProblemsetData = await firstValueFrom(this.problemsetService.getConcreteUserProblemset(userProblemsetId));
     let userId = userProblemsetData.data.relationships.user.data.id;
     let userData = await firstValueFrom(this.problemsetService.getConcreteUser(userId));
@@ -230,17 +228,17 @@ export class ProblemsetDetailComponent implements OnInit {
       task.isModule = this.checkIfModule(task);
     });
   }
-  
+
 
   checkIfModule(task: NestedTask): boolean {
     const isSuite = task.attributes.document.type === 'suite';
     const hasNoParent = task.relationships['parent-task'].data === null;
-  
+
     const hasChildren = task.children && task.children.length > 0;
-  
+
     return isSuite && hasChildren && hasNoParent;
   }
-  
+
 
   formatEvaluationScore(score: number): string {
     const roundedScore = score.toFixed(1);

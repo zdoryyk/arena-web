@@ -1,27 +1,28 @@
 import { Component, OnInit, Renderer2, TransferState, makeStateKey } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import {  RouterModule } from '@angular/router';
-import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
-import { DomSanitizer} from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { NewCourseComponent } from '../../../components/dialogs/new-course/new-course.component';
 import { Subscription } from 'rxjs';
-import { CourseManagerService } from '../../../services/course-manager.service';
+import { CourseManagerService } from '../course-manager.service';
 import { Course } from '../../../interfaces/course';
 import { Problemset } from '../../../interfaces/problemset';
 import { CourseCardComponent } from '../../../components/course-card/course-card.component';
 import { ProblemsetCardComponent } from '../../../components/problemset-card/problemset-card.component';
 import { SkeletonModule } from 'primeng/skeleton';
-import { ThemeService } from '../../../services/theme.service';
+import { ThemeService } from '../../../core-services/theme.service';
 import { SummaryCardsComponent } from '../../../components/summary-cards/summary-cards.component';
-import { AuthService } from '../../../services/auth.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LanguageService } from '../../../core-services/language.service';
+import { AuthService } from '../../login/auth.service';
 
 
 @Component({
   selector: 'app-admin-courses',
   standalone: true,
-  imports: [RouterModule, DatePipe, CommonModule,MatIconModule,HttpClientModule,CourseCardComponent,ProblemsetCardComponent,SkeletonModule,SummaryCardsComponent],
+  imports: [RouterModule, DatePipe, CommonModule,MatIconModule,HttpClientModule,CourseCardComponent,ProblemsetCardComponent,SkeletonModule,SummaryCardsComponent, TranslateModule],
   templateUrl: './admin-courses.component.html',
   styleUrl: './admin-courses.component.scss'
 })
@@ -47,12 +48,17 @@ export class AdminCoursesComponent implements OnInit {
     public dialog: MatDialog,
     private transferState: TransferState,
     private coursesManagerService: CourseManagerService,
-    private themeService: ThemeService, 
-    private renderer: Renderer2
+    private themeService: ThemeService,
+    private renderer: Renderer2,
+    private languageService: LanguageService,
+    private translate: TranslateService
   ){
   }
-  
+
    ngOnInit(): void {
+    this.languageService.lang$.subscribe(lang => {
+      this.translate.use(lang);
+    });
     this.themeService.theme$.subscribe(theme => {
       this.renderer.removeClass(document.body, 'light-theme');
       this.renderer.removeClass(document.body, 'dark-theme');
@@ -67,7 +73,7 @@ export class AdminCoursesComponent implements OnInit {
       this.loading = false;
     }else{
       this.initializeData();
-    } 
+    }
   }
 
 
@@ -93,7 +99,7 @@ export class AdminCoursesComponent implements OnInit {
       }
     })();
   }
-  
+
 
 
   openNewCourseDialog() {
@@ -123,7 +129,7 @@ export class AdminCoursesComponent implements OnInit {
     );
   }
 
-  
+
 
   toggleTheme(){
     this.themeService.toggleTheme()

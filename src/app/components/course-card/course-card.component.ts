@@ -4,7 +4,7 @@ import { Component, Input, OnInit, Renderer2 } from '@angular/core';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { ThemeService } from '../../services/theme.service';
+import { ThemeService } from '../../core-services/theme.service';
 
 @Component({
   selector: 'app-course-card',
@@ -26,14 +26,14 @@ export class CourseCardComponent implements OnInit  {
     private domSanitizer: DomSanitizer,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private themeService: ThemeService, 
+    private themeService: ThemeService,
     private renderer: Renderer2
   ){
     this.matIconRegistery.addSvgIcon(
       'detail',
       this.domSanitizer
       .bypassSecurityTrustResourceUrl('../assets/icons/detail.svg'),
-    )    
+    )
   }
 
 

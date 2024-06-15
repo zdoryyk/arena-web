@@ -1,26 +1,26 @@
 import { Component, Inject, OnInit, PLATFORM_ID, Renderer2 } from '@angular/core';
-import { Router, RouterLink, RouterModule } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { Router, RouterModule } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
-import { ThemeService } from '../../services/theme.service';
+import { ThemeService } from '../../core-services/theme.service';
+import { AuthService } from '../../pages/login/auth.service';
 
 @Component({
   selector: 'app-mobile-menu',
-  standalone: true,  
+  standalone: true,
   imports: [RouterModule,MatIconModule],
   templateUrl: './mobile-menu.component.html',
   styleUrl: './mobile-menu.component.scss'
 })
 
 export class MobileMenuComponent implements OnInit{
-  
+
   dynamicRouteDashboard: string | any[] = '/dashboard';
   dynamicRouteCoursesOrProblemsets: string | any[] = '/problemsets';
   platformId: Object;
-  isTeacher = false; 
-  isLoggedIn = true;  
+  isTeacher = false;
+  isLoggedIn = true;
   fullName: string = 'none';
   isDarkTheme: boolean = false;
 
@@ -60,7 +60,7 @@ export class MobileMenuComponent implements OnInit{
       }
     }
   }
-  
+
 
   onLogout() {
     this.authService.setLoggedIn(false);
@@ -68,7 +68,7 @@ export class MobileMenuComponent implements OnInit{
     this.router.navigate(['/login']);
     this.onToggle();
   }
-  
+
   onToggle() {
     const btnMenu = document.querySelectorAll('.btn-menu');
     const menu = document.getElementById('menu') as HTMLElement;
@@ -81,5 +81,5 @@ export class MobileMenuComponent implements OnInit{
     this.isDarkTheme = !this.isDarkTheme;
     this.themeService.toggleTheme();
   }
-  
+
 }

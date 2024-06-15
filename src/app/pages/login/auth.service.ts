@@ -2,11 +2,11 @@ import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID, TransferState, makeStateKey } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
-import { Permission } from '../interfaces/permissions';
-import { User, UserData } from '../interfaces/user';
-import { environment } from '../../environments/environment';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { data } from 'jquery';
+import { Permission } from '../../interfaces/permissions';
+import { User, UserData } from '../../interfaces/user';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

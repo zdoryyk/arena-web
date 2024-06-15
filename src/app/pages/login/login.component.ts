@@ -1,16 +1,17 @@
-import { Component, Inject, OnInit, PLATFORM_ID, Renderer2, TransferState, makeStateKey } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { LoginService } from './login.service';
-import { Subscription, firstValueFrom, take } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { Permission } from '../../interfaces/permissions';
 import { environment } from '../../../environments/environment';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { AuthService } from '../../services/auth.service';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-import { ThemeService } from '../../services/theme.service';
+import { ThemeService } from '../../core-services/theme.service';
+import { LanguageService } from '../../core-services/language.service';
+import { AuthService } from './auth.service';
 
 
 @Component({
@@ -45,8 +46,6 @@ export class LoginComponent implements OnInit{
   isVisible = false;
   isLoading = false;
   platformId: Object;
-  private tokenSubscription: Subscription = new Subscription();
-  private userSubscription: Subscription = new Subscription();
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -54,6 +53,7 @@ export class LoginComponent implements OnInit{
     private authService: AuthService,
     private messageService: MessageService,
     private themeService: ThemeService,
+    private languageService: LanguageService,
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
@@ -65,8 +65,8 @@ export class LoginComponent implements OnInit{
     if(token){
       this.router.navigate(['/redirect']);
       return;
-    }
-    if(isPlatformBrowser(this.platformId)){
+      }
+      if(isPlatformBrowser(this.platformId)){
       this.themeService.theme$.subscribe(theme => {
         this.renderer.removeClass(document.body, 'light-theme');
         this.renderer.removeClass(document.body, 'dark-theme');
@@ -75,11 +75,11 @@ export class LoginComponent implements OnInit{
     }
     this.route.queryParams.subscribe(async params => {
       if (params['err']) {
-        
-      } 
+
+      }
       else if (params['cas_token']) {
         await this.handleThirdPartyLogin(params['cas_token']);
-      } 
+      }
       else {
         if(isPlatformBrowser(this.platformId)){
           window.open(environment.api_url +"/cas-token?callback=" + environment.base_url + "/login", "_self");

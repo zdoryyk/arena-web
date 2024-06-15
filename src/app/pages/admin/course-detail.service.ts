@@ -1,10 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { GroupResponse } from '../interfaces/group';
-import { ProblemsetsResponse } from '../interfaces/problemset';
-import { User } from '../interfaces/user';
+import { environment } from '../../../environments/environment';
+import { GroupResponse } from '../../interfaces/group';
+import { ProblemsetsResponse } from '../../interfaces/problemset';
+import { User } from '../../interfaces/user';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,7 @@ export class CourseDetailService {
 
   getGroup(groupId: string): Observable<any> {
     var routePath = environment.api_url + "/groups/" + groupId;
-    
+
     return this.http.get<any>(routePath, {
       headers: {
           "Authorization": 'token ' + localStorage.getItem("arena-token")

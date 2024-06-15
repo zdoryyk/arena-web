@@ -1,13 +1,13 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, Input, OnInit, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
-import { MatExpansionModule, MatExpansionPanel } from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { StdoutComponent } from './test-case-components/stdout/stdout.component';
 import { StderrComponent } from './stderr/stderr.component';
 import { NestedTask } from '../../interfaces/submission';
-import { ThemeService } from '../../services/theme.service';
+import { ThemeService } from '../../core-services/theme.service';
 
 @Component({
   selector: 'app-test-case-test',
@@ -31,8 +31,8 @@ export class TestCaseComponent implements OnInit {
   safeHtml: SafeHtml;
   @Input() orderedNumber: number;
   @Input() submission: NestedTask;
-  
-  
+
+
   isRecursive: boolean;
   isExpanded: boolean = false;
   checkBtnVisible: boolean = false;
@@ -50,7 +50,7 @@ export class TestCaseComponent implements OnInit {
   maxScore: number;
   passed: boolean;
   strict: boolean;
-  
+
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     if(window.innerWidth <= 568){
@@ -66,7 +66,7 @@ export class TestCaseComponent implements OnInit {
     private cdRef: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
     private matIconRegistery: MatIconRegistry,
-    private themeService: ThemeService, 
+    private themeService: ThemeService,
     private renderer: Renderer2
    ){
     this.matIconRegistery.addSvgIcon(
@@ -85,7 +85,7 @@ export class TestCaseComponent implements OnInit {
       .bypassSecurityTrustResourceUrl('../assets/icons/info.svg'),
     );
    }
-  
+
   ngOnInit(): void {
     this.themeService.theme$.subscribe(theme => {
       this.renderer.removeClass(document.body, 'light-theme');
@@ -173,7 +173,7 @@ export class TestCaseComponent implements OnInit {
       }
     }
   }
-  
+
 
   onToggle(): void {
     this.rotationAngle += 90;
@@ -188,7 +188,7 @@ export class TestCaseComponent implements OnInit {
     description = description.replace(/`([^`]+)`/g, '<code>$1</code>')
                 .replace(/\*\*([^\*]+)\*\*/g, '<strong>$1</strong>')
                 .replace(/\*([^\*]+)\*/g, '<em>$1</em>')
-                .replace(/\_([^\_]+)\_/g, '<em>$1</em>') 
+                .replace(/\_([^\_]+)\_/g, '<em>$1</em>')
                 .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a style="color: #8FBE48;text-decoration: none"  href="$2">$1</a>');
     this.safeHtml = this.sanitizer.bypassSecurityTrustHtml(description);
     return description;
@@ -198,10 +198,10 @@ export class TestCaseComponent implements OnInit {
     return (
       this.strict
      && this.score == null
-     && this.maxScore == null 
+     && this.maxScore == null
      && !this.passed
-     ) 
-     || 
+     )
+     ||
      (
       this.strict
       && this.score == 0

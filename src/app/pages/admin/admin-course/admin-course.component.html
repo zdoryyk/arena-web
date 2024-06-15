@@ -4,8 +4,8 @@
             <header class="header-flex">
                 <div class="title left">{{this.course?.attributes?.title}}</div>
                     <div class="buttons">
-                        <button class="btn add" (click)="openNewProblemsetDialog()">ADD PROBLEMSET</button>
-                        <button class="btn archive" (click)="openConfirmationDialog()">ARCHIVE</button>
+                        <button class="btn add" (click)="openNewProblemsetDialog()">{{'ADD PROBLEMSET' | translate}}</button>
+                        <button class="btn archive" (click)="openConfirmationDialog()">{{'ARCHIVE' | translate}}</button>
                     </div>
             </header>
             <div class="content-wrapper">

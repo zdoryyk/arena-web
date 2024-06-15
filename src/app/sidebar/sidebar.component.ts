@@ -1,16 +1,18 @@
-import { AfterViewInit, Component, Inject, OnInit, PLATFORM_ID, Renderer2, TransferState, booleanAttribute, makeStateKey } from '@angular/core';
-import { Router, RouterLink, RouterModule } from '@angular/router';
-import { AuthService } from '../services/auth.service';
-import { isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, Inject, OnInit, PLATFORM_ID, Renderer2 } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from '../../environments/environment';
-import { ThemeService } from '../services/theme.service';
+import { ThemeService } from '../core-services/theme.service';
+import {DropdownModule} from 'primeng/dropdown';
+import { LanguageService } from '../core-services/language.service';
+import { AuthService } from '../pages/login/auth.service';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [RouterModule,MatIconModule],
+  imports: [RouterModule,MatIconModule,DropdownModule,CommonModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
@@ -18,19 +20,21 @@ export class SidebarComponent implements OnInit,AfterViewInit {
   dynamicRouteDashboard: string | any[] = '/dashboard';
   dynamicRouteCoursesOrProblemsets: string | any[] = '/problemsets';
   platformId: Object;
-  isTeacher = false; 
-  isLoggedIn = false;  
+  isTeacher = false;
+  isLoggedIn = false;
   fullName: string = 'none';
   tempName = '';
   isDarkTheme: boolean = false;
+  language = 'en';
+  languages: string[] = ['en','sk', 'ua', 'ru'];
   constructor(
-    private router: Router,
     private authService: AuthService,
     @Inject(PLATFORM_ID) platformId: Object,
     private sanitizer: DomSanitizer,
     private matIconRegistery: MatIconRegistry,
     private themeService: ThemeService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private languageService: LanguageService,
     ) {
     this.platformId = platformId;
     this.matIconRegistery.addSvgIcon(
@@ -49,12 +53,13 @@ export class SidebarComponent implements OnInit,AfterViewInit {
     );
   }
   async ngAfterViewInit() {
-  
+
   }
 
 
   async ngOnInit() {
     if(isPlatformBrowser(this.platformId)){
+      this.language = localStorage.getItem('lang') || 'en';
       this.themeService.theme$.subscribe(theme => {
         this.isDarkTheme = theme === 'dark-theme';
         this.renderer.removeClass(document.body, 'light-theme');
@@ -108,9 +113,8 @@ export class SidebarComponent implements OnInit,AfterViewInit {
          window.open(url, "_self");
       }
     });
-    // this.router.navigate(['/login']);
   }
-  
+
   onToggle() {
     const sidebar = document.getElementById('sidebar') as HTMLElement;
     const btn = document.getElementById('panel-show') as HTMLElement;
@@ -118,7 +122,7 @@ export class SidebarComponent implements OnInit,AfterViewInit {
     const sidebarMain = document.getElementById('sidebar-main') as HTMLElement;
     const sidebarSecondary = document.getElementById('sidebar-secondary') as HTMLElement;
     const listItems = document.querySelectorAll('.list-item');
-    
+
     if (sidebar.style.left === '-200px') {
         sidebar.style.left = '0';
         btn.style.transform = 'rotate(360deg)';
@@ -126,7 +130,7 @@ export class SidebarComponent implements OnInit,AfterViewInit {
         sidebarMain.style.display = 'block';
         sidebarSecondary.style.display = 'none';
         listItems.forEach(item => (item as HTMLElement).style.justifyContent = "start");
-        
+
         this.fullName = this.tempName;
     } else {
         sidebar.style.left = '-200px';
@@ -138,6 +142,11 @@ export class SidebarComponent implements OnInit,AfterViewInit {
         this.fullName = '';
     }
   }
+
+  switchLanguage(lang: string){
+    this.languageService.setLanguage(lang);
+  }
+
 
   toggleTheme(){
     this.isDarkTheme = !this.isDarkTheme;

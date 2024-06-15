@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Submission } from '../../interfaces/interfaces';
 import { CommonModule, DatePipe } from '@angular/common';

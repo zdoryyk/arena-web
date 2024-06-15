@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../login/auth.service';
 
 @Component({
   selector: 'app-empty-page',
@@ -18,12 +18,6 @@ export class EmptyPageComponent implements OnInit {
 
   async ngOnInit() {
     try {
-      // let token = this.authService.getToken();
-      // console.log(123);
-      // if (!token) {
-      //   this.router.navigate(['/login']);
-      //   return;
-      // }
       let user = await this.authService.checkIsUserInStorage();
       if (user && user.attributes['is-lecturer']) {
         this.router.navigate(['/admin-dashboard']);
@@ -34,9 +28,9 @@ export class EmptyPageComponent implements OnInit {
       }
     } catch (error) {
       console.error('Error during initialization:', error);
-      this.router.navigate(['/login']); 
+      this.router.navigate(['/login']);
     }
   }
-  
-  
+
+
 }

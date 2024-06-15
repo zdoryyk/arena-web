@@ -1,4 +1,4 @@
-import { Injectable, ApplicationRef, Inject, PLATFORM_ID } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -12,7 +12,6 @@ export class ThemeService {
   private darkModeMediaQuery: MediaQueryList;
 
   constructor(
-    private ref: ApplicationRef,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     if (isPlatformBrowser(this.platformId)) {
@@ -35,13 +34,10 @@ export class ThemeService {
   
   private handleThemeChange(event: MediaQueryListEvent) {
     const newTheme = event.matches ? 'dark-theme' : 'light-theme';
-    // console.log(`System theme changed: ${newTheme}`);
-    // console.log(`Updating theme to ${newTheme} based on system preference`);
     this.setTheme(newTheme);
   }
   
   public setTheme(newTheme: string) {
-    // console.log(`Setting theme to ${newTheme}`);
     document.body.classList.replace(this.themeSource.value, newTheme);
     this.themeSource.next(newTheme);
     localStorage.setItem('currentTheme', newTheme);

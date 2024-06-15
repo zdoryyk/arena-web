@@ -16,7 +16,7 @@
                 </div>
                 @if(submissions){
                     <div class="single-task-bar {{submissions[0].completeStatus.keys().next().value }}">
-                        {{submissions.length}} submissions
+                        {{submissions.length}} {{'Submissions' | translate}}
                     </div>
                 }@else{
                 <div class="single-task-bar warning">

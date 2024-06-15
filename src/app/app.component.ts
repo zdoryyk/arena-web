@@ -1,13 +1,13 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component,OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {Router, RouterLink, RouterLinkActive, RouterModule, RouterOutlet} from '@angular/router';
+import {RouterLink, RouterLinkActive, RouterModule, RouterOutlet} from '@angular/router';
 import {LoginComponent} from "./pages/login/login.component";
 import {SidebarComponent} from "./sidebar/sidebar.component";
 import {HeaderComponent} from "./components/header/header.component";
 import { MobileMenuComponent } from './components/mobile-menu/mobile-menu.component';
-import { AuthService } from './services/auth.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ThemeService } from './services/theme.service';
+import {TranslateModule } from '@ngx-translate/core';
+import { AuthService } from './pages/login/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -22,24 +22,22 @@ import { ThemeService } from './services/theme.service';
     MobileMenuComponent,
     RouterLink,
     RouterLinkActive,
-    MatProgressSpinnerModule 
+    MatProgressSpinnerModule,
+    TranslateModule,
   ],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  providers: []
 })
-export class AppComponent implements OnInit{
-
-
+export class AppComponent{
   title = 'arena';
   isLoading = false;
   isLoggedIn = false;
-  constructor(public authService: AuthService,private themeService: ThemeService) {
+
+  constructor(public authService: AuthService) {
     this.authService.isLoggedIn$.subscribe(loggedIn => {
       this.isLoggedIn = loggedIn;
       this.isLoading = false;
     });
   }
-  ngOnInit(): void {
-  }
-
 }

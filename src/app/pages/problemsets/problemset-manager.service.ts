@@ -1,8 +1,8 @@
 import { Injectable, TransferState, makeStateKey } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { ProblemsetsService } from './problemsets.service';
-import { ProblemsetExtra } from '../interfaces/problemset';
-import { NestedTask, Submission, Task, TaskData } from '../interfaces/submission';
+import { ProblemsetExtra } from '../../interfaces/problemset';
+import { NestedTask, Submission, Task, TaskData } from '../../interfaces/submission';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class ProblemsetManagerService {
     let taskData = await firstValueFrom(this.problemsetService.getSubmissionTasks(id));
     let nestedTasks = this.nestTasks(taskData.data);
     console.log(nestedTasks);
-    
+
     return nestedTasks;
   }
 
@@ -67,15 +67,15 @@ export class ProblemsetManagerService {
       let problemset = await firstValueFrom(this.problemsetService.getProblemsetDetailById(userProblemset.relationships.problemset.data.id));
       let submissions = await firstValueFrom(this.problemsetService.getUserSubmissionByProblemset(userProblemset.id));
       let lastSubmission = submissions.data[0];
-      
+
       const title = problemset.data.attributes.title;
       const isActive = new Date(problemset.data.attributes['date-finish']).getTime() > Date.now();
       const maxSubmissionScore = problemset.data.attributes['max-score'] as number;
       const submissionsLength = submissions.data.length;
       const lastScore = lastSubmission.attributes.score;
       const lastSubmitted = lastSubmission.attributes['date-evaluated'];
-      
-      
+
+
       let completeStatus =new Map<string, string>([
         ['warning','Task Incompleted'],
       ])
@@ -84,7 +84,7 @@ export class ProblemsetManagerService {
           ['success','Task completed'],
         ])
       }
-      
+
       let problemsetExtra:ProblemsetExtra = {
         id: userProblemset.id,
         title: this.problemsetService.trimTitleFromLastYearOrColon(title),
@@ -96,7 +96,7 @@ export class ProblemsetManagerService {
         completeStatus: completeStatus
       };
       problemsets = [...problemsets,problemsetExtra];
-    }  
+    }
     this.tranferState.set<ProblemsetExtra[]>(makeStateKey('problemsetsCards'),problemsets);
     return problemsets;
   }

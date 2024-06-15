@@ -2,7 +2,7 @@
     <section class="section">
         <div class="container">
             @if(isAnyActiveProblemset){
-                <h2 class="title">Ongoing problems</h2>
+                <h2 class="title">{{'Ongoing problems' | translate}}</h2>
                 <div class="submissions problemsets">
                     @if (isLoading) {
                             <div class="skeleton"><p-skeleton width="100%" height="100%" ></p-skeleton></div>
@@ -31,7 +31,7 @@
                     }
                 </div>
             }
-            <h2 class="title">Closed problems</h2>
+            <h2 class="title">{{'Closed problems' | translate}}</h2>
             <div class="submissions">
                 @if (isLoading) {
                     <div class="skeleton"><p-skeleton width="100%" height="100%" ></p-skeleton></div>

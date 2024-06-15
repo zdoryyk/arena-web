@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -24,7 +24,6 @@ export class ProblemsetCardComponent {
     private matIconRegistery: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
   ){
     this.matIconRegistery.addSvgIcon(
       'detail',

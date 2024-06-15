@@ -15,7 +15,7 @@
                 Joined <span class="profile-text-value">Sep 2021</span>
               </p> -->
               <p class="profile-label">
-                username
+                {{'username' | translate}}
                 @if (user && user.data.attributes.username) {
                   <span class="profile-text-value-username">{{user.data.attributes.username}}</span>
                 }@else{
@@ -29,25 +29,25 @@
             <div class="case">
               @if (user && user.problemsetsLength) {
               <p class="case-value">{{user.problemsetsLength}}</p>
-              <p class="case-label">Problemsets fixed</p>
+              <p class="case-label">{{'Problemsets fixed' | translate}}</p>
               }@else {<p-skeleton width="5rem" height="1rem" styleClass="mb-2"></p-skeleton>}
             </div>
             <div class="case">
               @if (user && user.submissionsLength) {
                 <p class="case-value">{{user.submissionsLength}}</p>
-                <p class="case-label">Submissions</p>
+                <p class="case-label">{{'Submissions' | translate}}</p>
               }@else {<p-skeleton width="5rem" height="1rem" styleClass="mb-2"></p-skeleton>}
             </div>
             <div class="case">
               @if (user && user.rate) {
                 <p class="case-value success">{{user.rate}}%</p>
-                <p class="case-label">Success rate</p>
+                <p class="case-label">{{'Success rate' | translate}}</p>
               }@else {<p-skeleton width="5rem" height="1rem" styleClass="mb-2"></p-skeleton>}
             </div>
             <div class="case">
               @if (user && user.totalScore) {
                 <p class="case-value">{{user.totalScore.toFixed(0)}}</p>
-                <p class="case-label">Summary points</p>
+                <p class="case-label">{{'Summary points' | translate}}</p>
               }@else {<p-skeleton width="5rem" height="1rem" styleClass="mb-2"></p-skeleton>}
             </div>
           </div>

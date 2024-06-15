@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { Observable, firstValueFrom } from 'rxjs';
 
 
@@ -116,32 +116,32 @@ export class ProblemsetsService {
     const submissionsData = await firstValueFrom(this.getUserSubmissionByProblemset(problemsetId));
     const actualLimit = Math.min(submissionsData.data.length, limit);
     const limitedSubmissions = submissionsData.data.slice(0, actualLimit);
-    
-    return limitedSubmissions; 
+
+    return limitedSubmissions;
 }
 
   trimTitleFromLastYearOrColon(title: string): string {
     const lastYearMatch = title.match(/\d{4}(?!.*\d{4})/);
-    const lastYearIndex = lastYearMatch ? lastYearMatch.index + 4 : -1; 
-  
+    const lastYearIndex = lastYearMatch ? lastYearMatch.index + 4 : -1;
+
     const lastColonIndex = title.lastIndexOf(":");
-  
+
     let startIndex = Math.max(lastYearIndex, lastColonIndex);
-  
+
     if (title[startIndex] === " " || title[startIndex] === ":") {
       startIndex++;
     }
-  
+
     return title.substring(startIndex).trim();
   }
 
-  
+
 
   trimGroupTitle(title: string): string {
     const atIndex = title.indexOf('@');
     const trimmedTitle = atIndex !== -1 ? title.substring(0, atIndex) : title;
     return trimmedTitle.length > 18 ? `${trimmedTitle.substring(0, 18)}..` : trimmedTitle;
   }
-  
 
-} 
+
+}

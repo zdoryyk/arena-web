@@ -1,20 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, HostListener, Inject, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Subscription, concatMap, delay, firstValueFrom, forkJoin, from } from 'rxjs';
+import { ChangeDetectorRef, Component, HostListener, Input, OnDestroy, OnInit, } from '@angular/core';
+import { FormControl,  FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Subscription, concatMap, delay, forkJoin, from } from 'rxjs';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { Table, TableModule } from 'primeng/table';
-import { CourseDetailService } from '../../services/course-detail.service';
-import { User, UserData } from '../../interfaces/user';
-import { ProblemsetsService } from '../../services/problemsets.service';
+import { CourseDetailService } from '../../pages/admin/course-detail.service';
+import { UserData } from '../../interfaces/user';
+import { ProblemsetsService } from '../../pages/problemsets/problemsets.service';
 import { Group } from '../../interfaces/group';
 import { ProblemsetData } from '../../interfaces/problemset';
 import { MatButton } from '@angular/material/button';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { log } from 'console';
-import { Skeleton, SkeletonModule } from 'primeng/skeleton';
+import { SkeletonModule } from 'primeng/skeleton';
 
 
 interface ProblemsetPreview {
@@ -26,8 +25,8 @@ interface ProblemsetPreview {
 interface ExtendedUser {
   groupName: string,
   fullName: string;
-  problemSet: ProblemsetPreview; 
-  data: UserData; 
+  problemSet: ProblemsetPreview;
+  data: UserData;
 }
 
 interface GroupOption {
@@ -70,13 +69,13 @@ export class GroupDetailComponent implements OnInit,OnDestroy {
 
 
   groupOptions!: GroupOption[];
-  selectedGroups!: GroupOption[]; 
+  selectedGroups!: GroupOption[];
   problemsetOptions!: ProblemsetOption[];
   selectedProblemsets: ProblemsetOption[] = [];
   private studentsCopy: ExtendedUser[] = [];
-  private loadingSubscription: Subscription = new Subscription(); 
+  private loadingSubscription: Subscription = new Subscription();
   private subscription: Subscription = new Subscription();
-  students: ExtendedUser[] = []; 
+  students: ExtendedUser[] = [];
   selectedGroupsControl = new FormControl();
   skeletons: string[] = ['1','2','3','4','5','6','7','8','9','0'];
 
@@ -129,7 +128,7 @@ export class GroupDetailComponent implements OnInit,OnDestroy {
 
         this.loadingSubscription.add(loadGroups$.subscribe({
             complete: () => {
-                this.cd.detectChanges(); 
+                this.cd.detectChanges();
             }
         }));
     } else {
@@ -143,10 +142,10 @@ export class GroupDetailComponent implements OnInit,OnDestroy {
   }
 
   onProblemsetSelectionChange() {
-    if(this.selectedProblemsets.length > 0){  
+    if(this.selectedProblemsets.length > 0){
       this.students = this.studentsCopy;
       const selectedProblemsetNames = new Set(this.selectedProblemsets.map(ps => ps.title));
-      this.students = this.students.filter(student => 
+      this.students = this.students.filter(student =>
         student.problemSet && selectedProblemsetNames.has(student.problemSet.title));
     }else if(this.selectedProblemsets.length == 0){
       this.students = this.studentsCopy;
@@ -208,10 +207,10 @@ studentAlreadyAdded(newStudent: ExtendedUser): boolean {
     );
 }
 
-  
+
 
   async sortUsersProblemsets(userProblemsets: any[]) {
-    const userProblemsetIds = this.problemsets.map(ps => ps.id);    
+    const userProblemsetIds = this.problemsets.map(ps => ps.id);
     let filteredProblemsets = userProblemsets.filter(problemset => userProblemsetIds.includes(problemset.relationships.problemset.data.id));
     return filteredProblemsets;
   }

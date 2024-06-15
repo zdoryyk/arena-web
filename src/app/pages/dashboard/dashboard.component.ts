@@ -2,19 +2,21 @@ import { Component, OnInit, TransferState, makeStateKey } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { ChartModule } from 'primeng/chart';
 import { SubmissionCardComponent } from '../../components/submission-card/submission-card.component';
-import { AuthService } from '../../services/auth.service';
 import { UserData } from '../../interfaces/user';
-import { ProblemsetManagerService } from '../../services/problemset-manager.service';
+import { ProblemsetManagerService } from '../problemsets/problemset-manager.service';
 import { ProblemsetExtra } from '../../interfaces/problemset';
-import { ProfileMangerService } from '../../services/profile-manger.service';
+import { ProfileMangerService } from '../profile/profile-manger.service';
 import { SkeletonModule } from 'primeng/skeleton';
 import {MatButtonModule} from '@angular/material/button';
 import { TableModule } from 'primeng/table';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LanguageService } from '../../core-services/language.service';
+import { AuthService } from '../login/auth.service';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [RouterModule, ChartModule,SubmissionCardComponent,SkeletonModule,MatButtonModule,TableModule],
+  imports: [RouterModule, ChartModule,SubmissionCardComponent,SkeletonModule,MatButtonModule,TableModule, TranslateModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
@@ -37,12 +39,18 @@ export class DashboardComponent implements OnInit {
     private profileManager: ProfileMangerService,
     private problemsetManager: ProblemsetManagerService,
     private transferState: TransferState,
-    private authService: AuthService
+    private authService: AuthService,
+    private translate: TranslateService,
+    private languageService: LanguageService,
+
   ){
 
   }
-  
+
   async ngOnInit() {
+    this.languageService.lang$.subscribe(lang => {
+      this.translate.use(lang);
+    });
     await this.loadUserData();
     if(this.user.attributes['is-lecturer']){
       this.router.navigate(['/admin-dashboard']);
@@ -67,7 +75,7 @@ export class DashboardComponent implements OnInit {
       await this.getLastSubmissionsByActiveProblemsets();
     }
     this.setCharts();
-    this.isLoading = false; 
+    this.isLoading = false;
   }
 
 
@@ -103,17 +111,17 @@ export class DashboardComponent implements OnInit {
       let color = this.getRandomColor();
 
       const newDataset = {
-        label: key, 
+        label: key,
         data: data,
         fill: false,
         borderColor: color,
-        pointBackgroundColor: color, 
+        pointBackgroundColor: color,
       };
       datasets.push(newDataset);
     }
 
     this.lineData = {
-      labels: time, 
+      labels: time,
       datasets: datasets,
     };
 
@@ -166,7 +174,7 @@ export class DashboardComponent implements OnInit {
         hour: '2-digit',
         minute: '2-digit',
         hour12: false
-      });      
+      });
       return submission;
     });
   }
