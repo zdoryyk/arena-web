@@ -1,15 +1,17 @@
 import { Component, Inject, OnInit, PLATFORM_ID, Renderer2 } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { isPlatformBrowser } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { ThemeService } from '../../core-services/theme.service';
 import { AuthService } from '../../pages/login/auth.service';
+import { LanguageService } from '../../core-services/language.service';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-mobile-menu',
   standalone: true,
-  imports: [RouterModule,MatIconModule],
+  imports: [RouterModule,MatIconModule,DropdownModule,CommonModule],
   templateUrl: './mobile-menu.component.html',
   styleUrl: './mobile-menu.component.scss'
 })
@@ -21,8 +23,10 @@ export class MobileMenuComponent implements OnInit{
   platformId: Object;
   isTeacher = false;
   isLoggedIn = true;
-  fullName: string = 'none';
+  fullName: string = '';
   isDarkTheme: boolean = false;
+  language = 'en';
+  languages: string[] = ['en','sk', 'ua', 'ru'];
 
   constructor(
     private router: Router,
@@ -31,7 +35,8 @@ export class MobileMenuComponent implements OnInit{
     private sanitizer: DomSanitizer,
     private matIconRegistery: MatIconRegistry,
     private themeService: ThemeService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private languageService: LanguageService,
     ) {
     this.platformId = platformId;
     this.matIconRegistery.addSvgIcon(
@@ -42,7 +47,12 @@ export class MobileMenuComponent implements OnInit{
   }
 
   async ngOnInit() {
+    const user = await this.authService.checkIsUserInStorage();
+    if(user && user.attributes['first-name'] && user.attributes['last-name']) {
+      this.fullName = `${user.attributes['first-name']} ${user.attributes['last-name']}`;
+    }
     if(isPlatformBrowser(this.platformId)){
+      this.language = localStorage.getItem('lang') || 'en';
       this.themeService.theme$.subscribe(theme => {
         this.isDarkTheme = theme === 'dark-theme';
         this.renderer.removeClass(document.body, 'light-theme');
@@ -50,15 +60,15 @@ export class MobileMenuComponent implements OnInit{
         this.renderer.addClass(document.body, theme);
       });
       this.isTeacher = localStorage.getItem('arena-permission') === 'Teacher';
-      const user = await this.authService.checkIsUserInStorage();
-      if(user && user.attributes['first-name'] && user.attributes['last-name']) {
-        this.fullName = `${user.attributes['first-name']} ${user.attributes['last-name']}`;
-      }
       if(this.isTeacher){
         this.dynamicRouteDashboard =  '/admin-dashboard';
         this.dynamicRouteCoursesOrProblemsets = '/admin-courses';
       }
     }
+  }
+
+  switchLanguage(lang: string){
+    this.languageService.setLanguage(lang);
   }
 
 
